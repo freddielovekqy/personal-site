@@ -19,4 +19,3 @@ public class HelloWorldController {
         return view;
     }
 }
-s
