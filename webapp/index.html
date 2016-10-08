@@ -3,17 +3,21 @@
         <title>index</title>
         <link rel="stylesheet" href="framework/bootstrap/css/bootstrap.css">
         <link rel="stylesheet" href="css/index.css">
+        <base href="/">
     </header>
-    <body>
+    <body ng-app="app">
         <div class="test"></div>
         <div>this is webapp index page</div>
         <button type="button" class="btn btn-default">Default</button>
         <button type="button" class="btn btn-primary">Primary</button>
+        <div ng-view>
+            
+        </div>
     </body>
     <script src="framework/jquery-2.1.4.min.js"></script>
     <script src="framework/bootstrap/js/bootstrap.js"></script>
-    <script src="framework/jquery-2.1.4.min.js"></script>
-    <script src="framework/jquery-2.1.4.min.js"></script>
-    <script src="framework/jquery-2.1.4.min.js"></script>
-    <script src="framework/jquery-2.1.4.min.js"></script>
+    <script src="framework/angular-1.5.8/angular.js"></script>
+    <script src="framework/angular-1.5.8/angular-route.min.js"></script>
+    <script src="app.js"></script>
+    <script src="js/controller.js"></script>
 </html>
