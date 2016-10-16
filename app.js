@@ -16,17 +16,21 @@ app.set('view engine', 'html');
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(cookieParser());
+
+// 将less转换成css文件，并定义存放目录
 app.use(lessMiddleware('/css', {
     dest: '/css',
     pathRoot: path.join(__dirname, 'webapp')
 }));
-app.use(express.static(path.join(__dirname, 'webapp')));
 
-// app.use('/', routes);
+// 前端资源文件全部交由nginx服务器进行管理
+// app.use(express.static(path.join(__dirname, 'webapp')));
+
 app.use('/users', users);
 
-app.get('/', function (request, response) {
-    response.sendfile('webapp/index.html');
+// nodejs提供restful的api接口
+app.get('/api/about', function (request, response) {
+    response.send('Hello World!');
 });
 
 // catch 404 and forward to error handler
