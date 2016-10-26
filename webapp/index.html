@@ -1,23 +1,48 @@
+<!DOCTYPE html>
 <html>
     <header>
-        <title>index</title>
+        <title>首页</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         <link rel="stylesheet" href="framework/bootstrap/css/bootstrap.css">
-        <link rel="stylesheet" href="css/index.css">
+        <link rel="stylesheet" href="framework/font-awesome/css/font-awesome.css">
+        <link rel="stylesheet" href="css/app.css">
         <base href="/">
     </header>
     <body ng-app="app">
-        <div class="test"></div>
-        <div>this is webapp index page</div>
-        <button type="button" class="btn btn-default">Default</button>
-        <button type="button" class="btn btn-primary">Primary</button>
-        <div ng-view>
+        <div ng-controller="initController">
+            <div class="header-div" ng-show="showHeader">
+                <div class="container">
+                    <div class="logo">W&KBlog</div>
+                    <div class="nav-menu-div">
+                        <div class="nav-menu">
+                            <a class="nav-menu-item" href="/" ng-click="changePath('/')" ng-class="{'current-page': currentPath === '/'}">首页</a>
+                            <a class="nav-menu-item" href="/blog" ng-click="changePath('/blog')" ng-class="{'current-page': currentPath === '/blog'}">博客</a>
+                            <a class="nav-menu-item">图片</a>
+                            <a class="nav-menu-item">广场</a>
+                            <a class="nav-menu-item">GIT</a>
+                            <a class="nav-menu-item" href="/about" ng-click="changePath('/about')" ng-class="{'current-page': currentPath === '/about'}">关于</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div ng-view class="container web-container mCustomScrollbar">
             
         </div>
     </body>
     <script src="framework/jquery-2.1.4.min.js"></script>
-    <script src="framework/bootstrap/js/bootstrap.js"></script>
+    <script src="framework/underscore/underscore.js"></script>
+    <script src="framework/bootstrap/js/bootstrap.min.js"></script>
     <script src="framework/angular-1.5.8/angular.js"></script>
     <script src="framework/angular-1.5.8/angular-route.min.js"></script>
     <script src="app.js"></script>
-    <script src="js/controller.js"></script>
+    <script src="js/home/HomeController.js"></script>
+    <script src="js/about/AboutController.js"></script>
+    <script src="js/blog/BlogController.js"></script>
+    <script src="js/blog/BlogListController.js"></script>
+    <script src="js/profile/ProfileController.js"></script>
+    <script src="js/profile/ProfileInBlog.js"></script>
+    <script src="js/common/CommonDirective.js"></script>
 </html>

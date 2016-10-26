@@ -11,20 +11,21 @@ var app = express();
 app.set('view engine', 'html');
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 // app.use(logger('dev'));
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(cookieParser());
 
 // 将less转换成css文件，并定义存放目录
-app.use(lessMiddleware('/css', {
+app.use(lessMiddleware('/less', {
     dest: '/css',
-    pathRoot: path.join(__dirname, 'webapp')
+    pathRoot: path.join(__dirname, 'webapp'),
+    debug: true
 }));
 
 // 前端资源文件全部交由nginx服务器进行管理
-// app.use(express.static(path.join(__dirname, 'webapp')));
+app.use(express.static(path.join(__dirname, 'webapp')));
 
 app.use('/users', users);
 
