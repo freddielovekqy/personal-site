@@ -11,7 +11,7 @@ mongoose.connect(DB_URL);
   */
 mongoose.connection.on('connected', function () {    
     console.log('Mongoose connection open to ' + DB_URL);  
-});    
+});
 
 /**
  * 连接异常
@@ -23,7 +23,6 @@ mongoose.connection.on('error',function (err) {
 /**
  * 连接断开
  */
-// TODO
 mongoose.connection.on('disconnected', function () {    
     console.log('Mongoose connection disconnected');  
 });    
