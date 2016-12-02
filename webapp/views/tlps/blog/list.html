@@ -1,10 +1,10 @@
 <div class="blog-list-page">
-    <div class="profile-blog-info" media-query="1024">
+    <div class="profile-blog-info" media-query="1024-">
         <profile-in-blog></profile-in-blog>
     </div>
     <div class="blog-list-div" ng-controller="BlogListController">
         <div ng-repeat="blog in blogList" class="blog-list">
-            <div>
+            <div class="type-and-title">
                 <span class="label label-info blog-type">原</span>
                 <div class="blog-title">{{blog.title}}</div>
             </div>

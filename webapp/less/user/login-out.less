@@ -1,0 +1,109 @@
+.login-page {
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  .login-div {
+    padding: 20px;
+    box-shadow: 0 2px 16px #CCC,0 0 1px #CCC,0 0 1px #CCC;
+    background: rgba(255,255,255,0.41);
+    max-width: 576px;
+    min-width: 400px;
+    margin: 0 auto;
+    top: 176px;
+    position: relative;
+    height: 350px;
+    .login-logo-img {
+      width: 100%;
+      padding-bottom: 10px;
+      border-bottom: 1px dashed #CCC;
+    }
+    .login-contain {
+      width: 80%;
+      margin: 0 auto;
+      padding-top: 20px;
+      .glyphicon {
+        color: #666;
+      }
+      .label-for-text {
+        display: block;
+      }
+      .input-line {
+        input {
+          @icon-width: 36px;
+          width: -moz-calc(~"100% - @{icon-width}");
+          width: -webkit-calc(~"100% - @{icon-width}");
+          width: calc(~"100% - @{icon-width}");
+        }
+      }
+      .login-icon {
+        height: 34px;
+        line-height: 34px;
+        border: 1px solid #ccc;
+        border-right: 0px;
+        border-radius: 4px;
+        background: #eee;
+        width: 36px;
+        float: left;
+        text-align: center;
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+        position: relative;
+        top: 0;
+      }
+      .login-input {
+        display: inline-block;
+        width: 86%;
+        float: left;
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+      }
+      .username-div {
+        overflow: auto;
+      }
+      .password-div {
+        overflow: auto;
+        margin-top: 10px;
+      }
+      .login-option {
+        font-size: 12px;
+        margin: 5px 0;
+        .auto-login {
+          display: inline-block;
+          margin: 0;
+          height: 30px;
+          line-height: 30px;
+        }
+        .forget-password {
+          display: inline-block;
+          float: right;
+          line-height: 30px;
+        }
+      }
+      .login-button {
+        width: 100%;
+      }
+      .sign-up {
+        float: right;
+        font-size: 12px;
+        line-height: 30px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .login-page {
+    .login-div {
+      height: 290px;
+      width: 267px;
+      top: 80px;
+      padding: 10px;
+      min-width: 0;
+      .login-contain {
+        width: 95%;
+      }
+    }
+  }
+}

@@ -7,15 +7,48 @@ app.directive('mediaQuery', function () {
         scope: false,
         replace: true,
         link: function (scope, elements, attrs) {
-            console.log('scope', scope);
-            console.log('elements', elements);
-            console.log('attrs', attrs);
-            console.log('window.screen', window.screen)
-            if (attrs.mediaQuery === '123') {
+            var mediaQueryRange = attrs.mediaQuery.split('-');
+            var currentScreenWidth = window.screen.width;
+
+            if (currentScreenWidth >= parseInt(mediaQueryRange[0] || 0) && currentScreenWidth <= parseInt(mediaQueryRange[1] || 4000)) {
                 elements.show();
             } else {
                 elements.hide();
             }
+        }
+    };
+});
+
+app.directive('customerCheckbox', function () {
+    return {
+        restrict: 'E',
+        require : '?ngModel',
+        replace: true,
+        templateUrl: 'views/tlps/common/f_checkbox.html',
+        controller: function ($scope) {
+        },
+        link: function (scope, elements, attrs, ngModel) {
+            elements.find('[type="checkbox"]').iCheck({
+                checkboxClass: 'icheckbox_flat-blue',
+                radioClass: 'iradio_flat-blue'
+            });
+
+            if (scope.option.checked) {
+                elements.find('[type="checkbox"]').iCheck('check');
+            } else {
+                elements.find('[type="checkbox"]').iCheck('uncheck');
+            }
+
+
+            elements.on('ifChecked', '[type="checkbox"]', function (event) {
+                scope.option.checked = true;
+                ngModel.$setViewValue(ngModel.$modelValue);
+            });
+
+            elements.on('ifUnchecked', '[type="checkbox"]', function (event) {
+                scope.option.checked = false;
+                ngModel.$setViewValue(ngModel.$modelValue)
+            });
         }
     };
 });

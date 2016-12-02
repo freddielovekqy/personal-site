@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         <link rel="stylesheet" href="framework/bootstrap/css/bootstrap.css">
         <link rel="stylesheet" href="framework/font-awesome/css/font-awesome.css">
+        <link rel="stylesheet" href="framework/iCheck/flat/blue.css" >
         <link rel="stylesheet" href="css/app.css">
         <base href="/">
     </header>
@@ -14,21 +15,41 @@
             <div class="header-div" ng-show="showHeader">
                 <div class="container">
                     <div class="logo">W&KBlog</div>
-                    <div class="nav-menu-div">
+                    <div class="nav-list-div-for-mbp" media-query="0-767">
+                        <span class="glyphicon glyphicon-th-list"></span>
+                    </div>
+                    <div class="nav-menu-div" media-query="768-">
                         <div class="nav-menu">
                             <a class="nav-menu-item" href="/" ng-click="changePath('/')" ng-class="{'current-page': currentPath === '/'}">首页</a>
                             <a class="nav-menu-item" href="/blog" ng-click="changePath('/blog')" ng-class="{'current-page': currentPath === '/blog'}">博客</a>
                             <a class="nav-menu-item">图片</a>
-                            <a class="nav-menu-item">广场</a>
+                            <div class="nav-menu-item dropdown">
+                                <a id="dropdownMenu1" data-toggle="dropdown">广场</a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">热门微博</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">热门博文</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">风云榜</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">游戏</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">新闻</a></li>
+                                </ul>
+                            </div>
                             <a class="nav-menu-item">GIT</a>
                             <a class="nav-menu-item" href="/about" ng-click="changePath('/about')" ng-class="{'current-page': currentPath === '/about'}">关于</a>
                         </div>
                     </div>
+                    <div class="login-out-div" ng-show="!showLoginBtn">
+                        <a class="login" href="/login">登录</a>
+                        <a class="sign-up" href="/register">注册</a>
+                    </div>
+                    <a class="username-in-header" ng-show="showLoginBtn">
+                        <span class="glyphicon glyphicon-user"></span>
+                        <span class="username">王超</span>
+                    </a>
                 </div>
             </div>
         </div>
         
-        <div ng-view class="container web-container mCustomScrollbar">
+        <div ng-view class="web-container mCustomScrollbar">
             
         </div>
     </body>
@@ -37,6 +58,7 @@
     <script src="framework/bootstrap/js/bootstrap.min.js"></script>
     <script src="framework/angular-1.5.8/angular.js"></script>
     <script src="framework/angular-1.5.8/angular-route.min.js"></script>
+    <script src="framework/iCheck/icheck.js"></script>
     <script src="app.js"></script>
     <script src="js/home/HomeController.js"></script>
     <script src="js/about/AboutController.js"></script>
@@ -45,4 +67,9 @@
     <script src="js/profile/ProfileController.js"></script>
     <script src="js/profile/ProfileInBlog.js"></script>
     <script src="js/common/CommonDirective.js"></script>
+    <script src="js/common/CommonUtils.js"></script>
+
+
+    <script src="js/user/LoginOutController.js"></script>
+    <script src="js/user/RegisterController.js"></script>
 </html>

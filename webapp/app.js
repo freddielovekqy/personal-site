@@ -1,18 +1,27 @@
 'use strict';
 
-var app = angular.module('app', ['ngRoute', 'home', 'about', 'blog', 'profile']);
+var app = angular.module('app', ['ngRoute', 'home', 'about', 'blog', 'profile', 'loginOut', 'register']);
 
 app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
     $routeProvider
         .when('/', { templateUrl: '/views/home.html', controller: 'HomeController' })
         .when('/about', { templateUrl: '/views/tlps/about.html', controller: 'AboutController' })
+        .when('/login', {templateUrl: '/views/tlps/user/login.html', controller: 'LoginController'})
+        .when('/register', {templateUrl: '/views/tlps/user/register.html', controller: 'RegisterController'})
         .otherwise({ redirectTo: '/' });
     $locationProvider.html5Mode(true);
 }]);
 
-app.controller('initController', ['$scope', '$location', '$timeout', function ($scope, $location, $timeout) {
+app.controller('initController', ['$rootScope', '$scope', '$location', '$timeout', 'CommonUtils', function ($rootScope, $scope, $location, $timeout, CommonUtils) {
     $scope.showHeader = true;
+    $scope.showLoginBtn = false;
     $scope.currentPath = getRootPath($location.path());
+
+    $rootScope.$on('$locationChangeStart', function () {
+        $scope.currentPath = getRootPath($location.path());
+        $scope.showLoginBtn = ($scope.currentPath === '/login' || $scope.currentPath === '/register');
+    });
+
 
     console.log('$scope.currentPath', $scope.currentPath);
 
