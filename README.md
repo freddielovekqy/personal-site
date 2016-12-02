@@ -6,10 +6,17 @@
 - **less** ： 支持less
 - **less-middleware** ： less于nodejs集成的中间件，编译less文件等
 - **grunt**：nodejs项目管理工具
+- **mongoose**：nodejs操作mongoDB
 ```
 // 全局安装grunt管理工具
 npm install -g grunt-cli
 ```
+### 前台使用的框架与插件
+- **angularJS**：前台整体框架
+- **bootstrap**：前台css框架
+- **font-awesome**：使用到的字体与icon
+- **iCheck**：单选框与多选框美化
+- **underscore**：js工具插件
 
 > 网站所有静态文件全部交由nginx进行管理
 
