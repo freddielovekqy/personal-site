@@ -1,34 +1,38 @@
 var express = require('express');
 var lessMiddleware = require('less-middleware');
 var path = require('path');
+var bodyParser = require('body-parser')
+var log4js = require('./src/common/log/log4js')
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
-var mongoose = require('./src/dao/db.js');
+var routes = require('./src/routes/index');
+var user = require('./src/routes/UserController');
+
 
 var app = express();
 
+
 // view engine setup
+log4js.use(app);
+// app.use(log4js('dev'));
 app.set('view engine', 'html');
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 // uncomment after placing your favicon in /public
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-// app.use(logger('dev'));
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(cookieParser());
 
 // 将less转换成css文件，并定义存放目录
 app.use(lessMiddleware('/less', {
     dest: '/css',
     pathRoot: path.join(__dirname, 'webapp'),
-    debug: true
+    debug: false
 }));
 
 // 前端资源文件全部交由nginx服务器进行管理
 app.use(express.static(path.join(__dirname, 'webapp')));
 
-app.use('/users', users);
+app.use('/api/user', user);
 
 // nodejs提供restful的api接口
 app.get('/api/about', function (request, response) {

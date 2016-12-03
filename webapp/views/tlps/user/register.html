@@ -7,7 +7,7 @@
                 <label class="label-for-text" for="username">邮箱：</label>
                 <div class="input-line">
                     <span class="glyphicon glyphicon-user register-icon"></span>
-                    <input type="text" class="form-control register-input" id="username" placeholder="请输入邮箱">
+                    <input type="text" class="form-control register-input" id="username" ng-model="user.username" placeholder="请输入邮箱">
                 </div>
 
             </div>
@@ -15,14 +15,14 @@
                 <label class="label-for-text" for="password">密码：</label>
                 <div class="input-line">
                     <span class="glyphicon glyphicon-lock register-icon"></span>
-                    <input type="password" class="form-control register-input" id="password" placeholder="请输入密码"/>
+                    <input type="password" class="form-control register-input" id="password" ng-model="user.password" placeholder="请输入密码"/>
                 </div>
             </div>
             <div class="password-div">
                 <label class="label-for-text" for="password">再次输入密码：</label>
                 <div class="input-line">
                     <span class="glyphicon glyphicon-lock register-icon"></span>
-                    <input type="password" class="form-control register-input" id="rePassword" placeholder="请输入密码"/>
+                    <input type="password" class="form-control register-input" id="rePassword" ng-model="user.rePassword" placeholder="请输入密码"/>
                 </div>
             </div>
             <div class="register-option">
@@ -30,7 +30,7 @@
                     <customer-checkbox ng-model="option"></customer-checkbox>
                 </div>
             </div>
-            <button type="button" class="btn btn-primary register-button">注册</button>
+            <button type="button" class="btn btn-primary register-button" ng-click="register()">注册</button>
             <span class="login">已有账户，立即<a href="/login">登录</a></span>
         </div>
     </div>

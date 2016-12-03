@@ -7,10 +7,12 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "body-parser": "^1.15.2",
     "express": "^4.13.4",
     "grunt": "^1.0.1",
     "less": "^2.7.1",
     "less-middleware": "^2.2.0",
+    "log4js": "^1.0.1",
     "mongoose": "^4.7.0"
   }
 }

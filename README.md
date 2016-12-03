@@ -7,6 +7,8 @@
 - **less-middleware** ： less于nodejs集成的中间件，编译less文件等
 - **grunt**：nodejs项目管理工具
 - **mongoose**：nodejs操作mongoDB
+- **body-parser**：express推荐使用的解析客户端请求中间件https://github.com/expressjs/body-parser
+- **log4js**：nodejs的日志
 ```
 // 全局安装grunt管理工具
 npm install -g grunt-cli
