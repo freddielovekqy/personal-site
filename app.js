@@ -1,11 +1,15 @@
 var express = require('express');
+var session = require('express-session');
 var lessMiddleware = require('less-middleware');
 var path = require('path');
-var bodyParser = require('body-parser')
-var log4js = require('./src/common/log/log4js')
+var bodyParser = require('body-parser');
+var log4js = require('./src/common/log/log4js');
+
+
 
 var routes = require('./src/routes/index');
 var user = require('./src/routes/UserController');
+var blog = require('./src/routes/BlogController');
 
 
 var app = express();
@@ -29,10 +33,27 @@ app.use(lessMiddleware('/less', {
     debug: false
 }));
 
+
+app.use(session({
+  secret: 'sessiontest', // 建议使用 128 个字符的随机字符串
+  cookie: { maxAge: 60 * 1000 }
+}));
+
 // 前端资源文件全部交由nginx服务器进行管理
 app.use(express.static(path.join(__dirname, 'webapp')));
 
+app.get('/api/*', function (req, res, next) {
+    log4js.logger.info('currentUser', req.session.currentUser);
+    next();
+});
+
+app.post('/api/*', function (req, res, next) {
+    log4js.logger.info('currentUser', req.session.currentUser);
+    next();
+});
+
 app.use('/api/user', user);
+app.use('/api/blog', blog);
 
 // nodejs提供restful的api接口
 app.get('/api/about', function (request, response) {

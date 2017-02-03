@@ -52,3 +52,24 @@ app.directive('customerCheckbox', function () {
         }
     };
 });
+
+app.directive('customValidator', function () {
+    return {
+        restrict: 'A',
+        scope: {
+            customValidator: '='
+        },
+        require : '?ngModel',
+        replace: true,
+        link: function (scope, elements, attrs, ngModel) {
+            var customerValidatorFun = scope.customValidator;
+            // TODO 可能会有性能问题
+            scope.$watch(function () {
+                return ngModel.$modelValue;
+            }, function (newVal, oldVal) {
+                var result = customerValidatorFun();
+                console.log('change...', newVal, oldVal, result);
+            });
+        }
+    };
+});

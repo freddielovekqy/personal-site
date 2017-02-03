@@ -1,19 +1,27 @@
 var User = require("../model/user.js");
 
-function insert (userDTO) {
+function save (userDTO) {
     var user = new User({
-        username: userDTO.username,
+        email: userDTO.email,
         password: userDTO.password
     });
-    console.log(userDTO, user);
-    user.save(function (err, res) {
-        if (err) {
-            console.log("Error:" + err);
-        } else {
-            console.log("Res:" + res);
-        }
-
+    var promise = user.save();
+    promise.then(function (data) {
+        return data;
+    }).catch(function (error) {
+        return error;
     });
 }
 
-module.exports.insert = insert;
+function findByEmail (email) {
+    var promise = User.find({email: email}).exec();
+    promise.then(function (data) {
+        return data;
+    }).catch(function (error) {
+        return error;
+    });
+    return promise;
+}
+
+module.exports.save = save;
+module.exports.findByEmail = findByEmail;

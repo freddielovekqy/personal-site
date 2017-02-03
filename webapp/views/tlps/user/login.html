@@ -4,10 +4,10 @@
         <img src="image/logo.png" class="login-logo-img" alt=""/>
         <div class="login-contain">
             <div class="username-div">
-                <label class="label-for-text" for="username">用户名：</label>
+                <label class="label-for-text" for="email">用户名：</label>
                 <div class="input-line">
                     <span class="glyphicon glyphicon-user login-icon"></span>
-                    <input type="text" class="form-control login-input" id="username" placeholder="请输入用户名">
+                    <input type="text" class="form-control login-input" id="email" ng-model="email" placeholder="请输入邮箱">
                 </div>
 
             </div>
@@ -15,7 +15,7 @@
                 <label class="label-for-text" for="password">密码：</label>
                 <div class="input-line">
                     <span class="glyphicon glyphicon-lock login-icon"></span>
-                    <input type="password" class="form-control login-input" id="password" placeholder="请输入密码"/>
+                    <input type="password" class="form-control login-input" id="password" ng-model="password" ng-keydown="enterLogin($event)" placeholder="请输入密码"/>
                 </div>
             </div>
             <div class="login-option">
@@ -24,7 +24,7 @@
                 </div>
                 <a class="forget-password">忘记密码？</a>
             </div>
-            <button type="button" class="btn btn-info login-button">登录</button>
+            <button type="button" class="btn btn-info login-button" ng-click="login()">登录</button>
             <a href="/register" class="sign-up">立即注册</a>
         </div>
     </div>

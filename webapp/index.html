@@ -4,10 +4,10 @@
         <title>首页</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <link rel="stylesheet" href="framework/bootstrap/css/bootstrap.css">
-        <link rel="stylesheet" href="framework/font-awesome/css/font-awesome.css">
-        <link rel="stylesheet" href="framework/iCheck/flat/blue.css" >
-        <link rel="stylesheet" href="css/app.css">
+        <link rel="stylesheet" href="/framework/bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="/framework/font-awesome/css/font-awesome.css">
+        <link rel="stylesheet" href="/framework/iCheck/flat/blue.css" >
+        <link rel="stylesheet" href="/css/app.css">
         <base href="/">
     </header>
     <body ng-app="app">
@@ -37,26 +37,31 @@
                             <a class="nav-menu-item" href="/about" ng-click="changePath('/about')" ng-class="{'current-page': currentPath === '/about'}">关于</a>
                         </div>
                     </div>
-                    <div class="login-out-div" ng-show="!showLoginBtn">
+                    <div class="login-out-div" ng-show="!showLoginBtn && !currentUser">
                         <a class="login" href="/login">登录</a>
                         <a class="sign-up" href="/register">注册</a>
                     </div>
-                    <a class="username-in-header" ng-show="showLoginBtn">
+                    <a class="username-in-header" href="/account-setting" ng-show="currentUser">
                         <span class="glyphicon glyphicon-user"></span>
-                        <span class="username">王超</span>
+                        <span class="username">{{currentUser.username || currentUser.email}}</span>
                     </a>
                 </div>
             </div>
+            <div class="container alert-message">
+                <div ng-show="alertObj" class="alert alert-{{alertObj.type}}" role="alert">{{alertObj.message}}</div>
+            </div>
+            <div ng-view class="web-container">
+
+            </div>
         </div>
-        
-        <div ng-view class="web-container mCustomScrollbar">
-            
-        </div>
+
+
     </body>
     <script src="framework/jquery-2.1.4.min.js"></script>
     <script src="framework/underscore/underscore.js"></script>
     <script src="framework/bootstrap/js/bootstrap.min.js"></script>
     <script src="framework/angular-1.5.8/angular.js"></script>
+    <script src="framework/angular-1.5.8/angular-animate.min.js"></script>
     <script src="framework/angular-1.5.8/angular-route.min.js"></script>
     <script src="framework/iCheck/icheck.js"></script>
     <script src="app.js"></script>
@@ -68,8 +73,12 @@
     <script src="js/profile/ProfileInBlog.js"></script>
     <script src="js/common/CommonDirective.js"></script>
     <script src="js/common/CommonUtils.js"></script>
+    <script src="js/common/HttpServive.js"></script>
 
 
     <script src="js/user/LoginOutController.js"></script>
     <script src="js/user/RegisterController.js"></script>
+    <script src="js/accountSetting/AccountProfileController.js"></script>
+    <script src="js/accountSetting/AccountSetting.js"></script>
+
 </html>

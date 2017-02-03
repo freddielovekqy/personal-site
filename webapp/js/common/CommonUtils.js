@@ -24,3 +24,18 @@ app.service('CommonUtils', [function () {
         isPC: isPC
     }
 }]);
+
+app.service('SessionStorageUtils', [function () {
+    function setItem (key, value) {
+        sessionStorage.setItem(key, JSON.stringify(value));
+    }
+
+    function getItem (key) {
+        return JSON.parse(sessionStorage.getItem(key));
+    }
+
+    return {
+        setItem: setItem,
+        getItem: getItem
+    }
+}]);

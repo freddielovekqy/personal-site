@@ -2,3 +2,5 @@
 /node_modules
 /webapp/framework/flat-ui
 /.vscode
+/logs
+/webapp/index2.html
