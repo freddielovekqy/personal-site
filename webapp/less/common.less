@@ -1,0 +1,39 @@
+body {
+    a {
+        color: @link-color;
+        text-decoration: none;
+
+    }
+    a:hover {
+        color: @link-color-hover;
+        cursor: pointer;
+        text-decoration: none;
+    }
+    a:focus {
+        color: @link-color-focus;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    // 自定义多选框
+    .custom-checkbox-div {
+        input[type="checkbox"] {
+            cursor: pointer;
+        }
+        .custom-checkbox-label {
+            display: inline-block !important;
+            padding-left: 5px;
+        }
+    }
+
+    .input-has-error {
+        border-color: #a94442;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    }
+    .input-has-error:focus {
+        border-color: #843534;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 6px #ce8483;
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 6px #ce8483;
+    }
+}

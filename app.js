@@ -1,32 +1,63 @@
 var express = require('express');
+var session = require('express-session');
 var lessMiddleware = require('less-middleware');
 var path = require('path');
+var bodyParser = require('body-parser');
+var log4js = require('./src/common/log/log4js');
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
+
+
+var routes = require('./src/routes/index');
+var user = require('./src/routes/UserController');
+var blog = require('./src/routes/BlogController');
+
 
 var app = express();
 
+
 // view engine setup
+log4js.use(app);
+// app.use(log4js('dev'));
 app.set('view engine', 'html');
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-// app.use(logger('dev'));
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 // app.use(cookieParser());
-app.use(lessMiddleware('/css', {
+
+// 将less转换成css文件，并定义存放目录
+app.use(lessMiddleware('/less', {
     dest: '/css',
-    pathRoot: path.join(__dirname, 'webapp')
+    pathRoot: path.join(__dirname, 'webapp'),
+    debug: false
 }));
+
+
+app.use(session({
+  secret: 'sessiontest', // 建议使用 128 个字符的随机字符串
+  cookie: { maxAge: 60 * 1000 }
+}));
+
+// 前端资源文件全部交由nginx服务器进行管理
 app.use(express.static(path.join(__dirname, 'webapp')));
 
-// app.use('/', routes);
-app.use('/users', users);
+app.get('/api/*', function (req, res, next) {
+    log4js.logger.info('currentUser', req.session.currentUser);
+    next();
+});
 
-app.get('/', function (request, response) {
-    response.sendfile('webapp/index.html');
+app.post('/api/*', function (req, res, next) {
+    log4js.logger.info('currentUser', req.session.currentUser);
+    next();
+});
+
+app.use('/api/user', user);
+app.use('/api/blog', blog);
+
+// nodejs提供restful的api接口
+app.get('/api/about', function (request, response) {
+    response.send('Hello World!');
 });
 
 // catch 404 and forward to error handler

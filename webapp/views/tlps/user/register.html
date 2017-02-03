@@ -1,0 +1,36 @@
+<div class="register-page">
+
+    <div class="register-div">
+        <img src="image/logo.png" class="register-logo-img" alt=""/>
+        <div class="register-contain">
+            <div class="username-div">
+                <label class="label-for-text" for="username">邮箱：</label>
+                <div class="input-line">
+                    <span class="glyphicon glyphicon-user register-icon"></span>
+                    <input type="text" id="username" class="form-control register-input"  ng-model="user.email" placeholder="请输入邮箱" custom-validator="changeEmail">
+                </div>
+            </div>
+            <div class="password-div">
+                <label class="label-for-text" for="password">密码：</label>
+                <div class="input-line">
+                    <span class="glyphicon glyphicon-lock register-icon"></span>
+                    <input type="password" id="password" class="form-control register-input" ng-model="user.password" placeholder="请输入密码"/>
+                </div>
+            </div>
+            <div class="password-div">
+                <label class="label-for-text" for="password">再次输入密码：</label>
+                <div class="input-line">
+                    <span class="glyphicon glyphicon-lock register-icon"></span>
+                    <input type="password" id="rePassword" class="form-control register-input" ng-model="user.rePassword" placeholder="请输入密码"/>
+                </div>
+            </div>
+            <div class="register-option">
+                <div class="checkbox auto-register">
+                    <customer-checkbox ng-model="option"></customer-checkbox>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary register-button" ng-click="register()">注册</button>
+            <span class="login">已有账户，立即<a href="/login">登录</a></span>
+        </div>
+    </div>
+</div>

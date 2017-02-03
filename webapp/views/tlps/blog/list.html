@@ -1,0 +1,33 @@
+<div class="blog-list-page container">
+    <div class="profile-blog-info" media-query="1024-">
+        <profile-in-blog></profile-in-blog>
+    </div>
+    <div class="blog-list-div" ng-controller="BlogListController">
+        <div ng-repeat="blog in blogList" class="blog-list">
+            <div class="type-and-title">
+                <span class="label label-info blog-type">原</span>
+                <div class="blog-title">{{blog.title}}</div>
+            </div>
+            <div class="blog-summary">{{blog.summary}}</div>
+            <div class="blog-info">
+                <div class="blog-create-time">2015-04-08 10:17</div>
+                <div class="read-statistic">
+                    <span class="icon-eye-open"></span>
+                    <span class="read operation-link">阅读</span>
+                    <span class="read-statistic-count">(51)</span>
+                </div>
+                <div class="comment-statistic">
+                    <span class="icon-comments-alt"></span>
+                    <span class="comment operation-link">评论</span>
+                    <span class="comment-statistic-count">(2)</span>
+                </div>
+                <div class="edit operation-link">
+                    <span>编辑</span>
+                </div>
+                <div class="delete operation-link">
+                    <span>删除</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
