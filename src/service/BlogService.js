@@ -2,12 +2,17 @@ var BlogDao = require('../dao/BlogDao');
 var logger = require('../common/log/log4js').logger;
 
 
-function getBlogsByUser(userId, isCurrentUser) {
+function getBlogsByUser(userId, paginationParams, isCurrentUser) {
     return new Promise(function (resolve, reject) {
-        var promise = BlogDao.findByUser(userId, isCurrentUser);
-        promise.then(function (data) {
+        var dataPromise = BlogDao.findByUser(userId, paginationParams, isCurrentUser);
+        var countPromise = BlogDao.getBlogCountByCondition({});
+        Promise.all([dataPromise, countPromise]).then(function (data) {
             console.log('getBlogsByUser', data);
-            resolve(data);
+            var result = {
+                blogs: data[0],
+                totalCount: data[1]
+            }
+            resolve(result);
         });
     });
 }

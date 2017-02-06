@@ -21,12 +21,13 @@ var BlogSchema = new Schema({
     keyword: { type: String },
     content: { type: String },
     type: { type: String },
-    isPublic: {type: Boolean, default: true},
+    isPublic: { type: Boolean, default: true },
     userId: { type: String },
     createDate: { type: Date, default: Date.now },
     lastUpdateDate: { type: Date, default: Date.now },
     comment: [blogCommentSchema],
-    reader: [blogReaderSchema]
+    reader: [blogReaderSchema],
+    readCount: { type: Number, default: 0 }
 });
 
 

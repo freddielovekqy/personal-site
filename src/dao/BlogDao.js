@@ -19,11 +19,11 @@ function save(blogDTO) {
     });
 }
 
-function findByUser(userId, isCurrentUser) {
+function findByUser(userId, paginationParams, isCurrentUser) {
     var candition = { userId: userId };
     !isCurrentUser && (candition.isPublic = true);
-
-    var promise = Blog.find(candition).exec();
+    // sort = {'logindate':-1}
+    var promise = Blog.find(candition).skip(paginationParams.startIndex).limit(paginationParams.pageSize).sort(paginationParams.sort).exec();
     promise.then(function (data) {
         return data;
     }).catch(function (error) {
@@ -42,6 +42,15 @@ function findByBlogId(blogId) {
     return promise;
 }
 
+function getBlogCountByCondition(condition) {
+    var promise = Blog.count(condition).exec();
+    promise.then(function (data) {
+        return data;
+    });
+    return promise;
+}
+
 module.exports.save = save;
 module.exports.findByUser = findByUser;
 module.exports.findByBlogId = findByBlogId;
+module.exports.getBlogCountByCondition = getBlogCountByCondition;
