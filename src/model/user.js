@@ -4,7 +4,8 @@ var mongoose = require('../dao/db.js'),
 var UserSchema = new Schema({
     username: { type: String },
     email: { type: String },
-    password: { type: String }
+    password: { type: String },
+    head: {type : String}
 });
 
 module.exports = mongoose.model('User', UserSchema);

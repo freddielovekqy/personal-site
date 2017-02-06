@@ -10,8 +10,8 @@ blogListModule.constant('blogConstants', {
     BLOG_TYPES_TRANSLATION: '译文',
     BLOG_TYPES_TRANSLATION_SHOW: '译'
 });
-blogListModule.controller('BlogListController', ['$scope', 'HttpService', 'SessionStorageUtils', 'blogConstants', 'DateUtils',
-    function ($scope, HttpService, SessionStorageUtils, blogConstants, DateUtils) {
+blogListModule.controller('BlogListController', ['$scope', 'HttpService', 'SessionStorageUtils', 'blogConstants',
+    function ($scope, HttpService, SessionStorageUtils, blogConstants) {
         var _this = this;
         var currentUser = SessionStorageUtils.getItem('currentUser');
 
