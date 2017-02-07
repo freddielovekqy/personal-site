@@ -10,6 +10,7 @@ var log4js = require('./src/common/log/log4js');
 var routes = require('./src/routes/index');
 var user = require('./src/routes/UserController');
 var blog = require('./src/routes/BlogController');
+var userBlogInfo = require('./src/routes/UserBlogInfoController');
 
 
 var app = express();
@@ -54,6 +55,7 @@ app.post('/api/*', function (req, res, next) {
 
 app.use('/api/user', user);
 app.use('/api/blog', blog);
+app.use('/api/userBlogInfo', userBlogInfo);
 
 // nodejs提供restful的api接口
 app.get('/api/about', function (request, response) {

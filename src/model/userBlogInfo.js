@@ -9,4 +9,4 @@ var UserBlogInfoSchema = new Schema({
     ranking: { type: Number }//排名
 });
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model('UserBlogInfo', UserBlogInfoSchema);

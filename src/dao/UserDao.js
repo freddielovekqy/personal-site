@@ -1,6 +1,6 @@
 var User = require("../model/user.js");
 
-function save (userDTO) {
+function save(userDTO) {
     var user = new User({
         email: userDTO.email,
         password: userDTO.password
@@ -13,8 +13,18 @@ function save (userDTO) {
     });
 }
 
-function findByEmail (email) {
-    var promise = User.find({email: email}).exec();
+function findByEmail(email) {
+    var promise = User.find({ email: email }).exec();
+    promise.then(function (data) {
+        return data;
+    }).catch(function (error) {
+        return error;
+    });
+    return promise;
+}
+
+function getById(userId) {
+    var promise = User.findById(userId).exec();
     promise.then(function (data) {
         return data;
     }).catch(function (error) {
@@ -24,4 +34,5 @@ function findByEmail (email) {
 }
 
 module.exports.save = save;
+module.exports.getById = getById;
 module.exports.findByEmail = findByEmail;
