@@ -1,8 +1,50 @@
 <div class="blog-list-page container">
     <div class="profile-blog-info" media-query="1024-">
-        <profile-in-blog></profile-in-blog>
+        <div class="profile-in-blog-div">
+            <div class="title">个人资料</div>
+            <div class="profile-info">
+                <div class="profile-img"></div>
+                <div class="username">{{user.username}}</div>
+            </div>
+            <div class="blog-statistics-info">
+                <div class="statistics-item">
+                    <div class="statistics-label">访问：</div>
+                    <div class="statistics-value">{{userBlogInfo.totalHits}}</div>
+                </div>
+                <div class="statistics-item">
+                    <div class="statistics-label">积分：</div>
+                    <div class="statistics-value">{{userBlogInfo.integral}}</div>
+                </div>
+                <div class="statistics-item">
+                    <div class="statistics-label">等级：</div>
+                    <div class="statistics-value">{{userBlogInfo.level}}</div>
+                </div>
+                <div class="statistics-item">
+                    <div class="statistics-label">排名：</div>
+                    <div class="statistics-value">{{userBlogInfo.ranking > 9999 ? '千里之外' : userBlogInfo.ranking}}</div>
+                </div>
+            </div>
+            <div class="blog-summary-info">
+                <div class="blog-summary-item">
+                    <div class="summary-label">原创：</div>
+                    <div class="summary-value">{{blogCountMap.originCount}}篇</div>
+                </div>
+                <div class="blog-summary-item">
+                    <div class="summary-label">转载：</div>
+                    <div class="summary-value">{{blogCountMap.rePrintCount}}篇</div>
+                </div>
+                <div class="blog-summary-item">
+                    <div class="summary-label">译文：</div>
+                    <div class="summary-value">{{blogCountMap.translationCount}}篇</div>
+                </div>
+                <div class="blog-summary-item">
+                    <div class="summary-label">评论：</div>
+                    <div class="summary-value">1篇</div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="blog-list-div" ng-controller="BlogListController">
+    <div class="blog-list-div">
         <div ng-repeat="blog in blogList" class="blog-list">
             <div class="type-and-title">
                 <span class="label label-info blog-type {{blog.type}}-blog-type">{{blog.typeShow}}</span>
