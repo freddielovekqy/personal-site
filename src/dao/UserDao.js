@@ -24,7 +24,7 @@ function findByEmail(email) {
 }
 
 function getById(userId) {
-    var promise = User.findById(userId).exec();
+    var promise = User.find({_id: userId}).exec();
     promise.then(function (data) {
         return data;
     }).catch(function (error) {

@@ -21,6 +21,16 @@ router.get('/list', function (request, response, next) {
     });
 }); 
 
+router.get('/getBlog/:blogId', function (request, response, next) {
+    var blogId = request.params.blogId;
+    var promise = blogService.getBlogById(blogId);
+    promise.then(function (data) {
+        response.send(JSON.stringify(data));
+    }).catch(function (data) {
+        response.send(JSON.stringify(data));
+    });
+});
+
 router.post('/save', function (request, response, next) {
     var blogDTO = {
         title: request.body.title,

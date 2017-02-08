@@ -1,4 +1,5 @@
 var userBlogInfoDao = require('../dao/UserBlogInfoDao');
+var blogDao = require('../dao/BlogDao');
 var logger = require('../common/log/log4js').logger;
 
 function getUserBlogInfo(userId) {
