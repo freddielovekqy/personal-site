@@ -51,6 +51,7 @@ function getUserInfo(userId) {
                 delete user['password'];
                 resolve(user);
             } else {
+                logger.error();
                 reject({ errorMessage: '数据异常' });
             }
         });

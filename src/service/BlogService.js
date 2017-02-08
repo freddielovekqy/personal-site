@@ -17,6 +17,17 @@ function getBlogsByUser(userId, paginationParams, isCurrentUser) {
     });
 }
 
+function getBlogById(blogId) {
+    return new Promise(function (resolve, reject) {
+        var promise = BlogDao.findByBlogId(blogId);
+        promise.then(function (data) {
+            if (data.length === 1) {
+                resolve(data[0]);
+            }
+        });
+    });
+}
+
 function saveBlog(blogDTO) {
     return new Promise(function (resolve, reject) {
         logger.info('saveBlog', blogDTO);
@@ -28,4 +39,5 @@ function saveBlog(blogDTO) {
 }
 
 module.exports.getBlogsByUser = getBlogsByUser;
+module.exports.getBlogById = getBlogById;
 module.exports.saveBlog = saveBlog;
