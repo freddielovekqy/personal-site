@@ -1,3 +1,34 @@
 <div class="blog-detail-page container">
     <profile-in-blog user-id="blogInfo.userId"></profile-in-blog>
+    <div class="blog-container-div">
+        <div class="blog-title-div">
+            <span class="label label-info blog-type {{blogInfo.type}}-blog-type">{{blogInfo.typeShow}}</span>
+            <div class="blog-title">{{blogInfo.title}}</div>
+        </div>
+        <div class="blog-info-div">
+            <div class="keyword">关键字：{{blogInfo.keyword}}</div>
+            <div class="info-and-operation">
+                <div class="create-date">{{blogInfo.createDate}}</div>
+                <div class="read-statistic">
+                    <span class="icon-eye-open"></span>
+                    <span>{{blogInfo.readCount}}人阅读</span>
+                </div>
+                <div class="comment-statistic">
+                    <span class="icon-comments-alt"></span>
+                    <span class="comment operation-link">评论</span>
+                    <span class="comment-statistic-count">({{blogInfo.comment.length}})</span>
+                </div>
+                <div class="edit operation-link">
+                    <span>编辑</span>
+                </div>
+                <div class="delete operation-link">
+                    <span>删除</span>
+                </div>
+            </div>
+            <div class="blog-classify-type"></div>
+        </div>
+        <div class="blog-content">
+            {{blogInfo.content}}
+        </div>
+    </div>
 </div>

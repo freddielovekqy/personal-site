@@ -34,16 +34,8 @@ profileModule.controller('ProfileInBlogController', ['$scope', 'HttpService', 'S
             HttpService.get({
                 url: 'api/userBlogInfo/getInfo/' + userId,
                 success: function (data) {
-                    $scope.userBlogInfo = data;
-                },
-                error: function (data) {
-                    console.log('get blog list error');
-                }
-            });
-            HttpService.get({
-                url: 'api/user/getUserInfo/' + userId,
-                success: function (data) {
-                    $scope.user = data;
+                    $scope.userBlogInfo = data.userBlogInfo;
+                    $scope.user = data.userInfo;
                 },
                 error: function (data) {
                     console.log('get blog list error');
