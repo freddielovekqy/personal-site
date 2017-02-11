@@ -10,6 +10,7 @@
 - **body-parser**：express推荐使用的解析客户端请求中间件https://github.com/expressjs/body-parser
 - **log4js**：nodejs的日志
 - **express-session**：用于管理nodeJS后台的session
+- **underscore**：工具类
 ```
 // 全局安装grunt管理工具
 npm install -g grunt-cli
