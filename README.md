@@ -21,6 +21,7 @@ npm install -g grunt-cli
 - **font-awesome**：使用到的字体与icon
 - **iCheck**：单选框与多选框美化
 - **underscore**：js工具插件
+- **ckeditor**：富文本编辑器
 
 > 网站所有静态文件全部交由nginx进行管理
 
