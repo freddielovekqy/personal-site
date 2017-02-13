@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="/framework/bootstrap/css/bootstrap.css">
         <link rel="stylesheet" href="/framework/font-awesome/css/font-awesome.css">
         <link rel="stylesheet" href="/framework/iCheck/flat/blue.css" >
+        <link rel="stylesheet" href="/framework/wangEditor-2.1.22/dist/css/wangEditor.min.css" >
         <link rel="stylesheet" href="/css/app.css">
         <base href="/">
     </header>
@@ -50,6 +51,7 @@
             <div class="container alert-message">
                 <div ng-show="alertObj" class="alert alert-{{alertObj.type}}" role="alert">{{alertObj.message}}</div>
             </div>
+            </div>
             <div ng-view class="web-container">
 
             </div>
@@ -58,12 +60,14 @@
 
     </body>
     <script src="framework/jquery-2.1.4.min.js"></script>
+    <script src="framework/wangEditor-2.1.22/dist/js/wangEditor.js"></script>
     <script src="framework/underscore/underscore.js"></script>
     <script src="framework/bootstrap/js/bootstrap.min.js"></script>
     <script src="framework/angular-1.5.8/angular.js"></script>
     <script src="framework/angular-1.5.8/angular-animate.min.js"></script>
     <script src="framework/angular-1.5.8/angular-route.min.js"></script>
     <script src="framework/iCheck/icheck.js"></script>
+
     <script src="app.js"></script>
     <script src="js/home/HomeController.js"></script>
     <script src="js/about/AboutController.js"></script>

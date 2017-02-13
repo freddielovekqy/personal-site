@@ -3,8 +3,8 @@
  */
 var blogDetailModule = angular.module('blogDetail', []);
 
-blogDetailModule.controller('BlogDetailController', ['$scope', 'HttpService', '$routeParams', 'BlogService',
-    function ($scope, HttpService, $routeParams, BlogService) {
+blogDetailModule.controller('BlogDetailController', ['$scope', '$sce', 'HttpService', '$routeParams', 'BlogService',
+    function ($scope, $sce, HttpService, $routeParams, BlogService) {
         var blogId = $routeParams.blogId;
         console.log('blogId', blogId);
         function getBlogInfo(blogId) {
@@ -15,6 +15,7 @@ blogDetailModule.controller('BlogDetailController', ['$scope', 'HttpService', '$
                     data.createDate = new Date(data.createDate).format('yyyy-MM-dd hh:mm:ss');
                     data.lastUpdateDate = new Date(data.lastUpdateDate).format('yyyy-MM-dd hh:mm:ss');
                     $scope.blogInfo = BlogService.getBlogType(data);
+                    $scope.blogInfo.content = $sce.trustAsHtml($scope.blogInfo.content);
                 },
                 error: function (data) {
                     console.log('get blog list error');

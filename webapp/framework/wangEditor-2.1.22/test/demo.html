@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>demo</title>
+    <link rel="stylesheet" type="text/css" href="../dist/css/wangEditor.min.css">
+</head>
+<body>
+<div id="editor-trigger"><p>请输入内容</p></div>
+</body>
+<script type="text/javascript" src="../dist/js/lib/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="../dist/js/wangEditor.js"></script>
+<script type="text/javascript">
+    var editor = new wangEditor('editor-trigger');
+    editor.create();
+    editor.$txt.html('<p>博客内容</p><pre style=\"max-width:100%;overflow-x:auto;\"><code class=\"javascript hljs\" codemark=\"1\"><span class=\"hljs-keyword\">var</span> test = <span class=\"hljs-number\">1</span>;<span class=\"hljs-built_in\">console</span>.log(test);</code></pre><p><br></p>');
+</script>
+</html>
