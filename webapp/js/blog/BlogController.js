@@ -1,11 +1,12 @@
 'use strict';
 
-var blogModule = angular.module('blog', ['ngRoute', 'blogList', 'blogDetail']);
+var blogModule = angular.module('blog', ['ngRoute', 'blogManager', 'blogList', 'blogDetail', 'createBlog']);
 
 blogModule.config(['$routeProvider', '$locationProvider', function ($routeProvider) {
     $routeProvider
         .when('/blog', { templateUrl: '/views/tlps/blog/list.html', controller: 'BlogListController' })
         .when('/blog/list', { templateUrl: '/views/tlps/blog/list.html', controller: 'BlogListController' })
+        .when('/blog/create', { templateUrl: '/views/tlps/blog/manager.html', controller: 'BlogManagerController' })
         .when('/blog/list/:userId', { templateUrl: '/views/tlps/blog/list.html', controller: 'BlogListController' })
         .when('/blog/detail/:blogId', { templateUrl: '/views/tlps/blog/detail.html', controller: 'BlogDetailController' })
         .otherwise({ redirectTo: '/blog' });

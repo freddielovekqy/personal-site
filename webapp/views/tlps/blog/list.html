@@ -1,8 +1,8 @@
 <div class="blog-list-page container">
     <profile-in-blog user-id="userId"></profile-in-blog>
     <div class="blog-list-div">
-        <div class="operation-div">
-            <button type="button" class="btn btn-info">写博客</button>
+        <div class="operation-div" ng-show="currentUser._id === userId">
+            <button type="button" class="btn btn-info" ng-click="createBlog()">写博客</button>
             <button class="btn btn-default">博客管理</button>
         </div>
         <div ng-repeat="blog in blogList" class="blog-list">
