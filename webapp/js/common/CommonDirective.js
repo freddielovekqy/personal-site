@@ -19,13 +19,13 @@ app.directive('mediaQuery', function () {
     };
 });
 
-app.directive('contenteditable', function() {
+app.directive('wangEditor', function() {
     return {
         restrict: 'A' ,
         require: 'ngModel',
         link: function(scope, element, attrs, ctrl) {
             // 创建编辑器
-            var editor = new wangEditor('editor-trigger');
+            var editor = new wangEditor(attrs.id);
             editor.onchange = function () {
                 // 从 onchange 函数中更新数据
                 scope.$apply(function () {

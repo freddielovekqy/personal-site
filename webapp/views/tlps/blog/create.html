@@ -1,3 +1,43 @@
 <div class="create-blog-page">
-
+    <div class="create-blog-title">
+        <div class="create-blog-label">文章标题</div>
+        <div class="blog-type-select">
+            <div class="blog-type-item blog-type-item-select">原创</div>
+            <div class="blog-type-item">转载</div>
+            <div class="blog-type-item">译文</div>
+        </div>
+        <div class="blog-title-input">
+            <input type="text" class="form-control" placeholder="请输入文章名称"/>
+        </div>
+    </div>
+    <div class="create-blog-content">
+        <div class="create-blog-label">文章内容</div>
+        <div class="content">
+            <div id="createBlogContent" class="create-blog-content-input" ng-model="content" wang-editor="true"></div>
+            <!--<input type="text" ng-model="content" wang-editor/>-->
+            <!--<textarea name="" id="createBlogContent" cols="30" rows="10" ng-model="content" wang-editor></textarea>-->
+            <!--<div id="editor-trigger" ng-model="content" wang-editor="true">-->
+        </div>
+    </div>
+    <div class="blog-keyword">
+        <div class="create-blog-label">关键字</div>
+        <div class="keyword">
+            <div class="keyword-item">
+                <span>关键字1</span>
+                <span class="glyphicon glyphicon-remove"></span>
+            </div>
+            <div class="keyword-item">
+                <span>关键字2</span>
+                <span class="glyphicon glyphicon-remove"></span>
+            </div>
+            <div class="keyword-item">
+                <span>关键字3</span>
+                <span class="glyphicon glyphicon-remove"></span>
+            </div>
+        </div>
+    </div>
+    <div class="blog-summary">
+        <div class="create-blog-label">摘要</div>
+        <textarea name="" id="blogSummary" cols="160" rows="3"></textarea>
+    </div>
 </div>
