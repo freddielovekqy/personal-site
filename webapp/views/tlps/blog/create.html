@@ -2,21 +2,18 @@
     <div class="create-blog-title">
         <div class="create-blog-label">文章标题</div>
         <div class="blog-type-select">
-            <div class="blog-type-item blog-type-item-select">原创</div>
-            <div class="blog-type-item">转载</div>
-            <div class="blog-type-item">译文</div>
+            <div class="blog-type-item" ng-class="{'blog-type-item-select':blogInfo.type === '原创'}" ng-click="chooseBlogType('原创')">原创</div>
+            <div class="blog-type-item" ng-class="{'blog-type-item-select':blogInfo.type === '转载'}" ng-click="chooseBlogType('转载')">转载</div>
+            <div class="blog-type-item" ng-class="{'blog-type-item-select':blogInfo.type === '译文'}" ng-click="chooseBlogType('译文')">译文</div>
         </div>
         <div class="blog-title-input">
-            <input type="text" class="form-control" placeholder="请输入文章名称"/>
+            <input type="text" class="form-control" placeholder="请输入文章名称" ng-model="blogInfo.title"/>
         </div>
     </div>
     <div class="create-blog-content">
         <div class="create-blog-label">文章内容</div>
         <div class="content">
-            <div id="createBlogContent" class="create-blog-content-input" ng-model="content" wang-editor="true"></div>
-            <!--<input type="text" ng-model="content" wang-editor/>-->
-            <!--<textarea name="" id="createBlogContent" cols="30" rows="10" ng-model="content" wang-editor></textarea>-->
-            <!--<div id="editor-trigger" ng-model="content" wang-editor="true">-->
+            <div id="createBlogContent" class="create-blog-content-input" ng-model="blogInfo.content" wang-editor="true"></div>
         </div>
     </div>
     <div class="blog-keyword">
@@ -36,8 +33,28 @@
             </div>
         </div>
     </div>
+    <div class="user-blog-type">
+        <div class="create-blog-label">
+            <span>个人类别 [</span>
+            <span class="create-personal-type" ng-click="createPersonalType()">创建新的分类</span>
+            <span>]</span>
+        </div>
+        <customer-checkbox-list ng-model="list"></customer-checkbox-list>
+    </div>
     <div class="blog-summary">
-        <div class="create-blog-label">摘要</div>
-        <textarea name="" id="blogSummary" cols="160" rows="3"></textarea>
+        <div class="create-blog-label">
+            <span>摘要</span>
+            <span class="help-text">(默认自动提取您文章的前200字显示在博客首页作为文章摘要，您也可以在这里自行编辑)</span>
+        </div>
+        <textarea name="" id="blogSummary" cols="160" rows="3" ng-model="blogInfo.summary"></textarea>
+    </div>
+    <div class="other-settings">
+        <div class="create-blog-label">其他设置</div>
+        <customer-checkbox ng-model="option"></customer-checkbox>
+    </div>
+    <div class="buttons">
+        <button type="button" class="btn btn-primary btn-sm" ng-click="saveBlog('submit')">发表文章</button>
+        <button type="button" class="btn btn-info btn-sm" ng-click="saveBlog('save')">立即保存</button>
+        <button type="button" class="btn btn-default btn-sm">取消</button>
     </div>
 </div>

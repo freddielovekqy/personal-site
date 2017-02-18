@@ -12,6 +12,21 @@ blogModule.config(['$routeProvider', '$locationProvider', function ($routeProvid
         .otherwise({ redirectTo: '/blog' });
 }]);
 
+blogModule.directive('createPersonalType', function () {
+    return {
+        restrict: 'E' ,
+        templateUrl: 'views/tlps/blog/create_personal_type_popover.html',
+        controller: ['$scope', function ($scope) {
+            $scope.typeOption = {
+                name: '',
+                useNow: true
+            };
+        }],
+        link: function(scope, element, attrs, ngModel) {
+        }
+    };
+});
+
 blogModule.service('BlogService', [
     function () {
         function getBlogType(blog) {

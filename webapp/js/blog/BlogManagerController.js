@@ -6,7 +6,7 @@ var blogManagerModule = angular.module('blogManager', []);
 blogManagerModule.controller('BlogManagerController', ['$scope', '$compile', '$location', 'HttpService', 'SessionStorageUtils',
     function ($scope, $compile, $location, HttpService, SessionStorageUtils) {
         $scope.currentSelectTab = '';
-        var currentUser = SessionStorageUtils.getItem('currentUser');
+        $scope.currentUser = SessionStorageUtils.getItem('currentUser');
 
         init();
 
@@ -35,7 +35,7 @@ blogManagerModule.controller('BlogManagerController', ['$scope', '$compile', '$l
 
         function getUserInfo() {
             HttpService.get({
-                url: 'api/user/getUserInfo/' + currentUser._id,
+                url: 'api/user/getUserInfo/' + $scope.currentUser._id,
                 success: function (data) {
                     $scope.userInfo = data;
                 },

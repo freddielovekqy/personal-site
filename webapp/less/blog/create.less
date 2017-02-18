@@ -1,5 +1,8 @@
 .create-blog-page {
   margin-top: 20px;
+  .create-blog-div(@marginBottom: 15px) {
+    margin-bottom: @marginBottom;
+  }
   .create-blog-label {
     border-bottom: solid 1px #eee;
     margin-bottom: 10px;
@@ -8,7 +11,7 @@
     color: #717171;
   }
   .create-blog-title {
-    margin-bottom: 15px;
+    .create-blog-div;
     .blog-type-select {
       display: inline-block;
       .blog-type-item {
@@ -29,7 +32,7 @@
     }
   }
   .blog-keyword {
-    margin-bottom: 15px;
+    .create-blog-div;
     .keyword {
       .keyword-item {
         display: inline-block;
@@ -48,11 +51,43 @@
     }
   }
   .create-blog-content {
-    margin-bottom: 15px;
+    .create-blog-div;
     .content {
       .create-blog-content-input {
         height: 400px;
       }
+    }
+  }
+  .user-blog-type {
+    .create-blog-div;
+    .custom-checkbox-label {
+      padding-left: 0px;
+    }
+    .create-personal-type {
+      cursor: pointer;
+      color: #2a6496;
+      font-weight: normal;
+    }
+    .create-personal-type:hover {
+      color: #3385ff;
+    }
+  }
+  .blog-summary {
+    .create-blog-div;
+    .help-text {
+      font-weight: normal;
+      color: #888;
+    }
+  }
+  .other-settings {
+    .custom-checkbox-label {
+      padding-left: 0px;
+    }
+  }
+  .buttons {
+    text-align: center;
+    button {
+      margin: 0 5px;
     }
   }
 }

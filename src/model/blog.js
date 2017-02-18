@@ -22,6 +22,7 @@ var BlogSchema = new Schema({
     content: { type: String },
     type: { type: String },
     isPublic: { type: Boolean, default: true },
+    status: {type: String, default: '1'}, // 博客状态，1：提交且公开的博客；2：提交但是不公开的博客；3：保存的未提交的博客
     userId: { type: String },
     createDate: { type: Date, default: Date.now },
     lastUpdateDate: { type: Date, default: Date.now },

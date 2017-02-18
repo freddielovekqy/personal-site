@@ -23,17 +23,37 @@ app.directive('wangEditor', function() {
     return {
         restrict: 'A' ,
         require: 'ngModel',
-        link: function(scope, element, attrs, ctrl) {
+        controller: function () {
+
+        },
+        link: function(scope, element, attrs, ngModel) {
             // 创建编辑器
             var editor = new wangEditor(attrs.id);
             editor.onchange = function () {
                 // 从 onchange 函数中更新数据
                 scope.$apply(function () {
                     var html = editor.$txt.html();
-                    ctrl.$setViewValue(html);
+                    ngModel.$setViewValue(html);
+                    // 讲纯文本传递出去
+                    scope.$broadcast(attrs.id + 'NormalText', {text: editor.$txt.text()});
                 });
             };
             editor.create();
+        }
+    };
+});
+
+app.directive('popover', function () {
+    return {
+        restrict: 'E' ,
+        scope: {
+            option: '='
+        },
+        templateUrl: 'views/tlps/common/popover.html',
+        controller: function ($scope) {
+            // $scope.option = $scope.$parent.option;
+        },
+        link: function(scope, element, attrs, ngModel) {
         }
     };
 });
@@ -68,6 +88,18 @@ app.directive('customerCheckbox', function () {
                 scope.option.checked = false;
                 ngModel.$setViewValue(ngModel.$modelValue)
             });
+        }
+    };
+});
+
+app.directive('customerCheckboxList', function () {
+    return {
+        restrict: 'E',
+        require : '?ngModel',
+        replace: true,
+        templateUrl: 'views/tlps/common/f_checkbox_list.html',
+        link: function (scope, elements, attrs, ngModel) {
+            console.log(scope.list);
         }
     };
 });

@@ -7,6 +7,7 @@ function save(blogDTO) {
         keyword: blogDTO.keyword,
         content: blogDTO.content,
         type: blogDTO.type,
+        status: blogDTO.status,
         userId: blogDTO.userId,
         comment: blogDTO.comment,
         reader: blogDTO.reader

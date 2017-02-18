@@ -20,12 +20,12 @@ profileModule.directive('profileInBlog', function () {
 profileModule.controller('ProfileInBlogController', ['$scope', 'HttpService', 'SessionStorageUtils',
     function ($scope, HttpService, SessionStorageUtils) {
         var currentUser = SessionStorageUtils.getItem('currentUser');
-        init();
+        // init();
 
         $scope.$watch(function () {
             return $scope.userId;
         }, function (newVal) {
-            if (newVal) {
+            if (newVal && $scope.userId) {
                 getUserInfo($scope.userId);
             }
         });
@@ -43,11 +43,11 @@ profileModule.controller('ProfileInBlogController', ['$scope', 'HttpService', 'S
             });
         }
 
-        function init() {
-            console.log('$scope.userId', $scope.userId);
-            if ($scope.userId) {
-                getUserInfo($scope.userId);
-            }
-        }
+        // function init() {
+        //     console.log('$scope.userId', $scope.userId);
+        //     if ($scope.userId) {
+        //         getUserInfo($scope.userId);
+        //     }
+        // }
     }
 ]);
