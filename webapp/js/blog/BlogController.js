@@ -21,8 +21,14 @@ blogModule.directive('createPersonalType', function () {
                 name: '',
                 useNow: true
             };
+            $scope.option = {
+                id: 'test111',
+                checked: false,
+                disabled: false
+            };
         }],
         link: function(scope, element, attrs, ngModel) {
+            
         }
     };
 });
