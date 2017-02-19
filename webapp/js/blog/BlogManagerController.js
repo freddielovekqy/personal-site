@@ -21,6 +21,8 @@ blogManagerModule.controller('BlogManagerController', ['$scope', '$compile', '$l
                 $scope.currentSelectTab = 'blogManager';
             } else if (url === '/blog/manager/type') {
                 $scope.currentSelectTab = 'typeManager';
+                var ele = $compile('<blog-type-manager></blog-type-manager>')($scope);
+                baseEle.append(ele);
             } else if (url === '/blog/manager/comment') {
                 $scope.currentSelectTab = 'commentManager';
             } else if (url === '/blog/draft') {
