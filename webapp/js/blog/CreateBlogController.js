@@ -36,7 +36,7 @@ createBlogModule.controller('CreateBlogController', ['$scope', '$rootScope', '$c
         };
 
         $scope.createPersonalType = function () {
-            var baseEle = $('body');
+            var baseEle = $('.popover-container');
             var ele = $compile('<create-personal-type></create-personal-type>')($scope.$new());
             baseEle.append(ele);
         };

@@ -41,18 +41,6 @@ app.controller('initController', ['$rootScope', '$scope', '$location', '$timeout
         $scope.showLoginBtn = false;
         $scope.currentPath = getRootPath($location.path());
 
-        $scope.option = {
-            id: 'testSwitch',
-            checked: false,
-            disabled: true
-        };
-
-        $scope.$watch(function (){
-            return $scope.option;
-        }, function (newVal) {
-            console.log('option new value ', newVal);
-        }, true);
-
         $rootScope.$on('$locationChangeStart', function () {
             $scope.currentPath = getRootPath($location.path());
             $scope.showLoginBtn = ($scope.currentPath === '/login' || $scope.currentPath === '/register');

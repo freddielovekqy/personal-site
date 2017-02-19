@@ -18,17 +18,26 @@ blogModule.directive('createPersonalType', function () {
         templateUrl: 'views/tlps/blog/create_personal_type_popover.html',
         controller: ['$scope', function ($scope) {
             $scope.typeOption = {
-                name: '',
-                useNow: true
+                name: ''
             };
             $scope.option = {
-                id: 'test111',
-                checked: false,
-                disabled: false
+                id: 'useBlogSettingNow',
+                checked: true,
+                size: 'small'
+            };
+
+            $scope.save = function () {
+                $scope.$destroy();
+            };
+
+            $scope.cancel = function () {
+                $scope.$destroy();
             };
         }],
         link: function(scope, element, attrs, ngModel) {
-            
+            scope.$on('$destroy', function () {
+                element.remove();
+            });
         }
     };
 });

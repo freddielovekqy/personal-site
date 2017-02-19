@@ -48,6 +48,7 @@ body {
         }
     }
 
+    // 弹出框样式
     .my-popover {
         position: fixed;
         top: 0;
@@ -71,13 +72,18 @@ body {
             border-radius: 0px 0px 5px 5px;
             position: absolute;
             bottom: 0;
-            height: 35px;
+            height: 40px;
             width: 100%;
+            text-align: right;
+            line-height: 40px;
+            padding-right: 10px;
         }
     }
 
+    // 自定义开关按钮的样式
     .my-switch {
-        .switch-div {position: relative;
+        .switch-div {
+            position: relative;
             width: 55px;
             height: 30px;
             background: #eee;
@@ -94,6 +100,16 @@ body {
                 background: #fff;
                 font-size: 12px;
                 
+            }
+        }
+        .small {
+            width: 35px;
+            height: 20px;
+            .switch-handle {
+                width: 20px;
+                height: 20px;
+                border-radius: 20px;
+                line-height: 20px;
             }
         }
         .switch-div-on {
