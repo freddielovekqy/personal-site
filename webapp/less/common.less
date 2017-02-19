@@ -75,4 +75,50 @@ body {
             width: 100%;
         }
     }
+
+    .my-switch {
+        .switch-div {position: relative;
+            width: 55px;
+            height: 30px;
+            background: #eee;
+            border-radius: 30px;
+            cursor: pointer;
+            .switch-handle {
+                width: 30px;
+                height: 30px;
+                border-radius: 30px;
+                border: solid 1px #ccc;
+                text-align: center;
+                line-height: 30px;
+                position: absolute;
+                background: #fff;
+                font-size: 12px;
+                
+            }
+        }
+        .switch-div-on {
+            background: #35c036;
+            .switch-handle {
+                right: 0;
+            }
+        }
+        .switch-div-off {
+            background: #eee;
+            .switch-handle {
+                left: 0;
+            }
+        }
+        .switch-div-on-disabled {
+            background: #aaa;
+            .switch-handle {
+                right: 0;
+            }
+        }
+        .switch-div-off-disabled {
+            background: #eee;
+            .switch-handle {
+                left: 0;
+            }
+        }
+    }
 }

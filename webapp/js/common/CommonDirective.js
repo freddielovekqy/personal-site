@@ -92,6 +92,32 @@ app.directive('customerCheckbox', function () {
     };
 });
 
+app.directive('switch', function () {
+    return {
+        restrict: 'E',
+        scope: {
+            option: '=option'
+        },
+        replace: true,
+        templateUrl: 'views/tlps/common/switch.html',
+        controller: ['$scope', function ($scope) {
+            $scope.switchText = $scope.option.checked ? 'ON' : 'OFF';
+            if ($scope.option.disabled === undefined) {
+                $scope.option.disabled = false;
+            }
+            $scope.switchHandler = function () {
+                if (!$scope.option.disabled) {
+                    $scope.option.checked = !$scope.option.checked;
+                    $scope.switchText = $scope.option.checked ? 'ON' : 'OFF';
+                }
+            }
+        }],
+        link: function (scope, elements, attrs, ngModel) {
+            console.log('switch', scope.option);
+        }
+    };
+});
+
 app.directive('customerCheckboxList', function () {
     return {
         restrict: 'E',
