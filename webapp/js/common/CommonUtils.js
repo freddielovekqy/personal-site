@@ -39,3 +39,14 @@ app.service('SessionStorageUtils', [function () {
         getItem: getItem
     }
 }]);
+
+app.service('RadioBroadcast', ['$rootScope', function ($rootScope) {
+    function broadcast(broadcastType, data) {
+        $rootScope.$broadcast(broadcastType, data);
+        $rootScope.$emit(broadcastType, data);
+    }
+
+    return {
+        broadcast: broadcast
+    };
+}]);

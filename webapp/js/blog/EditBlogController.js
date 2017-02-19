@@ -3,20 +3,17 @@
  */
 var createBlogModule = angular.module('createBlog', []);
 
-createBlogModule.controller('CreateBlogController', ['$scope', '$rootScope', '$compile', '$location', '$timeout', 'HttpService',
-    function ($scope, $rootScope, $compile, $location, $timeout, HttpService) {
+createBlogModule.controller('EditBlogController', ['$scope', '$rootScope', '$compile', '$location', '$timeout', 'HttpService', 'RadioBroadcast',
+    function ($scope, $rootScope, $compile, $location, $timeout, HttpService, RadioBroadcast) {
         $scope.blogNormalText = '';
-        console.log('$scope.currentSelectTab', $scope.currentSelectTab);
-        $scope.$on('createBlogContentNormalText', function (name, data) {
-            $scope.blogNormalText = data.text;
-        });
         $scope.blogTypeList = [];
         $scope.blogInfo = {
             title: '',
             type: '原创',
             content: '',
             summary: '',
-            keyword: ''
+            keyword: '',
+            blogType: []
         };
 
         $scope.option = {
@@ -29,6 +26,25 @@ createBlogModule.controller('CreateBlogController', ['$scope', '$rootScope', '$c
 
         getBlogTypes();
 
+        $scope.$on('blogContentNormalText', function (name, data) {
+            $scope.blogNormalText = data.text;
+        });
+        $scope.$on('createBlogTypeSuccess', function (name, data) {
+            $scope.blogTypeList.push({
+                id: 'blogTypeId_' + $scope.blogTypeList.length,
+                name: 'blogType_' + $scope.blogTypeList.length,
+                typeId: data._id,
+                label: data.name,
+                checked: true,
+                disabled: false
+            });
+        });
+
+        $scope.$on('$destroy', function () {
+            console.log('$destroy');
+            RadioBroadcast.broadcast('destoryWangEditor', {id: 'createBlogContent'});
+        });
+
         $scope.chooseBlogType = function (type) {
             $scope.blogInfo.type = type;
         };
@@ -40,6 +56,9 @@ createBlogModule.controller('CreateBlogController', ['$scope', '$rootScope', '$c
         };
 
         $scope.saveBlog = function (eventType) {
+            if (!checkBlogParams()) {
+                return;
+            }
             if (eventType === 'save') {
                 $scope.blogInfo.status = '3';
             } else {
@@ -47,10 +66,11 @@ createBlogModule.controller('CreateBlogController', ['$scope', '$rootScope', '$c
                     $scope.blogInfo.status = '2';
                 }
             }
-            if (!$scope.blogInfo.summary) {
-                $scope.blogInfo.summary = $scope.blogNormalText.substr(0, 200);
-            }
+            !$scope.blogInfo.summary && ($scope.blogInfo.summary = $scope.blogNormalText.substr(0, 200));
             $scope.blogInfo.userId = $scope.currentUser._id;
+            $scope.blogTypeList.forEach(function (item) {
+                $scope.blogInfo.blogType.push(item.typeId);
+            });
             HttpService.post({
                 url: 'api/blog/save',
                 params: $scope.blogInfo,
@@ -76,6 +96,7 @@ createBlogModule.controller('CreateBlogController', ['$scope', '$rootScope', '$c
                         $scope.blogTypeList.push({
                             id: 'blogTypeId_' + index,
                             name: 'blogType_' + index,
+                            typeId: item._id,
                             label: item.name,
                             checked: false,
                             disabled: false
@@ -84,16 +105,20 @@ createBlogModule.controller('CreateBlogController', ['$scope', '$rootScope', '$c
                 }
             });
         }
+
+        function checkBlogParams() {
+            return $scope.blogInfo.title.trim() && $scope.blogInfo.content.trim();
+        }
     }
 ]);
 
-createBlogModule.directive('createBlog', function () {
+createBlogModule.directive('editBlog', function () {
     return {
         restrict: 'E',
         require: '?ngModel',
         replace: true,
-        templateUrl: 'views/tlps/blog/create.html',
-        controller: 'CreateBlogController',
+        templateUrl: 'views/tlps/blog/edit_blog.html',
+        controller: 'EditBlogController',
         link: function (scope, elements, attrs, ngModel) {
 
         }

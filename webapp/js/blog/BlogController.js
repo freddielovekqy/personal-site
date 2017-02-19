@@ -16,7 +16,7 @@ blogModule.directive('createPersonalType', function () {
     return {
         restrict: 'E' ,
         templateUrl: 'views/tlps/blog/create_personal_type_popover.html',
-        controller: ['$scope', 'HttpService', function ($scope, HttpService) {
+        controller: ['$scope', 'HttpService', 'RadioBroadcast', function ($scope, HttpService, RadioBroadcast) {
             $scope.typeOption = {
                 name: ''
             };
@@ -31,6 +31,7 @@ blogModule.directive('createPersonalType', function () {
                     url: 'api/blog/createBlogType',
                     params: $scope.typeOption,
                     success: function (data) {
+                        RadioBroadcast.broadcast('createBlogTypeSuccess', data);
                         $scope.$destroy();
                     },
                     error: function (data) {

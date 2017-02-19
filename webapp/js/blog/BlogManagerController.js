@@ -15,7 +15,7 @@ blogManagerModule.controller('BlogManagerController', ['$scope', '$compile', '$l
             var baseEle = $('.current-blog-page');
             if (url === '/blog/create') {
                 $scope.currentSelectTab = 'create';
-                var ele = $compile('<create-blog></create-blog>')($scope);
+                var ele = $compile('<edit-blog></edit-blog>')($scope);
                 baseEle.append(ele);
             } else if (url === '/blog/manager') {
                 $scope.currentSelectTab = 'blogManager';
@@ -40,7 +40,6 @@ blogManagerModule.controller('BlogManagerController', ['$scope', '$compile', '$l
                     $scope.userInfo = data;
                 },
                 error: function (data) {
-                    console.log('get user info error');
                 }
             });
         }

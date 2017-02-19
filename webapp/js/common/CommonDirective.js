@@ -35,10 +35,17 @@ app.directive('wangEditor', function() {
                     var html = editor.$txt.html();
                     ngModel.$setViewValue(html);
                     // 讲纯文本传递出去
-                    scope.$broadcast(attrs.id + 'NormalText', {text: editor.$txt.text()});
+                    scope.$broadcast(attrs.id + 'blogContentNormalText', {text: editor.$txt.text()});
                 });
             };
             editor.create();
+
+            scope.$on('destoryWangEditor', function (name, data) {
+                if (attrs.id === data.id) {
+                    editor.destroy();
+                    editor = null;
+                }
+            });
         }
     };
 });

@@ -37,7 +37,7 @@ app.use(lessMiddleware('/less', {
 
 app.use(session({
   secret: 'sessiontest', // 建议使用 128 个字符的随机字符串
-  cookie: { maxAge: 60 * 1000 }
+  cookie: { maxAge: 6000 * 1000 }
 }));
 
 // 前端资源文件全部交由nginx服务器进行管理
