@@ -10,7 +10,7 @@ createBlogModule.controller('CreateBlogController', ['$scope', '$rootScope', '$c
         $scope.$on('createBlogContentNormalText', function (name, data) {
             $scope.blogNormalText = data.text;
         });
-
+        $scope.blogTypeList = [];
         $scope.blogInfo = {
             title: '',
             type: '原创',
@@ -27,9 +27,7 @@ createBlogModule.controller('CreateBlogController', ['$scope', '$rootScope', '$c
             disabled: false
         };
 
-        $scope.option2 = {
-            title: 'test title'
-        };
+        getBlogTypes();
 
         $scope.chooseBlogType = function (type) {
             $scope.blogInfo.type = type;
@@ -70,21 +68,22 @@ createBlogModule.controller('CreateBlogController', ['$scope', '$rootScope', '$c
             });
         };
 
-        $scope.list = [
-            {
-                id: 'test',
-                name: 'test',
-                label: 'Spring',
-                checked: true,
-                disabled: false
-            }, {
-                id: 'test1',
-                name: 'test1',
-                label: 'Spring1',
-                checked: true,
-                disabled: false
-            }
-        ];
+        function getBlogTypes() {
+            HttpService.get({
+                url: 'api/blog/getBlogType',
+                success: function (data) {
+                    data.forEach(function (item, index) {
+                        $scope.blogTypeList.push({
+                            id: 'blogTypeId_' + index,
+                            name: 'blogType_' + index,
+                            label: item.name,
+                            checked: false,
+                            disabled: false
+                        });
+                    });
+                }
+            });
+        }
     }
 ]);
 

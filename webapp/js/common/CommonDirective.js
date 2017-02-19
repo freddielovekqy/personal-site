@@ -58,6 +58,49 @@ app.directive('popover', function () {
     };
 });
 
+app.directive('popoverMovable', function () {
+    return {
+        restrict: 'A' ,
+        controller: function () {
+
+        },
+        link: function(scope, element, attrs, ngModel) {
+            var sourcePosition = {};
+            var mousedown = false;
+            var mouseup = false;
+            element.on('mousedown', function (event) {
+                if ($(event.target).hasClass('popover-title')) {
+                    mousedown = true;
+                    mouseup = false;
+                    sourcePosition = {
+                        x: event.pageX,
+                        y: event.pageY
+                    };
+                    console.log('event.pageX', event.pageX, 'event.pageY', event.pageY);
+                }
+            });
+
+            element.on('mouseup', function (event) {
+                mouseup = true;
+            });
+
+            element.on('mousemove', function (event) {
+                if (mousedown && !mouseup) {
+                    console.log('event.pageX', event.pageX, 'event.pageY', event.pageY);
+                    var move = {
+                        x: event.pageX - sourcePosition.x,
+                        y: event.pageY - sourcePosition.y
+                    };
+                    $(this).css({
+                        left: move.x + 'px',
+                        top: move.y + 'px'
+                    });
+                }
+            });
+        }
+    };
+});
+
 app.directive('customerCheckbox', function () {
     return {
         restrict: 'E',
@@ -121,7 +164,9 @@ app.directive('switch', function () {
 app.directive('customerCheckboxList', function () {
     return {
         restrict: 'E',
-        require : '?ngModel',
+        scope: {
+            list: '='
+        },
         replace: true,
         templateUrl: 'views/tlps/common/f_checkbox_list.html',
         link: function (scope, elements, attrs, ngModel) {

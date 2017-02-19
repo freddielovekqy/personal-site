@@ -3,6 +3,7 @@ var router = express.Router();
 var logger = require('../common/log/log4js').logger;
 var commonUtils = require('../common/CommonUtils');
 var blogService = require('../service/BlogService');
+var blogTypeService = require('../service/BlogTypeService');
 
 router.get('/list', function (request, response, next) {
     var blogUserId = request.query.userId;
@@ -46,6 +47,27 @@ router.post('/save', function (request, response, next) {
     };
 
     var promise = blogService.saveBlog(blogDTO);
+    promise.then(function (data) {
+        response.send(JSON.stringify(data));
+    }).catch(function (data) {
+        response.send(JSON.stringify(data));
+    });
+});
+
+router.post('/createBlogType', function (request, response, next) {
+    var blogTypeDTO = {
+        name: request.body.name,
+        userId: request.session.currentUser.id
+    };
+    var promise = blogTypeService.save(blogTypeDTO);
+    promise.then(function (data) {
+        response.send(JSON.stringify(data));
+    }).catch(function (data) {
+        response.send(JSON.stringify(data));
+    });
+});
+router.get('/getBlogType', function (request, response, next) {
+    var promise = blogTypeService.getBlogTypes(request.session.currentUser.id);
     promise.then(function (data) {
         response.send(JSON.stringify(data));
     }).catch(function (data) {
