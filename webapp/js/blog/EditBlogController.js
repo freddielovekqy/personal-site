@@ -41,7 +41,6 @@ createBlogModule.controller('EditBlogController', ['$scope', '$rootScope', '$com
         });
 
         $scope.$on('$destroy', function () {
-            console.log('$destroy');
             RadioBroadcast.broadcast('destoryWangEditor', {id: 'createBlogContent'});
         });
 

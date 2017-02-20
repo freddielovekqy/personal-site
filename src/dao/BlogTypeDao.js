@@ -8,6 +8,14 @@ function save(blogTypeDTO) {
     return blogType.save();
 }
 
+function update(id, name) {
+    return BlogType.update({_id: id}, {$set: {name: name}});
+}
+
+function deleteBlogType(id) {
+    return BlogType.remove({_id: id});
+}
+
 function getByName(type, userId) {
     return BlogType.find({name: type, userId: userId}).exec();
 }
@@ -17,5 +25,7 @@ function getAllTypeByUser(userId) {
 }
 
 module.exports.save = save;
+module.exports.update = update;
+module.exports.deleteBlogType = deleteBlogType;
 module.exports.getByName = getByName;
 module.exports.getAllTypeByUser = getAllTypeByUser;

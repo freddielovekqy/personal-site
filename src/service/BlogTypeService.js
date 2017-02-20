@@ -16,6 +16,28 @@ function save(blogTypeDTO) {
     });
 }
 
+function update(id, name) {
+    return new Promise(function (resolve, reject) {
+        var promise = BlogTypeDao.update(id, name);
+        promise.then(function (data) {
+            resolve(data);
+        }).catch(function (error) {
+            reject(error);
+        });
+    });
+}
+
+function deleteBlogType(id) {
+    return new Promise(function (resolve, reject) {
+        var promise = BlogTypeDao.deleteBlogType(id);
+        promise.then(function (data) {
+            resolve(data);
+        }).catch(function (error) {
+            reject(error);
+        });
+    });
+}
+
 function getBlogTypes(userId) {
     return new Promise(function (resolve, reject) {
         console.log('userId', userId);
@@ -28,5 +50,9 @@ function getBlogTypes(userId) {
     });
 }
 
+
+
 module.exports.save = save;
+module.exports.update = update;
+module.exports.deleteBlogType = deleteBlogType;
 module.exports.getBlogTypes = getBlogTypes;

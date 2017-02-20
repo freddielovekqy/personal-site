@@ -66,6 +66,28 @@ router.post('/createBlogType', function (request, response, next) {
         response.send(JSON.stringify(data));
     });
 });
+
+router.post('/updateBlogType', function (request, response, next) {
+    var id = request.body.id;
+    var name = request.body.name;
+    var promise = blogTypeService.update(id, name);
+    promise.then(function (data) {
+        response.send(JSON.stringify(data));
+    }).catch(function (data) {
+        response.send(JSON.stringify(data));
+    });
+});
+
+router.post('/deleteBlogType/:id', function (request, response, next) {
+    var id = request.params.id;
+    var promise = blogTypeService.deleteBlogType(id);
+    promise.then(function (data) {
+        response.send(JSON.stringify(data));
+    }).catch(function (data) {
+        response.send(JSON.stringify(data));
+    });
+});
+
 router.get('/getBlogType', function (request, response, next) {
     var promise = blogTypeService.getBlogTypes(request.session.currentUser.id);
     promise.then(function (data) {
