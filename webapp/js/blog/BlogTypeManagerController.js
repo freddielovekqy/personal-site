@@ -6,12 +6,27 @@ var blogTypeModule = angular.module('blogType', []);
 blogTypeModule.controller('BlogTypeManagerController', ['$scope', '$rootScope', 'HttpService', 'RadioBroadcast',
     function ($scope, $rootScope, HttpService, RadioBroadcast) {
         var updateBlogTypeBackup = {};
+        $scope.tooltipMessage = '输入错误';
         $scope.blogTypes = [];
         $scope.blogType = {
             name: ''
         };
 
         getBlogTypes();
+
+        $scope.typeValidator = function () {
+            var blogType = $scope.blogType.name.trim();
+            var result = {
+                isValid: true
+            };
+            for (var i = 0; i < $scope.blogTypes.length; i++) {
+                if ($scope.blogTypes[i].name === blogType) {
+                    result.isValid = false;
+                    break;
+                }
+            }
+            return result;
+        };
 
         $scope.addBlogType = function () {
             if (!$scope.blogType.name.trim()) {

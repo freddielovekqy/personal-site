@@ -1,7 +1,8 @@
 <div class="blog-type-manager-page">
     <div class="create-blog-type">
         <div class="create-input">
-            <input type="text" class="form-control" ng-model="blogType.name" ng-keydown="createKeyDown($event)"/>
+            <input type="text" class="form-control" ng-model="blogType.name" ng-keydown="createKeyDown($event)" custom-validator="typeValidator"/>
+            <tooltip tooltip-message="tooltipMessage"></tooltip>
         </div>
         <button type="button" class="btn btn-primary btn-sm" ng-click="addBlogType()">添加分类</button>
     </div>

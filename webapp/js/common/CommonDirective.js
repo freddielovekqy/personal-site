@@ -191,14 +191,49 @@ app.directive('customValidator', function () {
         require : '?ngModel',
         replace: true,
         link: function (scope, elements, attrs, ngModel) {
-            var customerValidatorFun = scope.customValidator;
-            // TODO 可能会有性能问题
-            scope.$watch(function () {
-                return ngModel.$modelValue;
-            }, function (newVal, oldVal) {
-                var result = customerValidatorFun();
-                console.log('change...', newVal, oldVal, result);
+            elements.on('keyup focus', function () {
+                var result = scope.customValidator();
+                console.log(result);
+                if (!result.isValid) {
+                    $(this).next().show();
+                    $(this).addClass('input-has-error');
+                } else {
+                    $(this).next().hide();
+                    $(this).removeClass('input-has-error');
+                }
             });
+
+            elements.on('mouseover', function () {
+                var result = scope.customValidator();
+                if (!result.isValid) {
+                    $(this).next().show();
+                } else {
+                    $(this).next().hide();
+                }
+            });
+
+            elements.on('mouseleave', function () {
+                $(this).next().hide();
+            });
+        }
+    };
+});
+
+app.directive('tooltip', function () {
+    return {
+        restrict: 'E',
+        scope: {
+            tooltipMessage: '='
+        },
+        replace: true,
+        template: '<div class="my-tooltip top"><div class="my-tooltip-arrow"></div><div class="my-tooltip-inner">{{tooltipMessage}}</div></div>',
+        link: function (scope, elements, attrs, ngModel) {
+            var position = $(elements).prev().position();
+            $(elements).css({
+                top: position.top - 40,
+                left: position.left
+            });
+            console.log($(elements).prev());
         }
     };
 });
