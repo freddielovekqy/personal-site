@@ -19,9 +19,11 @@ blogManagerModule.controller('BlogManagerController', ['$scope', '$compile', '$l
                 baseEle.append(ele);
             } else if (url === '/blog/manager') {
                 $scope.currentSelectTab = 'blogManager';
-            } else if (url === '/blog/manager/type') {
-                $scope.currentSelectTab = 'typeManager';
-                var ele = $compile('<blog-type-manager></blog-type-manager>')($scope);
+                var ele = $compile('<blog-article-manager></blog-article-manager>')($scope);
+                baseEle.append(ele);
+            } else if (url === '/blog/manager/category') {
+                $scope.currentSelectTab = 'categoryManager';
+                var ele = $compile('<blog-category-manager></blog-category-manager>')($scope);
                 baseEle.append(ele);
             } else if (url === '/blog/manager/comment') {
                 $scope.currentSelectTab = 'commentManager';

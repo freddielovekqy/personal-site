@@ -1,9 +1,9 @@
 /**
  * Created by freddie on 2017/2/19.
  */
-var blogTypeModule = angular.module('blogType', []);
+var blogTypeModule = angular.module('blogCategory', []);
 
-blogTypeModule.controller('BlogTypeManagerController', ['$scope', '$rootScope', 'HttpService', 'RadioBroadcast',
+blogTypeModule.controller('BlogCategoryManagerController', ['$scope', '$rootScope', 'HttpService', 'RadioBroadcast',
     function ($scope, $rootScope, HttpService, RadioBroadcast) {
         var updateBlogTypeBackup = {};
         $scope.tooltipMessage = '输入错误';
@@ -118,13 +118,13 @@ blogTypeModule.controller('BlogTypeManagerController', ['$scope', '$rootScope', 
     }
 ]);
 
-blogTypeModule.directive('blogTypeManager', function () {
+blogTypeModule.directive('blogCategoryManager', function () {
     return {
         restrict: 'E',
         require: '?ngModel',
         replace: true,
-        templateUrl: 'views/tlps/blog/type_manager.html',
-        controller: 'BlogTypeManagerController',
+        templateUrl: 'views/tlps/blog/category_manager.html',
+        controller: 'BlogCategoryManagerController',
         link: function (scope, elements, attrs, ngModel) {
 
         }
