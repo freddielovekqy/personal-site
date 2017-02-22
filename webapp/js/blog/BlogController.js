@@ -14,10 +14,10 @@ blogModule.config(['$routeProvider', '$locationProvider', function ($routeProvid
         .otherwise({ redirectTo: '/blog' });
 }]);
 
-blogModule.directive('createPersonalType', function () {
+blogModule.directive('createBlogCategory', function () {
     return {
         restrict: 'E' ,
-        templateUrl: 'views/tlps/blog/create_personal_type_popover.html',
+        templateUrl: 'views/tlps/blog/create_blog_category_popover.html',
         controller: ['$scope', 'HttpService', 'RadioBroadcast', function ($scope, HttpService, RadioBroadcast) {
             $scope.typeOption = {
                 name: ''
@@ -30,10 +30,10 @@ blogModule.directive('createPersonalType', function () {
 
             $scope.save = function () {
                 HttpService.post({
-                    url: 'api/blog/createBlogType',
+                    url: 'api/blog/createBlogCategory',
                     params: $scope.typeOption,
                     success: function (data) {
-                        RadioBroadcast.broadcast('createBlogTypeSuccess', data);
+                        RadioBroadcast.broadcast('createBlogCategorySuccess', data);
                         $scope.$destroy();
                     },
                     error: function (data) {

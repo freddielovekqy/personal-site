@@ -3,7 +3,7 @@ var router = express.Router();
 var logger = require('../common/log/log4js').logger;
 var commonUtils = require('../common/CommonUtils');
 var blogService = require('../service/BlogService');
-var blogTypeService = require('../service/BlogTypeService');
+var blogCategoryService = require('../service/BlogCategoryService');
 
 router.get('/list', function (request, response, next) {
     var blogUserId = request.query.userId;
@@ -54,12 +54,12 @@ router.post('/save', function (request, response, next) {
     });
 });
 
-router.post('/createBlogType', function (request, response, next) {
-    var blogTypeDTO = {
+router.post('/createBlogCategory', function (request, response, next) {
+    var blogCategoryDTO = {
         name: request.body.name,
         userId: request.session.currentUser.id
     };
-    var promise = blogTypeService.save(blogTypeDTO);
+    var promise = blogCategoryService.save(blogCategoryDTO);
     promise.then(function (data) {
         response.send(JSON.stringify(data));
     }).catch(function (data) {
@@ -67,10 +67,10 @@ router.post('/createBlogType', function (request, response, next) {
     });
 });
 
-router.post('/updateBlogType', function (request, response, next) {
+router.post('/updateBlogCategory', function (request, response, next) {
     var id = request.body.id;
     var name = request.body.name;
-    var promise = blogTypeService.update(id, name);
+    var promise = blogCategoryService.update(id, name);
     promise.then(function (data) {
         response.send(JSON.stringify(data));
     }).catch(function (data) {
@@ -78,9 +78,9 @@ router.post('/updateBlogType', function (request, response, next) {
     });
 });
 
-router.post('/deleteBlogType/:id', function (request, response, next) {
+router.post('/deleteBlogCategory/:id', function (request, response, next) {
     var id = request.params.id;
-    var promise = blogTypeService.deleteBlogType(id);
+    var promise = blogCategoryService.deleteBlogCategory(id);
     promise.then(function (data) {
         response.send(JSON.stringify(data));
     }).catch(function (data) {
@@ -88,8 +88,8 @@ router.post('/deleteBlogType/:id', function (request, response, next) {
     });
 });
 
-router.get('/getBlogType', function (request, response, next) {
-    var promise = blogTypeService.getBlogTypes(request.session.currentUser.id);
+router.get('/getBlogCategory', function (request, response, next) {
+    var promise = blogCategoryService.getBlogCategorys(request.session.currentUser.id);
     promise.then(function (data) {
         response.send(JSON.stringify(data));
     }).catch(function (data) {

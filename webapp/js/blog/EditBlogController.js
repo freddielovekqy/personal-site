@@ -29,7 +29,7 @@ createBlogModule.controller('EditBlogController', ['$scope', '$rootScope', '$com
         $scope.$on('blogContentNormalText', function (name, data) {
             $scope.blogNormalText = data.text;
         });
-        $scope.$on('createBlogTypeSuccess', function (name, data) {
+        $scope.$on('createBlogCategorySuccess', function (name, data) {
             $scope.blogTypeList.push({
                 id: 'blogTypeId_' + $scope.blogTypeList.length,
                 name: 'blogType_' + $scope.blogTypeList.length,
@@ -48,9 +48,9 @@ createBlogModule.controller('EditBlogController', ['$scope', '$rootScope', '$com
             $scope.blogInfo.type = type;
         };
 
-        $scope.createPersonalType = function () {
+        $scope.createBlogCategory = function () {
             var baseEle = $('.popover-container');
-            var ele = $compile('<create-personal-type></create-personal-type>')($scope.$new());
+            var ele = $compile('<create-blog-category></create-blog-category>')($scope.$new());
             baseEle.append(ele);
         };
 
@@ -89,7 +89,7 @@ createBlogModule.controller('EditBlogController', ['$scope', '$rootScope', '$com
 
         function getBlogTypes() {
             HttpService.get({
-                url: 'api/blog/getBlogType',
+                url: 'api/blog/getBlogCategory',
                 success: function (data) {
                     data.forEach(function (item, index) {
                         $scope.blogTypeList.push({

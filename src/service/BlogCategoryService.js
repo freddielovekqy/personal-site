@@ -1,11 +1,11 @@
-var BlogTypeDao = require('../dao/BlogTypeDao');
+var BlogCategoryDao = require('../dao/BlogCategoryDao');
 var logger = require('../common/log/log4js').logger;
 
-function save(blogTypeDTO) {
+function save(blogCategoryDTO) {
     return new Promise(function (resolve, reject) {
-        var promise = BlogTypeDao.save(blogTypeDTO);
+        var promise = BlogCategoryDao.save(blogCategoryDTO);
         promise.then(function (data) {
-            return BlogTypeDao.getByName(blogTypeDTO.name, blogTypeDTO.userId);
+            return BlogCategoryDao.getByName(blogCategoryDTO.name, blogCategoryDTO.userId);
         }).then(function (data) {
             if (data.length === 1) {
                 resolve(data[0]);
@@ -18,7 +18,7 @@ function save(blogTypeDTO) {
 
 function update(id, name) {
     return new Promise(function (resolve, reject) {
-        var promise = BlogTypeDao.update(id, name);
+        var promise = BlogCategoryDao.update(id, name);
         promise.then(function (data) {
             resolve(data);
         }).catch(function (error) {
@@ -27,9 +27,9 @@ function update(id, name) {
     });
 }
 
-function deleteBlogType(id) {
+function deleteBlogCategory(id) {
     return new Promise(function (resolve, reject) {
-        var promise = BlogTypeDao.deleteBlogType(id);
+        var promise = BlogCategoryDao.deleteBlogCategory(id);
         promise.then(function (data) {
             resolve(data);
         }).catch(function (error) {
@@ -38,10 +38,10 @@ function deleteBlogType(id) {
     });
 }
 
-function getBlogTypes(userId) {
+function getBlogCategorys(userId) {
     return new Promise(function (resolve, reject) {
         console.log('userId', userId);
-        var promise = BlogTypeDao.getAllTypeByUser(userId);
+        var promise = BlogCategoryDao.getAllCategoryByUser(userId);
         promise.then(function (data) {
             resolve(data);
         }).catch(function (error) {
@@ -54,5 +54,5 @@ function getBlogTypes(userId) {
 
 module.exports.save = save;
 module.exports.update = update;
-module.exports.deleteBlogType = deleteBlogType;
-module.exports.getBlogTypes = getBlogTypes;
+module.exports.deleteBlogCategory = deleteBlogCategory;
+module.exports.getBlogCategorys = getBlogCategorys;

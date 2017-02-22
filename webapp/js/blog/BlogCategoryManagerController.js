@@ -1,26 +1,26 @@
 /**
  * Created by freddie on 2017/2/19.
  */
-var blogTypeModule = angular.module('blogCategory', []);
+var blogCategoryModule = angular.module('blogCategory', []);
 
-blogTypeModule.controller('BlogCategoryManagerController', ['$scope', '$rootScope', 'HttpService', 'RadioBroadcast',
+blogCategoryModule.controller('BlogCategoryManagerController', ['$scope', '$rootScope', 'HttpService', 'RadioBroadcast',
     function ($scope, $rootScope, HttpService, RadioBroadcast) {
-        var updateBlogTypeBackup = {};
+        var updateBlogCategoryBackup = {};
         $scope.tooltipMessage = '输入错误';
-        $scope.blogTypes = [];
-        $scope.blogType = {
+        $scope.blogCategorys = [];
+        $scope.blogCategory = {
             name: ''
         };
 
-        getBlogTypes();
+        getBlogCategories();
 
-        $scope.typeValidator = function () {
-            var blogType = $scope.blogType.name.trim();
+        $scope.categoryValidator = function () {
+            var blogCategory = $scope.blogCategory.name.trim();
             var result = {
                 isValid: true
             };
-            for (var i = 0; i < $scope.blogTypes.length; i++) {
-                if ($scope.blogTypes[i].name === blogType) {
+            for (var i = 0; i < $scope.blogCategorys.length; i++) {
+                if ($scope.blogCategorys[i].name === blogCategory) {
                     result.isValid = false;
                     break;
                 }
@@ -28,17 +28,17 @@ blogTypeModule.controller('BlogCategoryManagerController', ['$scope', '$rootScop
             return result;
         };
 
-        $scope.addBlogType = function () {
-            if (!$scope.blogType.name.trim()) {
+        $scope.addBlogCategory = function () {
+            if (!$scope.blogCategory.name.trim()) {
                 return;
             }
             HttpService.post({
-                url: 'api/blog/createBlogType',
-                params: $scope.blogType,
+                url: 'api/blog/createBlogCategory',
+                params: $scope.blogCategory,
                 success: function (data) {
                     data.update = false;
-                    $scope.blogTypes.push(data);
-                    $scope.blogType.name = '';
+                    $scope.blogCategorys.push(data);
+                    $scope.blogCategory.name = '';
                 },
                 error: function (data) {
                 }
@@ -48,55 +48,55 @@ blogTypeModule.controller('BlogCategoryManagerController', ['$scope', '$rootScop
         $scope.createKeyDown = function (event) {
             var keyCode = event.keyCode || event.which;
             if (keyCode === 13) {
-                $scope.addBlogType();
+                $scope.addBlogCategory();
             }
         };
 
-        $scope.editBlogType = function (item) {
-            $scope.blogTypes.forEach(function (type) {
-                type.update = false;
+        $scope.editBlogCategory = function (item) {
+            $scope.blogCategorys.forEach(function (category) {
+                category.update = false;
             });
             item.update = true;
-            updateBlogTypeBackup = angular.copy(item);
+            updateBlogCategoryBackup = angular.copy(item);
         };
 
-        $scope.updateBlogType = function (item) {
+        $scope.updateBlogCategory = function (item) {
             HttpService.post({
-                url: 'api/blog/updateBlogType',
+                url: 'api/blog/updateBlogCategory',
                 params: {
                     id: item._id,
                     name: item.name
                 },
                 success: function (data) {
                     item.update = false;
-                    console.log($scope.blogTypes);
-                    updateBlogTypeBackup = {};
+                    console.log($scope.blogCategorys);
+                    updateBlogCategoryBackup = {};
                 },
                 error: function () {
-                    item.name = updateBlogTypeBackup.name;
+                    item.name = updateBlogCategoryBackup.name;
                     item.update = false;
-                    updateBlogTypeBackup = {};
+                    updateBlogCategoryBackup = {};
                 }
             });
         };
 
         $scope.cancel = function (item) {
-            item.name = updateBlogTypeBackup.name;
-            updateBlogTypeBackup = {};
+            item.name = updateBlogCategoryBackup.name;
+            updateBlogCategoryBackup = {};
         };
 
         $scope.delete = function (item) {
             // TODO 级联删除动作
-            updateBlogTypeBackup = {};
+            updateBlogCategoryBackup = {};
             HttpService.post({
-                url: 'api/blog/deleteBlogType/' + item._id,
+                url: 'api/blog/deleteBlogCategory/' + item._id,
                 success: function (data) {
                     RadioBroadcast.broadcast('showAlertMessage', {
                         type: 'success',
                         message: '删除成功'
                     });
-                    $scope.blogTypes = $scope.blogTypes.filter(function (type) {
-                        return type._id !== item._id;
+                    $scope.blogCategorys = $scope.blogCategorys.filter(function (category) {
+                        return category._id !== item._id;
                     });
                 },
                 error: function () {
@@ -104,11 +104,11 @@ blogTypeModule.controller('BlogCategoryManagerController', ['$scope', '$rootScop
             });
         };
 
-        function getBlogTypes() {
+        function getBlogCategories() {
             HttpService.get({
-                url: 'api/blog/getBlogType',
+                url: 'api/blog/getBlogCategory',
                 success: function (data) {
-                    $scope.blogTypes = data.map(function (item) {
+                    $scope.blogCategorys = data.map(function (item) {
                         item.update = false;
                         return item;
                     });
@@ -118,7 +118,7 @@ blogTypeModule.controller('BlogCategoryManagerController', ['$scope', '$rootScop
     }
 ]);
 
-blogTypeModule.directive('blogCategoryManager', function () {
+blogCategoryModule.directive('blogCategoryManager', function () {
     return {
         restrict: 'E',
         require: '?ngModel',

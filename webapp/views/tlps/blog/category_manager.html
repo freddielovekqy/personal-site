@@ -1,30 +1,30 @@
-<div class="blog-type-manager-page">
-    <div class="create-blog-type">
+<div class="blog-category-manager-page">
+    <div class="create-blog-category">
         <div class="create-input">
-            <input type="text" class="form-control" ng-model="blogType.name" ng-keydown="createKeyDown($event)" custom-validator="typeValidator"/>
+            <input type="text" class="form-control" ng-model="blogCategory.name" ng-keydown="createKeyDown($event)" custom-validator="categoryValidator"/>
             <tooltip tooltip-message="tooltipMessage"></tooltip>
         </div>
-        <button type="button" class="btn btn-primary btn-sm" ng-click="addBlogType()">添加分类</button>
+        <button type="button" class="btn btn-primary btn-sm" ng-click="addBlogCategory()">添加分类</button>
     </div>
-    <div class="blog-type-header">
-        <div class="blog-type-title">类别</div>
+    <div class="blog-category-header">
+        <div class="blog-category-title">类别</div>
         <div class="blog-num-title">文章</div>
         <div class="operation-title">操作</div>
     </div>
-    <div class="blog-type-item" ng-repeat="item in blogTypes">
-        <div class="blog-type">
+    <div class="blog-category-item" ng-repeat="item in blogCategorys">
+        <div class="blog-category">
             <span ng-show="!item.update">{{item.name}}</span>
-            <div class="edit-blog-type" ng-show="item.update">
+            <div class="edit-blog-category" ng-show="item.update">
                 <div class="update-input">
                     <input type="text" class="form-control" ng-model="item.name"/>
                 </div>
-                <span class="operate-update" ng-click="updateBlogType(item)">保存</span>
+                <span class="operate-update" ng-click="updateBlogCategory(item)">保存</span>
                 <span class="operate-cancel" ng-click="cancel(item)">取消</span>
             </div>
         </div>
         <div class="blog-num">2</div>
         <div class="operation">
-            <span class="operation-edit" ng-click="editBlogType(item)">编辑</span>
+            <span class="operation-edit" ng-click="editBlogCategory(item)">编辑</span>
             <span>|</span>
             <span class="operation-delete" ng-click="delete(item)">删除</span>
         </div>
