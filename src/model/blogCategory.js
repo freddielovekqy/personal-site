@@ -3,8 +3,8 @@ var mongoose = require('../dao/db.js'),
 
 
 var BlogCategorySchema = new Schema({
-    name: {type: String},
-    userId: {type: String}
+    name: { type: String },
+    userId: { type: String }
 });
 
 module.exports = mongoose.model('BlogCategory', BlogCategorySchema);

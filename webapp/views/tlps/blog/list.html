@@ -3,7 +3,7 @@
     <div class="blog-list-div">
         <div class="operation-div" ng-show="currentUser._id === userId">
             <button type="button" class="btn btn-info" ng-click="createBlog()">写博客</button>
-            <button class="btn btn-default">博客管理</button>
+            <button class="btn btn-default" ng-click="blogManager()">博客管理</button>
         </div>
         <div ng-repeat="blog in blogList" class="blog-list">
             <div class="type-and-title">

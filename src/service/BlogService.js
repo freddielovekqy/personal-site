@@ -2,12 +2,37 @@ var BlogDao = require('../dao/BlogDao');
 var logger = require('../common/log/log4js').logger;
 
 
-function getBlogsByUser(userId, paginationParams, isCurrentUser) {
+function getBlogsByUser(blogUserId, visitUserId, searchOptions, paginationParams) {
     return new Promise(function (resolve, reject) {
-        var dataPromise = BlogDao.findByUser(userId, paginationParams, isCurrentUser);
-        var countPromise = BlogDao.getBlogCountByCondition({});
+        var candition = { userId: blogUserId };
+        console.log('searchOptions', searchOptions);
+        if (searchOptions.title) {
+            candition.title = {
+                $regex: new RegExp(searchOptions.title)
+            };
+        }
+
+        if (searchOptions.type) {
+            candition.type = searchOptions.type;
+        }
+
+        if (searchOptions.categories && searchOptions.categories.length > 0) {
+            candition.categories = {
+                $in: searchOptions.categories
+            };
+        }
+
+        if (blogUserId !== visitUserId) {
+            candition.status = '1';
+        } else {
+            candition['$or'] = [
+                { status: '1' },
+                { status: '2' }
+            ];
+        }
+        var dataPromise = BlogDao.findByUser(candition, paginationParams);
+        var countPromise = BlogDao.getBlogCountByCondition(candition);
         Promise.all([dataPromise, countPromise]).then(function (data) {
-            console.log('getBlogsByUser', data);
             var result = {
                 blogs: data[0],
                 totalCount: data[1]
@@ -38,9 +63,18 @@ function saveBlog(blogDTO) {
     });
 }
 
-function blogTopShow(id, topShow) {
+function deleteBlog(id) {
     return new Promise(function (resolve, reject) {
-        var promise = BlogDao.update(id, 'topShow', topShow);
+        var promise = BlogDao.update(id, 'status', 4);
+        promise.then(function (data) {
+            resolve(data);
+        });
+    });
+}
+
+function updateBlogAttr(id, attrName, attrValue) {
+    return new Promise(function (resolve, reject) {
+        var promise = BlogDao.update(id, attrName, attrValue);
         promise.then(function (data) {
             resolve(data);
         });
@@ -50,4 +84,5 @@ function blogTopShow(id, topShow) {
 module.exports.getBlogsByUser = getBlogsByUser;
 module.exports.getBlogById = getBlogById;
 module.exports.saveBlog = saveBlog;
-module.exports.blogTopShow = blogTopShow;
+module.exports.deleteBlog = deleteBlog;
+module.exports.updateBlogAttr = updateBlogAttr;

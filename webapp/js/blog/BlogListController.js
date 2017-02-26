@@ -10,12 +10,16 @@ blogListModule.constant('blogConstants', {
     BLOG_TYPES_TRANSLATION: '译文',
     BLOG_TYPES_TRANSLATION_SHOW: '译'
 });
-blogListModule.controller('BlogListController', ['$scope', '$location', 'HttpService', 'SessionStorageUtils', 'blogConstants', '$routeParams',
-    function ($scope, $location, HttpService, SessionStorageUtils, blogConstants, $routeParams) {
+blogListModule.controller('BlogListController', ['$scope', '$location', 'HttpService', 'StorageUtils', 'blogConstants', '$routeParams',
+    function ($scope, $location, HttpService, StorageUtils, blogConstants, $routeParams) {
         init();
 
         $scope.createBlog = function () {
             $location.path('/blog/create');
+        };
+
+        $scope.blogManager = function () {
+            $location.path('/blog/manager');
         };
 
         function getBlogList(userId) {
@@ -55,7 +59,7 @@ blogListModule.controller('BlogListController', ['$scope', '$location', 'HttpSer
         }
 
         function init() {
-            $scope.currentUser = SessionStorageUtils.getItem('currentUser');
+            $scope.currentUser = StorageUtils.getSessionStorage('currentUser');
             $scope.userId = $routeParams.userId || $scope.currentUser._id;
             console.log('$scope.userId', $scope.userId);
             if ($scope.userId) {

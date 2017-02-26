@@ -7,7 +7,9 @@ function save(blogDTO) {
         keyword: blogDTO.keyword,
         content: blogDTO.content,
         type: blogDTO.type,
+        categories: blogDTO.categories,
         status: blogDTO.status,
+        commentAble: blogDTO.commentAble,
         topShow: blogDTO.topShow,
         userId: blogDTO.userId,
         comment: blogDTO.comment,
@@ -22,23 +24,15 @@ function save(blogDTO) {
 }
 
 function update(id, key, value) {
-    console.log(key, value);
     var updateObj = {};
     updateObj[key] = value;
-    return Blog.update({'_id': id}, {'$set': updateObj});
+    return Blog.update({ '_id': id }, { '$set': updateObj });
 }
 
-function findByUser(userId, paginationParams, isCurrentUser) {
-    var candition = { userId: userId };
-    !isCurrentUser && (candition.isPublic = true);
+function findByUser(candition, paginationParams) {
     // sort = {'logindate':-1}
-    var promise = Blog.find(candition).skip(paginationParams.startIndex).limit(paginationParams.pageSize).sort(paginationParams.sort).exec();
-    promise.then(function (data) {
-        return data;
-    }).catch(function (error) {
-        return error;
-    });
-    return promise;
+    console.log('candition', candition);
+    return Blog.find(candition).skip(paginationParams.startIndex).limit(paginationParams.pageSize).sort(paginationParams.sort).exec();
 }
 
 function findByBlogId(blogId) {

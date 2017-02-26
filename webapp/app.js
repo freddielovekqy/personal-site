@@ -35,8 +35,8 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
     $locationProvider.html5Mode(true);
 }]);
 
-app.controller('initController', ['$rootScope', '$scope', '$location', '$timeout', 'CommonUtils', 'SessionStorageUtils',
-    function ($rootScope, $scope, $location, $timeout, CommonUtils, SessionStorageUtils) {
+app.controller('initController', ['$rootScope', '$scope', '$location', '$timeout', 'CommonUtils', 'HttpService', 'StorageUtils',
+    function ($rootScope, $scope, $location, $timeout, CommonUtils, HttpService, StorageUtils) {
         $scope.showHeader = true;
         $scope.showLoginBtn = false;
         $scope.currentPath = getRootPath($location.path());
@@ -47,18 +47,13 @@ app.controller('initController', ['$rootScope', '$scope', '$location', '$timeout
         });
 
         $scope.$on('loginSuccess', function () {
-            $scope.currentUser = SessionStorageUtils.getItem('currentUser');
+            $scope.currentUser = StorageUtils.getSessionStorage('currentUser');
         });
-
-
-        console.log('$scope.currentPath', $scope.currentPath);
+        $scope.currentUser = StorageUtils.getSessionStorage('currentUser');
 
         $scope.changePath = function (path) {
             $scope.currentPath = getRootPath(path);
         };
-
-        $scope.currentUser = SessionStorageUtils.getItem('currentUser');
-        console.log($scope.currentUser);
 
         function getRootPath (path) {
             var pathList = path.split('/');

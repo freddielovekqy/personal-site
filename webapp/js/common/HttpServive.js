@@ -8,7 +8,6 @@ app.service('HttpService', ['$rootScope', '$http', function ($rootScope, $http) 
             method: 'POST',
             data: httpParams.params
         }).success(function (data) {
-            console.log('common http service post', data);
             if (data.errorMessage) {
                 $rootScope.$broadcast('showAlertMessage', {
                     type: 'danger',
@@ -27,7 +26,24 @@ app.service('HttpService', ['$rootScope', '$http', function ($rootScope, $http) 
             method: 'GET',
             params: httpParams.params
         }).success(function (data) {
-            console.log('common http service get', data);
+            if (data.errorMessage) {
+                $rootScope.$broadcast('showAlertMessage', {
+                    type: 'danger',
+                    message: data.errorMessage
+                })
+            }
+            httpParams.success && httpParams.success(data);
+        }).error(function (data) {
+            httpParams.error && httpParams.error();
+        });
+    }
+
+    function deleteFuc(httpParams) {
+        $http({
+            url: httpParams.url,
+            method: 'DELETE',
+            params: httpParams.params
+        }).success(function (data) {
             if (data.errorMessage) {
                 $rootScope.$broadcast('showAlertMessage', {
                     type: 'danger',
@@ -42,6 +58,7 @@ app.service('HttpService', ['$rootScope', '$http', function ($rootScope, $http) 
 
     return {
         post: post,
-        get: get
+        get: get,
+        delete: deleteFuc
     };
 }]);

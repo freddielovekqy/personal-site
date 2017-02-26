@@ -6,7 +6,7 @@ var createBlogModule = angular.module('createBlog', []);
 createBlogModule.controller('EditBlogController', ['$scope', '$rootScope', '$compile', '$location', '$timeout', 'HttpService', 'RadioBroadcast',
     function ($scope, $rootScope, $compile, $location, $timeout, HttpService, RadioBroadcast) {
         $scope.blogNormalText = '';
-        $scope.blogTypeList = [];
+        $scope.blogCategoryList = [];
         $scope.blogInfo = {
             title: '',
             type: '原创',
@@ -24,15 +24,15 @@ createBlogModule.controller('EditBlogController', ['$scope', '$rootScope', '$com
             disabled: false
         };
 
-        getBlogTypes();
+        getBlogCategories();
 
         $scope.$on('blogContentNormalText', function (name, data) {
             $scope.blogNormalText = data.text;
         });
         $scope.$on('createBlogCategorySuccess', function (name, data) {
-            $scope.blogTypeList.push({
-                id: 'blogTypeId_' + $scope.blogTypeList.length,
-                name: 'blogType_' + $scope.blogTypeList.length,
+            $scope.blogCategoryList.push({
+                id: 'blogTypeId_' + $scope.blogCategoryList.length,
+                name: 'blogType_' + $scope.blogCategoryList.length,
                 typeId: data._id,
                 label: data.name,
                 checked: true,
@@ -67,8 +67,8 @@ createBlogModule.controller('EditBlogController', ['$scope', '$rootScope', '$com
             }
             !$scope.blogInfo.summary && ($scope.blogInfo.summary = $scope.blogNormalText.substr(0, 200));
             $scope.blogInfo.userId = $scope.currentUser._id;
-            $scope.blogTypeList.forEach(function (item) {
-                $scope.blogInfo.blogType.push(item.typeId);
+            $scope.blogCategoryList.forEach(function (item) {
+                $scope.blogInfo.categories.push(item.typeId);
             });
             HttpService.post({
                 url: 'api/blog/save',
@@ -87,12 +87,12 @@ createBlogModule.controller('EditBlogController', ['$scope', '$rootScope', '$com
             });
         };
 
-        function getBlogTypes() {
+        function getBlogCategories() {
             HttpService.get({
                 url: 'api/blog/getBlogCategory',
                 success: function (data) {
                     data.forEach(function (item, index) {
-                        $scope.blogTypeList.push({
+                        $scope.blogCategoryList.push({
                             id: 'blogTypeId_' + index,
                             name: 'blogType_' + index,
                             typeId: item._id,

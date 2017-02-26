@@ -17,9 +17,9 @@ profileModule.directive('profileInBlog', function () {
     };
 });
 
-profileModule.controller('ProfileInBlogController', ['$scope', 'HttpService', 'SessionStorageUtils',
-    function ($scope, HttpService, SessionStorageUtils) {
-        var currentUser = SessionStorageUtils.getItem('currentUser');
+profileModule.controller('ProfileInBlogController', ['$scope', 'HttpService', 'StorageUtils',
+    function ($scope, HttpService, StorageUtils) {
+        var currentUser = StorageUtils.getSessionStorage('currentUser');
         // init();
 
         $scope.$watch(function () {

@@ -7,14 +7,16 @@ var blogCategoryService = require('../service/BlogCategoryService');
 
 router.get('/list', function (request, response, next) {
     var blogUserId = request.query.userId;
-
+    var visitUserId = request.session.currentUser.id;
     var paginationParams = commonUtils.generatePaginationFromReq(request);
-    var isCurrentUser = false;
-    console.log(blogUserId, paginationParams)
-    if (request.session.currentUser && (!blogUserId || blogUserId === request.session.currentUser.id)) {
-        isCurrentUser = true;
-    }
-    var promise = blogService.getBlogsByUser(blogUserId, paginationParams, isCurrentUser);
+
+    var searchOptions = {
+        title: request.query.title,
+        type: request.query.type,
+        categories: request.query.categories
+    };
+
+    var promise = blogService.getBlogsByUser(blogUserId, visitUserId, searchOptions, paginationParams);
     promise.then(function (data) {
         response.send(JSON.stringify(data));
     }).catch(function (data) {
@@ -54,10 +56,31 @@ router.post('/save', function (request, response, next) {
     });
 });
 
+router.post('/delete/:blogId', function (request, response, next) {
+    var blogId = request.params.blogId;
+    var promise = blogService.deleteBlog(blogId);
+    promise.then(function (data) {
+        response.send(JSON.stringify(data));
+    }).catch(function (data) {
+        response.send(JSON.stringify(data));
+    });
+});
+
 router.post('/topShow', function (request, response, next) {
     var id = request.body.id;
     var topShow = request.body.topShow;
-    var promise = blogService.blogTopShow(id, topShow);
+    var promise = blogService.updateBlogAttr(id, 'topShow', topShow);
+    promise.then(function (data) {
+        response.send(JSON.stringify(data));
+    }).catch(function (data) {
+        response.send(JSON.stringify(data));
+    });
+});
+
+router.post('/commentAble', function (request, response, next) {
+    var id = request.body.id;
+    var commentAble = request.body.commentAble;
+    var promise = blogService.updateBlogAttr(id, 'commentAble', commentAble);
     promise.then(function (data) {
         response.send(JSON.stringify(data));
     }).catch(function (data) {

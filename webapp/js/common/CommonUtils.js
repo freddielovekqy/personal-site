@@ -1,4 +1,4 @@
-app.service('CommonUtils', [function () {
+app.service('CommonUtils', ['HttpService', function (HttpService) {
     var isPCClient;
     function isPC () {
         if (!isPCClient) {
@@ -20,23 +20,51 @@ app.service('CommonUtils', [function () {
         return isPCClient === 'true';
     }
 
+    function getCurrentUserId() {
+        var currentUserId = '';
+        var currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+        if (!currentUser) {
+            currentUserId = localStorage.getItem('currentUserId');
+            HttpService.get({
+                url: 'api/user/getUserInfo/' + currentUserId,
+                success: function (data) {
+                    sessionStorage.setItem(currentUser, JSON.stringify(data));
+                },
+                error: function (data) {
+                }
+            });
+        }
+        return currentUser._id;
+    }
+
     return {
-        isPC: isPC
+        isPC: isPC,
+        getCurrentUserId: getCurrentUserId
     }
 }]);
 
-app.service('SessionStorageUtils', [function () {
-    function setItem (key, value) {
+app.service('StorageUtils', [function () {
+    function setSessionStorage(key, value) {
         sessionStorage.setItem(key, JSON.stringify(value));
     }
 
-    function getItem (key) {
+    function getSessionStorage(key) {
         return JSON.parse(sessionStorage.getItem(key));
     }
 
+    function setLocalStorage(key, value) {
+        localStorage.setItem(key, JSON.stringify(value));
+    }
+
+    function  getLocalStorage(key) {
+        return JSON.parse(localStorage.getItem(key));
+    }
+
     return {
-        setItem: setItem,
-        getItem: getItem
+        setSessionStorage: setSessionStorage,
+        getSessionStorage: getSessionStorage,
+        setLocalStorage: setLocalStorage,
+        getLocalStorage: getLocalStorage
     }
 }]);
 

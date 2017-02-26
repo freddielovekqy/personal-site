@@ -3,10 +3,10 @@
  */
 var blogManagerModule = angular.module('blogManager', []);
 
-blogManagerModule.controller('BlogManagerController', ['$scope', '$compile', '$location', 'HttpService', 'SessionStorageUtils',
-    function ($scope, $compile, $location, HttpService, SessionStorageUtils) {
+blogManagerModule.controller('BlogManagerController', ['$scope', '$compile', '$location', 'HttpService', 'StorageUtils',
+    function ($scope, $compile, $location, HttpService, StorageUtils) {
         $scope.currentSelectTab = '';
-        $scope.currentUser = SessionStorageUtils.getItem('currentUser');
+        $scope.currentUser = StorageUtils.getSessionStorage('currentUser');
 
         init();
 
