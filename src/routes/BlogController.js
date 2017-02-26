@@ -54,6 +54,17 @@ router.post('/save', function (request, response, next) {
     });
 });
 
+router.post('/topShow', function (request, response, next) {
+    var id = request.body.id;
+    var topShow = request.body.topShow;
+    var promise = blogService.blogTopShow(id, topShow);
+    promise.then(function (data) {
+        response.send(JSON.stringify(data));
+    }).catch(function (data) {
+        response.send(JSON.stringify(data));
+    });
+});
+
 router.post('/createBlogCategory', function (request, response, next) {
     var blogCategoryDTO = {
         name: request.body.name,

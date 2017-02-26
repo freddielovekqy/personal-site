@@ -26,6 +26,7 @@ var BlogSchema = new Schema({
     userId: { type: String },
     createDate: { type: Date, default: Date.now },
     lastUpdateDate: { type: Date, default: Date.now },
+    topShow: { type: Boolean, default: false},
     comment: [blogCommentSchema],
     reader: [blogReaderSchema],
     readCount: { type: Number, default: 0 }

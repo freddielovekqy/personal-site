@@ -38,6 +38,16 @@ function saveBlog(blogDTO) {
     });
 }
 
+function blogTopShow(id, topShow) {
+    return new Promise(function (resolve, reject) {
+        var promise = BlogDao.update(id, 'topShow', topShow);
+        promise.then(function (data) {
+            resolve(data);
+        });
+    });
+}
+
 module.exports.getBlogsByUser = getBlogsByUser;
 module.exports.getBlogById = getBlogById;
 module.exports.saveBlog = saveBlog;
+module.exports.blogTopShow = blogTopShow;

@@ -8,6 +8,7 @@ function save(blogDTO) {
         content: blogDTO.content,
         type: blogDTO.type,
         status: blogDTO.status,
+        topShow: blogDTO.topShow,
         userId: blogDTO.userId,
         comment: blogDTO.comment,
         reader: blogDTO.reader
@@ -18,6 +19,13 @@ function save(blogDTO) {
     }).catch(function (error) {
         return error;
     });
+}
+
+function update(id, key, value) {
+    console.log(key, value);
+    var updateObj = {};
+    updateObj[key] = value;
+    return Blog.update({'_id': id}, {'$set': updateObj});
 }
 
 function findByUser(userId, paginationParams, isCurrentUser) {
@@ -52,6 +60,7 @@ function getBlogCountByCondition(condition) {
 }
 
 module.exports.save = save;
+module.exports.update = update;
 module.exports.findByUser = findByUser;
 module.exports.findByBlogId = findByBlogId;
 module.exports.getBlogCountByCondition = getBlogCountByCondition;
