@@ -1,7 +1,7 @@
 var blogArticleModule = angular.module('blogArticleManager', []);
 
-blogArticleModule.controller('BlogArticleManagerController', ['$scope', 'HttpService', 'StorageUtils',
-    function ($scope, HttpService, StorageUtils) {
+blogArticleModule.controller('BlogArticleManagerController', ['$scope', '$location', 'HttpService', 'StorageUtils',
+    function ($scope, $location, HttpService, StorageUtils) {
         $scope.currentUser = StorageUtils.getSessionStorage('currentUser');
         $scope.blogList = [];
         $scope.blogCategories = [
@@ -52,6 +52,10 @@ blogArticleModule.controller('BlogArticleManagerController', ['$scope', 'HttpSer
                     getBlogList($scope.currentUser._id);
                 }
             });
+        };
+
+        $scope.editBlog = function (id) {
+            $location.path('/blog/edit/' + id);
         };
 
         $scope.topShow = function (id, topShow) {

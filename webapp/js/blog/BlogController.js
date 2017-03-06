@@ -7,6 +7,7 @@ blogModule.config(['$routeProvider', '$locationProvider', function ($routeProvid
         .when('/blog', { templateUrl: '/views/tlps/blog/list.html', controller: 'BlogListController' })
         .when('/blog/list', { templateUrl: '/views/tlps/blog/list.html', controller: 'BlogListController' })
         .when('/blog/create', { templateUrl: '/views/tlps/blog/manager.html', controller: 'BlogManagerController' })
+        .when('/blog/edit/:blogId', { templateUrl: '/views/tlps/blog/manager.html', controller: 'BlogManagerController' })
         .when('/blog/manager', { templateUrl: '/views/tlps/blog/manager.html', controller: 'BlogManagerController' })
         .when('/blog/manager/category', { templateUrl: '/views/tlps/blog/manager.html', controller: 'BlogManagerController' })
         .when('/blog/list/:userId', { templateUrl: '/views/tlps/blog/list.html', controller: 'BlogListController' })

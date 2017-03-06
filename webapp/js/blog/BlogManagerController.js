@@ -12,18 +12,19 @@ blogManagerModule.controller('BlogManagerController', ['$scope', '$compile', '$l
 
         function init() {
             var url = $location.$$path;
+            var ele = '';
             var baseEle = $('.current-blog-page');
-            if (url === '/blog/create') {
-                $scope.currentSelectTab = 'create';
-                var ele = $compile('<edit-blog></edit-blog>')($scope);
+            if (url === '/blog/create' || url.indexOf('/blog/edit') > -1) {
+                $scope.currentSelectTab = 'edit';
+                ele = $compile('<edit-blog></edit-blog>')($scope);
                 baseEle.append(ele);
             } else if (url === '/blog/manager') {
                 $scope.currentSelectTab = 'blogManager';
-                var ele = $compile('<blog-article-manager></blog-article-manager>')($scope);
+                ele = $compile('<blog-article-manager></blog-article-manager>')($scope);
                 baseEle.append(ele);
             } else if (url === '/blog/manager/category') {
                 $scope.currentSelectTab = 'categoryManager';
-                var ele = $compile('<blog-category-manager></blog-category-manager>')($scope);
+                ele = $compile('<blog-category-manager></blog-category-manager>')($scope);
                 baseEle.append(ele);
             } else if (url === '/blog/manager/comment') {
                 $scope.currentSelectTab = 'commentManager';

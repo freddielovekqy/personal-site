@@ -3,8 +3,8 @@
  */
 var createBlogModule = angular.module('createBlog', []);
 
-createBlogModule.controller('EditBlogController', ['$scope', '$rootScope', '$compile', '$location', '$timeout', 'HttpService', 'RadioBroadcast',
-    function ($scope, $rootScope, $compile, $location, $timeout, HttpService, RadioBroadcast) {
+createBlogModule.controller('EditBlogController', ['$scope', '$rootScope', '$compile', '$location', '$routeParams', '$timeout', 'HttpService', 'RadioBroadcast',
+    function ($scope, $rootScope, $compile, $location, $routeParams, $timeout, HttpService, RadioBroadcast) {
         $scope.blogNormalText = '';
         $scope.blogCategoryList = [];
         $scope.blogInfo = {
@@ -25,6 +25,7 @@ createBlogModule.controller('EditBlogController', ['$scope', '$rootScope', '$com
         };
 
         getBlogCategories();
+        getBlogInfoWhenEdit();
 
         $scope.$on('blogContentNormalText', function (name, data) {
             $scope.blogNormalText = data.text;
@@ -105,6 +106,24 @@ createBlogModule.controller('EditBlogController', ['$scope', '$rootScope', '$com
             });
         }
 
+        function getBlogInfoWhenEdit() {
+            if ($routeParams.blogId) {
+                HttpService.get({
+                    url: 'api/blog/getBlog/' + $routeParams.blogId,
+                    success: function (data) {
+                        $scope.blogInfo = data;
+                        $scope.blogInfo.createDate = new Date(data.createDate).format('yyyy-MM-dd hh:mm:ss');
+                        $scope.blogInfo.lastUpdateDate = new Date(data.lastUpdateDate).format('yyyy-MM-dd hh:mm:ss');
+                        $scope.option.checked = ($scope.blogInfo.status == '1');
+                        RadioBroadcast.broadcast('initEditorContent', $scope.blogInfo);
+                    },
+                    error: function (data) {
+                        console.log('get blog list error');
+                    }
+                });
+            }
+        }
+
         function checkBlogParams() {
             return $scope.blogInfo.title.trim() && $scope.blogInfo.content.trim();
         }
@@ -119,7 +138,7 @@ createBlogModule.directive('editBlog', function () {
         templateUrl: 'views/tlps/blog/edit_blog.html',
         controller: 'EditBlogController',
         link: function (scope, elements, attrs, ngModel) {
-
+            $('#blogTitle').focus();
         }
     }
 });

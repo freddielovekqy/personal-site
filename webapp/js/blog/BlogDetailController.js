@@ -6,7 +6,7 @@ var blogDetailModule = angular.module('blogDetail', []);
 blogDetailModule.controller('BlogDetailController', ['$scope', '$sce', 'HttpService', '$routeParams', 'BlogService',
     function ($scope, $sce, HttpService, $routeParams, BlogService) {
         var blogId = $routeParams.blogId;
-        console.log('blogId', blogId);
+
         function getBlogInfo(blogId) {
             HttpService.get({
                 url: 'api/blog/getBlog/' + blogId,

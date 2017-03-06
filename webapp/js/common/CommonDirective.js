@@ -29,6 +29,7 @@ app.directive('wangEditor', function() {
         link: function(scope, element, attrs, ngModel) {
             // 创建编辑器
             var editor = new wangEditor(attrs.id);
+
             editor.onchange = function () {
                 // 从 onchange 函数中更新数据
                 scope.$apply(function () {
@@ -40,6 +41,11 @@ app.directive('wangEditor', function() {
             };
             editor.create();
 
+            scope.$on('initEditorContent', function (name, data) {
+                if (data && data.content) {
+                    editor.$txt.html(data.content);
+                }
+            });
             scope.$on('destoryWangEditor', function (name, data) {
                 if (attrs.id === data.id) {
                     editor.destroy();
@@ -117,27 +123,34 @@ app.directive('customerCheckbox', function () {
         controller: function ($scope) {
         },
         link: function (scope, elements, attrs, ngModel) {
-            elements.find('[type="checkbox"]').iCheck({
-                checkboxClass: 'icheckbox_flat-blue',
-                radioClass: 'iradio_flat-blue'
-            });
-
-            if (scope.option.checked) {
-                elements.find('[type="checkbox"]').iCheck('check');
-            } else {
-                elements.find('[type="checkbox"]').iCheck('uncheck');
-            }
-
-
-            elements.on('ifChecked', '[type="checkbox"]', function (event) {
-                scope.option.checked = true;
-                ngModel.$setViewValue(ngModel.$modelValue);
-            });
-
-            elements.on('ifUnchecked', '[type="checkbox"]', function (event) {
-                scope.option.checked = false;
-                ngModel.$setViewValue(ngModel.$modelValue)
-            });
+            //elements.find('[type="checkbox"]').iCheck({
+            //    checkboxClass: 'icheckbox_flat-blue',
+            //    radioClass: 'iradio_flat-blue'
+            //});
+            //
+            //if (scope.option.checked) {
+            //    elements.find('[type="checkbox"]').iCheck('check');
+            //} else {
+            //    elements.find('[type="checkbox"]').iCheck('uncheck');
+            //}
+            //
+            //scope.$watch(function () {
+            //    return scope.option.checked;
+            //}, function (newVal) {
+            //    var status = scope.option.checked ? 'check' : 'uncheck';
+            //    console.log(newVal, status);
+            //    elements.find('[type="checkbox"]').iCheck(status);
+            //});
+            //
+            //elements.on('ifChecked', '[type="checkbox"]', function (event) {
+            //    scope.option.checked = true;
+            //    ngModel.$setViewValue(ngModel.$modelValue);
+            //});
+            //
+            //elements.on('ifUnchecked', '[type="checkbox"]', function (event) {
+            //    scope.option.checked = false;
+            //    ngModel.$setViewValue(ngModel.$modelValue)
+            //});
         }
     };
 });

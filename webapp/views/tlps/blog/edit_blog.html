@@ -7,7 +7,7 @@
             <div class="blog-type-item" ng-class="{'blog-type-item-select':blogInfo.type === '译文'}" ng-click="chooseBlogType('译文')">译文</div>
         </div>
         <div class="blog-title-input">
-            <input type="text" class="form-control" placeholder="请输入文章名称" ng-model="blogInfo.title"/>
+            <input id="blogTitle" type="text" class="form-control" placeholder="请输入文章名称" ng-model="blogInfo.title"/>
         </div>
     </div>
     <div class="create-blog-content">
