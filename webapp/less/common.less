@@ -88,45 +88,95 @@ body {
     }
 
     // 自定义多选框
-    // .custom-checkbox-div {
-        .chk_1 { 
-    display: none; 
-} 
- 
-.chk_1 + label { 
-    background-color: #FFF; 
-    border: 1px solid #C1CACA; 
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05); 
-    padding: 9px; 
-    border-radius: 5px; 
-    display: inline-block; 
-    position: relative; 
-    margin-right: 30px; 
-} 
-.chk_1 + label:active { 
-    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1); 
-} 
- 
-.chk_1:checked + label { 
-    background-color: #ECF2F7; 
-    border: 1px solid #92A1AC; 
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05), inset 15px 10px -12px rgba(255, 255, 255, 0.1); 
-    color: #243441; 
-} 
- 
-.chk_1:checked + label:after { 
-    content: '\2714'; //勾选符号 
-    position: absolute; 
-    top: 0px; 
-    left: 0px; 
-    color: #758794; 
-    width: 100%; 
-    text-align: center; 
-    font-size: 1.4em; 
-    padding: 1px 0 0 0; 
-    vertical-align: text-top; 
-} 
-    // }
+    .my-checkbox-div {
+        .my-checkbox {
+            display: none;
+        }
+        .label-text {
+            cursor: pointer;
+        }
+        .my-checkbox + label { 
+            width: 20px;
+            height: 20px;
+            display: inline-block; 
+            position: relative; 
+            top: 5px;
+            padding: 9px; 
+            margin: 0px 5px 0px 0px;
+            border: 1px solid #C1CACA; 
+            border-radius: 3px; 
+            background-color: #FFF; 
+            cursor: pointer;
+        }
+
+        .my-checkbox + label:hover {
+            box-sizing: border-box;
+            background: #fbfbfb;
+        }
+
+        .my-checkbox + label:hover:after { 
+            content: '\2713'; //勾选符号 
+            position: absolute; 
+            top: -5px; 
+            left: 0px; 
+            color: #ccc; 
+            width: 100%; 
+            height: 100%;
+            text-align: center; 
+            font-size: 1.4em; 
+            padding: 1px 0 0 0; 
+            vertical-align: text-top; 
+        } 
+        
+        .my-checkbox:checked + label { 
+            background-color: rgb(36, 137, 197); 
+            border: 1px solid rgb(36, 137, 197); 
+            color: #243441; 
+        } 
+        
+        .my-checkbox:checked + label:after { 
+            content: '\2713'; //勾选符号 
+            position: absolute; 
+            top: -5px; 
+            left: 0px; 
+            color: #fff; 
+            width: 100%; 
+            height: 100%;
+            text-align: center; 
+            font-size: 1.4em; 
+            padding: 1px 0 0 0; 
+            vertical-align: text-top; 
+        } 
+
+        .my-checkbox:disabled + label {
+            background: #fff;
+            border: 1px solid #ddd;
+        }
+
+        .my-checkbox:disabled + label:after {
+            display: none;
+        }
+
+        .my-checkbox:checked:disabled + label {
+            background-color: #ccc;
+            border: 1px solid #ccc; 
+        }
+
+        .my-checkbox:checked:disabled + label:after {
+            content: '\2713'; //勾选符号 
+            position: absolute; 
+            top: -5px; 
+            left: 0px; 
+            color: #fff; 
+            width: 100%; 
+            height: 100%;
+            text-align: center; 
+            font-size: 1.4em; 
+            padding: 1px 0 0 0; 
+            vertical-align: text-top; 
+            display: inline-block;
+        }
+    }
 
     // 弹出框样式
     .my-popover {

@@ -120,37 +120,10 @@ app.directive('customerCheckbox', function () {
         require : '?ngModel',
         replace: true,
         templateUrl: 'views/tlps/common/f_checkbox.html',
-        controller: function ($scope) {
-        },
         link: function (scope, elements, attrs, ngModel) {
-            //elements.find('[type="checkbox"]').iCheck({
-            //    checkboxClass: 'icheckbox_flat-blue',
-            //    radioClass: 'iradio_flat-blue'
-            //});
-            //
-            //if (scope.option.checked) {
-            //    elements.find('[type="checkbox"]').iCheck('check');
-            //} else {
-            //    elements.find('[type="checkbox"]').iCheck('uncheck');
-            //}
-            //
-            //scope.$watch(function () {
-            //    return scope.option.checked;
-            //}, function (newVal) {
-            //    var status = scope.option.checked ? 'check' : 'uncheck';
-            //    console.log(newVal, status);
-            //    elements.find('[type="checkbox"]').iCheck(status);
-            //});
-            //
-            //elements.on('ifChecked', '[type="checkbox"]', function (event) {
-            //    scope.option.checked = true;
-            //    ngModel.$setViewValue(ngModel.$modelValue);
-            //});
-            //
-            //elements.on('ifUnchecked', '[type="checkbox"]', function (event) {
-            //    scope.option.checked = false;
-            //    ngModel.$setViewValue(ngModel.$modelValue)
-            //});
+            elements.on('click', '.label-text', function (event) {
+                elements.find('[type="checkbox"]').click();
+            });
         }
     };
 });
