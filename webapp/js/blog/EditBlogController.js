@@ -13,7 +13,7 @@ createBlogModule.controller('EditBlogController', ['$scope', '$rootScope', '$com
             content: '',
             summary: '',
             keyword: '',
-            blogType: []
+            categories: []
         };
 
         $scope.option = {
@@ -24,8 +24,13 @@ createBlogModule.controller('EditBlogController', ['$scope', '$rootScope', '$com
             disabled: false
         };
 
-        getBlogCategories();
-        getBlogInfoWhenEdit();
+        (function () {
+            if ($routeParams.blogId) {
+                getBlogInfoWhenEdit();
+            } else {
+                getBlogCategories([]);
+            }
+        })();
 
         $scope.$on('blogContentNormalText', function (name, data) {
             $scope.blogNormalText = data.text;
@@ -62,14 +67,12 @@ createBlogModule.controller('EditBlogController', ['$scope', '$rootScope', '$com
             if (eventType === 'save') {
                 $scope.blogInfo.status = '3';
             } else {
-                if (!$scope.option.checked) {
-                    $scope.blogInfo.status = '2';
-                }
+                $scope.blogInfo.status = $scope.option.checked ? '1' : '2';
             }
             !$scope.blogInfo.summary && ($scope.blogInfo.summary = $scope.blogNormalText.substr(0, 200));
             $scope.blogInfo.userId = $scope.currentUser._id;
             $scope.blogCategoryList.forEach(function (item) {
-                $scope.blogInfo.categories.push(item.typeId);
+                item.checked && $scope.blogInfo.categories.push(item.typeId);
             });
             HttpService.post({
                 url: 'api/blog/save',
@@ -88,7 +91,7 @@ createBlogModule.controller('EditBlogController', ['$scope', '$rootScope', '$com
             });
         };
 
-        function getBlogCategories() {
+        function getBlogCategories(checkedCategories) {
             HttpService.get({
                 url: 'api/blog/getBlogCategory',
                 success: function (data) {
@@ -98,7 +101,7 @@ createBlogModule.controller('EditBlogController', ['$scope', '$rootScope', '$com
                             name: 'blogType_' + index,
                             typeId: item._id,
                             label: item.name,
-                            checked: false,
+                            checked: checkedCategories.indexOf(item._id) > -1,
                             disabled: false
                         });
                     });
@@ -107,21 +110,20 @@ createBlogModule.controller('EditBlogController', ['$scope', '$rootScope', '$com
         }
 
         function getBlogInfoWhenEdit() {
-            if ($routeParams.blogId) {
-                HttpService.get({
-                    url: 'api/blog/getBlog/' + $routeParams.blogId,
-                    success: function (data) {
-                        $scope.blogInfo = data;
-                        $scope.blogInfo.createDate = new Date(data.createDate).format('yyyy-MM-dd hh:mm:ss');
-                        $scope.blogInfo.lastUpdateDate = new Date(data.lastUpdateDate).format('yyyy-MM-dd hh:mm:ss');
-                        $scope.option.checked = ($scope.blogInfo.status == '1');
-                        RadioBroadcast.broadcast('initEditorContent', $scope.blogInfo);
-                    },
-                    error: function (data) {
-                        console.log('get blog list error');
-                    }
-                });
-            }
+            HttpService.get({
+                url: 'api/blog/getBlog/' + $routeParams.blogId,
+                success: function (data) {
+                    $scope.blogInfo = data;
+                    $scope.blogInfo.createDate = new Date(data.createDate).format('yyyy-MM-dd hh:mm:ss');
+                    $scope.blogInfo.lastUpdateDate = new Date(data.lastUpdateDate).format('yyyy-MM-dd hh:mm:ss');
+                    $scope.option.checked = ($scope.blogInfo.status == '1');
+                    RadioBroadcast.broadcast('initEditorContent', $scope.blogInfo);
+                    getBlogCategories($scope.blogInfo.categories);
+                },
+                error: function (data) {
+                    console.log('get blog list error');
+                }
+            });
         }
 
         function checkBlogParams() {

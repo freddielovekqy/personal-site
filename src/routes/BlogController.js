@@ -41,7 +41,8 @@ router.post('/save', function (request, response, next) {
         keyword: request.body.keyword,
         content: request.body.content,
         type: request.body.type,
-        isPublic: request.body.isPublic,
+        status: request.body.status,
+        categories: request.body.categories,
         // TODO userId以后全部使用session中的数据request.session.currentUser.id
         userId: request.body.userId,
         comment: [],
