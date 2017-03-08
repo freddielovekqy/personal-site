@@ -6,8 +6,8 @@
             <div class="blog-title">{{blogInfo.title}}</div>
         </div>
         <div class="blog-info-div">
-            <div class="keyword">关键字：{{blogInfo.keyword}}</div>
-            <div class="info-and-operation">
+            <div class="blog-info-keyword">关键字：{{blogInfo.keyword}}</div>
+            <div class="blog-info-and-operation">
                 <div class="create-date">{{blogInfo.createDate}}</div>
                 <div class="read-statistic">
                     <span class="icon-eye-open"></span>
@@ -25,7 +25,12 @@
                     <span>删除</span>
                 </div>
             </div>
-            <div class="blog-classify-type"></div>
+            <div class="blog-info-categories">
+                <div class="category-label">
+                    <span class="glyphicon glyphicon-th-list"></span>
+                    <span class="category-label-text">分类：</span>
+                </div>
+            </div>
         </div>
         <div class="blog-content">
             <div ng-bind-html="blogInfo.content"></div>
