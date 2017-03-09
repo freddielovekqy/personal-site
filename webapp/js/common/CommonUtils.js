@@ -43,6 +43,30 @@ app.service('CommonUtils', ['HttpService', function (HttpService) {
     }
 }]);
 
+app.service('CommonUserUtils', ['$http', function ($http) {
+    var userInfo = {};
+
+    function getBasicUserInfo(userId) {
+        if (!userInfo) {
+            var currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+            $http({
+                url: 'api/user/getUserInfo/' + currentUser._id,
+                method: 'GET',
+                success: function (data) {
+                    userInfo = data;
+                },
+                error: function (data) {
+                }
+            });
+        }
+        return userInfo;
+    }
+
+    return {
+        getBasicUserInfo: getBasicUserInfo
+    };
+}]);
+
 app.service('StorageUtils', [function () {
     function setSessionStorage(key, value) {
         sessionStorage.setItem(key, JSON.stringify(value));

@@ -45,11 +45,24 @@ router.post('/save', function (request, response, next) {
         categories: request.body.categories,
         // TODO userId以后全部使用session中的数据request.session.currentUser.id
         userId: request.body.userId,
-        comment: [],
-        reader: []
+        comment: request.body.comment || [],
+        reader: request.body.reader || []
     };
+    var blog = request.body.blog;
+    console.log('blog', blog);
 
     var promise = blogService.saveBlog(blogDTO);
+    promise.then(function (data) {
+        response.send(JSON.stringify(data));
+    }).catch(function (data) {
+        response.send(JSON.stringify(data));
+    });
+});
+
+router.post('/update', function (request, response, next) {
+    var blog = request.body.blog;
+    logger.info('blog/update', blog);
+    var promise = blogService.updateBlog(blog);
     promise.then(function (data) {
         response.send(JSON.stringify(data));
     }).catch(function (data) {

@@ -22,6 +22,19 @@ blogListModule.controller('BlogListController', ['$scope', '$location', 'HttpSer
             $location.path('/blog/manager');
         };
 
+        $scope.editBlog = function (id) {
+            $location.path('/blog/edit/' + id);
+        };
+
+        $scope.removeBlog = function (id) {
+            HttpService.post({
+                url: 'api/blog/delete/' + id,
+                success: function (data) {
+                    $location.path('/blog');
+                }
+            });
+        };
+
         function getBlogList(userId) {
             HttpService.get({
                 url: 'api/blog/list',

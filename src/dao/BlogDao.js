@@ -23,7 +23,11 @@ function save(blogDTO) {
     });
 }
 
-function update(id, key, value) {
+function update(id, blog) {
+    return Blog.update({'_id': id}, blog);
+}
+
+function updateBlogAttr(id, key, value) {
     var updateObj = {};
     updateObj[key] = value;
     return Blog.update({ '_id': id }, { '$set': updateObj });
@@ -55,6 +59,7 @@ function getBlogCountByCondition(condition) {
 
 module.exports.save = save;
 module.exports.update = update;
+module.exports.updateBlogAttr = updateBlogAttr;
 module.exports.findByUser = findByUser;
 module.exports.findByBlogId = findByBlogId;
 module.exports.getBlogCountByCondition = getBlogCountByCondition;

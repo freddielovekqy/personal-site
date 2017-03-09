@@ -26,10 +26,10 @@
                     <span class="comment-statistic-count">({{blog.comment.length}})</span>
                 </div>
                 <div class="edit operation-link">
-                    <span>编辑</span>
+                    <span ng-click="editBlog(blog._id)">编辑</span>
                 </div>
                 <div class="delete operation-link">
-                    <span>删除</span>
+                    <span ng-click="removeBlog(blog._id)">删除</span>
                 </div>
             </div>
         </div>

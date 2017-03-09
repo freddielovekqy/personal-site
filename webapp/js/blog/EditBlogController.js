@@ -71,12 +71,16 @@ createBlogModule.controller('EditBlogController', ['$scope', '$rootScope', '$com
             }
             !$scope.blogInfo.summary && ($scope.blogInfo.summary = $scope.blogNormalText.substr(0, 200));
             $scope.blogInfo.userId = $scope.currentUser._id;
+            $scope.blogInfo.categories = [];
             $scope.blogCategoryList.forEach(function (item) {
                 item.checked && $scope.blogInfo.categories.push(item.typeId);
             });
+            var url = !!$scope.blogInfo._id ? 'api/blog/update' : 'api/blog/save';
             HttpService.post({
-                url: 'api/blog/save',
-                params: $scope.blogInfo,
+                url: url,
+                params: {
+                    blog: $scope.blogInfo
+                },
                 success: function (data) {
                     $rootScope.$broadcast('showAlertMessage', {
                         type: 'success',

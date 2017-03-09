@@ -63,9 +63,26 @@ function saveBlog(blogDTO) {
     });
 }
 
+function updateBlog(blog) {
+    return new Promise(function (resolve, reject) {
+        var promise = BlogDao.findByBlogId(blog._id);
+        promise.then(function (data) {
+            var oldBlog = data[0];
+            blog.createDate = oldBlog.createDate;
+            blog.lastUpdateDate = new Date();
+            blog.userId = oldBlog.userId;
+            var blogId = blog._id;
+            delete blog._id;
+            return BlogDao.update(blogId, blog);
+        }).then(function (data) {
+            resolve(data);
+        });
+    });
+}
+
 function deleteBlog(id) {
     return new Promise(function (resolve, reject) {
-        var promise = BlogDao.update(id, 'status', 4);
+        var promise = BlogDao.updateBlogAttr(id, 'status', 4);
         promise.then(function (data) {
             resolve(data);
         });
@@ -74,7 +91,7 @@ function deleteBlog(id) {
 
 function updateBlogAttr(id, attrName, attrValue) {
     return new Promise(function (resolve, reject) {
-        var promise = BlogDao.update(id, attrName, attrValue);
+        var promise = BlogDao.updateBlogAttr(id, attrName, attrValue);
         promise.then(function (data) {
             resolve(data);
         });
@@ -84,5 +101,6 @@ function updateBlogAttr(id, attrName, attrValue) {
 module.exports.getBlogsByUser = getBlogsByUser;
 module.exports.getBlogById = getBlogById;
 module.exports.saveBlog = saveBlog;
+module.exports.updateBlog = updateBlog;
 module.exports.deleteBlog = deleteBlog;
 module.exports.updateBlogAttr = updateBlogAttr;
