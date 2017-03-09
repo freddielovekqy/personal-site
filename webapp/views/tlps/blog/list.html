@@ -8,6 +8,7 @@
         <div ng-repeat="blog in blogList" class="blog-list">
             <div class="type-and-title">
                 <span class="label label-info blog-type {{blog.type}}-blog-type">{{blog.typeShow}}</span>
+                <span class="blog-list-top-show" ng-show="blog.topShow">[置顶]</span>
                 <div class="blog-title">
                     <a href="/blog/detail/{{blog._id}}">{{blog.title}}</a>
                 </div>
