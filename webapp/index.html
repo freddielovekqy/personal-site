@@ -38,14 +38,23 @@
                             <a class="nav-menu-item" href="/about" ng-click="changePath('/about')" ng-class="{'current-page': currentPath === '/about'}">关于</a>
                         </div>
                     </div>
-                    <div class="login-out-div" ng-show="!showLoginBtn && !currentUser">
+                    <div class="login-register-div" ng-show="!showLoginBtn && !currentUser">
                         <a class="login" href="/login">登录</a>
                         <a class="sign-up" href="/register">注册</a>
                     </div>
-                    <a class="username-in-header" href="/account-setting" ng-show="currentUser">
-                        <span class="glyphicon glyphicon-user"></span>
-                        <span class="username">{{currentUser.username || currentUser.email}}</span>
-                    </a>
+                    <div class="header-user-info-and-setting" ng-show="currentUser">
+                        <a href="/account-info" class="header-user-info">
+                            <span class="glyphicon glyphicon-user"></span>
+                            <span class="username">{{currentUser.username || currentUser.email}}</span>
+                        </a>
+                        <a href="" class="header-user-notice">
+                            <span class="glyphicon glyphicon-envelope"></span>
+                            <div class="have-notice">2</div>
+                        </a>
+                        <a href="/account-setting" class="header-user-setting">
+                            <span class="glyphicon glyphicon-cog"></span>
+                        </a>
+                    </div>
                 </div>
             </div>
             <div class="container alert-message">

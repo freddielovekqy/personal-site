@@ -94,7 +94,7 @@ body {
                 cursor: pointer;
             }
         }
-        .login-out-div {
+        .login-register-div {
             float: right;
             margin-left: 15px;
             font-size: 14px;
@@ -123,19 +123,41 @@ body {
                 background: rgba(255,255,255,0.2)
             }
         }
-        .username-in-header {
+        .header-user-info-and-setting {
             float: right;
             margin-left: 15px;
             font-size: 14px;
-            color: #FFF;
             font-weight: bold;
-            .glyphicon-user {
-                font-size: 18px;
-                top: 4px;
-                color: #FFF !important;
+            .header-user-info, .header-user-notice, .header-user-setting {
+                color: #FFF;
+                margin-left: 15px;
+                .glyphicon {
+                    font-size: 18px;
+                    top: 4px;
+                }
+                .username {
+                    margin-left: 5px;
+                }
             }
-            .username {
-                margin-left: 5px;
+            .header-user-notice {
+                position: relative;
+                .have-notice {
+                    position: absolute;
+                    display: inline-block;
+                    width: 20px;
+                    height: 14px;
+                    border-radius: 3px;
+                    background: #4eb2f9;
+                    top: -6px;
+                    left: 10px;
+                    line-height: 14px;
+                    color: #fff;
+                    font-weight: normal;
+                    text-align: center;
+                }
+            }
+            a:hover {
+                color: #2ba7ff;
             }
         }
     }
