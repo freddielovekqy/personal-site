@@ -8,8 +8,10 @@ function getUserBlogInfo(userId) {
         var promise = userBlogInfoDao.findByUser(userId);
         var commonUserInfoPromise = userDao.getById(userId);
         Promise.all([promise, commonUserInfoPromise]).then(function (data) {
+            var basicUserInfo = data[1][0]
+            delete basicUserInfo.password;
             resolve({
-                userInfo: data[1][0],
+                userInfo: basicUserInfo,
                 userBlogInfo: data[0][0]
             });
         }).catch(function (error) {

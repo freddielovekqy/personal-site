@@ -5,32 +5,15 @@ function save(userDTO) {
         email: userDTO.email,
         password: userDTO.password
     });
-    var promise = user.save();
-    promise.then(function (data) {
-        return data;
-    }).catch(function (error) {
-        return error;
-    });
+    return user.save();
 }
 
 function findByEmail(email) {
-    var promise = User.find({ email: email }).exec();
-    promise.then(function (data) {
-        return data;
-    }).catch(function (error) {
-        return error;
-    });
-    return promise;
+    return User.find({ email: email }).exec();
 }
 
 function getById(userId) {
-    var promise = User.find({_id: userId}).exec();
-    promise.then(function (data) {
-        return data;
-    }).catch(function (error) {
-        return error;
-    });
-    return promise;
+    return User.find({_id: userId}).exec();
 }
 
 module.exports.save = save;

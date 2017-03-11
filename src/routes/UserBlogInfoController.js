@@ -5,7 +5,6 @@ var userBlogInfoService = require('../service/UserBlogInfoService');
 
 router.get('/getInfo/:userId', function (request, response, next) {
     var userId = request.params.userId;
-    logger.info('get user\'s blog information', userId);
     var promise = userBlogInfoService.getUserBlogInfo(userId);
     promise.then(function (data) {
         response.send(JSON.stringify(data));
