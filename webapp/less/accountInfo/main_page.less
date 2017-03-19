@@ -88,8 +88,8 @@
         text-align: center;
         padding: 5px 0;
         border-top: 1px solid #e2e2e2;
-        .edit {
-
+        .edit:hover {
+          color: #2ba7ff;
         }
       }
     }
@@ -132,7 +132,16 @@
     .dynamic-item {
       background: #ffffff;
       margin-top: 10px;
-
+      position: relative;
+      .icon-angle-down {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        cursor: pointer;
+        &:hover {
+          color: #2ba7ff;
+        }
+      }
       .dynamic-info() {
         .user-image {
           width: 50px;
@@ -142,6 +151,7 @@
           margin-right: 10px;
         }
         .username {
+          line-height: 25px;
           font-size: 14px;
           font-weight: bold;
         }
@@ -163,6 +173,9 @@
         .dynamic-other-info {
           padding: 5px 0;
         }
+        .dynamic-info-detail {
+          font-size: 12px;
+        }
       }
       .dynamic-foot-operation {
         overflow: auto;
@@ -179,6 +192,10 @@
             height: 25px;
             line-height: 25px;
             border-right: 1px solid #ccc;
+            cursor: pointer;
+            &:hover {
+              color: #2ba7ff;
+            }
             .icon {
               margin-right: 5px;
             }
