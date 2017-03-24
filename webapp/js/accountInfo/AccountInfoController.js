@@ -11,8 +11,8 @@ accountInfoModule.config(['$routeProvider', '$locationProvider', function ($rout
         .otherwise({ redirectTo: '/account-info' });
 }]);
 
-accountInfoModule.controller('AccountInfoController', ['$scope', '$location', '$routeParams', '$compile', 'HttpService', 'StorageUtils',
-    function ($scope, $location, $routeParams, $compile, HttpService, StorageUtils) {
+accountInfoModule.controller('AccountInfoController', ['$scope', '$location', '$routeParams', '$compile', '$timeout', 'HttpService', 'StorageUtils', 'CommonUserUtils',
+    function ($scope, $location, $routeParams, $compile, $timeout, HttpService, StorageUtils, CommonUserUtils) {
         var currentUser = StorageUtils.getSessionStorage('currentUser');
         (function () {
             getUserInfo(currentUser._id);
@@ -35,16 +35,18 @@ accountInfoModule.controller('AccountInfoController', ['$scope', '$location', '$
         };
 
         function getUserInfo(userId) {
-            HttpService.get({
-                url: 'api/userBlogInfo/getInfo/' + userId,
-                success: function (data) {
-                    $scope.userBlogInfo = data.userBlogInfo;
-                    $scope.user = data.userInfo;
-                },
-                error: function (data) {
-                    console.log('get blog list error');
-                }
-            });
+            var result = CommonUserUtils.getUserBlogInfo(userId);
+            if (result instanceof Promise) {
+                result.then(function (data) {
+                    $timeout(function () {
+                        $scope.userBlogInfo = data.userBlogInfo;
+                        $scope.user = data.userInfo;
+                    }, 0);
+                });
+            } else {
+                $scope.userBlogInfo = result.userBlogInfo;
+                $scope.user = result.userInfo;
+            }
         }
     }
 ]);

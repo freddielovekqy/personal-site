@@ -45,6 +45,7 @@ app.service('CommonUtils', ['HttpService', function (HttpService) {
 
 app.service('CommonUserUtils', ['HttpService', function (HttpService) {
     var userInfo;
+    var userBlogInfo = {};
 
     function getUserInfo() {
         if (!userInfo) {
@@ -53,6 +54,7 @@ app.service('CommonUserUtils', ['HttpService', function (HttpService) {
                 HttpService.get({
                     url: 'api/user/getUserInfo/' + currentUserId,
                     success: function (data) {
+                        userInfo = data;
                         resolve(data);
                     },
                     error: function (data) {
@@ -65,8 +67,30 @@ app.service('CommonUserUtils', ['HttpService', function (HttpService) {
         }
     }
 
+    function getUserBlogInfo(userId) {
+        if (!userBlogInfo[userId]) {
+            return new Promise(function (resolve, reject) {
+                var currentUserId = localStorage.getItem('currentUserId');
+                HttpService.get({
+                    url: 'api/userBlogInfo/getInfo/' + userId,
+                    success: function (data) {
+                        userBlogInfo[userId] = data;
+                        resolve(data);
+                    },
+                    error: function (data) {
+                        console.log('get blog list error');
+                    }
+                });
+            });
+            
+        } else {
+            return userBlogInfo[userId];
+        }
+    }
+
     return {
-        getUserInfo: getUserInfo
+        getUserInfo: getUserInfo,
+        getUserBlogInfo: getUserBlogInfo
     };
 }]);
 
