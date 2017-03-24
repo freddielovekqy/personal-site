@@ -43,33 +43,40 @@ app.service('CommonUtils', ['HttpService', function (HttpService) {
     }
 }]);
 
-app.service('CommonUserUtils', ['$http', function ($http) {
-    var userInfo = {};
+app.service('CommonUserUtils', ['HttpService', function (HttpService) {
+    var userInfo;
 
-    function getBasicUserInfo(userId) {
+    function getUserInfo() {
         if (!userInfo) {
-            var currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
-            $http({
-                url: 'api/user/getUserInfo/' + currentUser._id,
-                method: 'GET',
-                success: function (data) {
-                    userInfo = data;
-                },
-                error: function (data) {
-                }
+            return new Promise(function (resolve, reject) {
+                var currentUserId = localStorage.getItem('currentUserId');
+                HttpService.get({
+                    url: 'api/user/getUserInfo/' + currentUserId,
+                    success: function (data) {
+                        resolve(data);
+                    },
+                    error: function (data) {
+                    }
+                });
             });
+            
+        } else {
+            return userInfo;
         }
-        return userInfo;
     }
 
     return {
-        getBasicUserInfo: getBasicUserInfo
+        getUserInfo: getUserInfo
     };
 }]);
 
 app.service('StorageUtils', [function () {
     function setSessionStorage(key, value) {
-        sessionStorage.setItem(key, JSON.stringify(value));
+        if (typeof value === 'string') {
+            sessionStorage.setItem(key, value);
+        } else {
+            sessionStorage.setItem(key, JSON.stringify(value));
+        }
     }
 
     function getSessionStorage(key) {
@@ -77,7 +84,11 @@ app.service('StorageUtils', [function () {
     }
 
     function setLocalStorage(key, value) {
-        localStorage.setItem(key, JSON.stringify(value));
+        if (typeof value === 'string') {
+            localStorage.setItem(key, value);
+        } else {
+            localStorage.setItem(key, JSON.stringify(value));
+        }
     }
 
     function  getLocalStorage(key) {

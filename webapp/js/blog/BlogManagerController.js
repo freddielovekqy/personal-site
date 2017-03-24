@@ -3,8 +3,8 @@
  */
 var blogManagerModule = angular.module('blogManager', []);
 
-blogManagerModule.controller('BlogManagerController', ['$scope', '$compile', '$location', 'HttpService', 'StorageUtils',
-    function ($scope, $compile, $location, HttpService, StorageUtils) {
+blogManagerModule.controller('BlogManagerController', ['$scope', '$compile', '$location', 'HttpService', 'StorageUtils', 'CommonUserUtils',
+    function ($scope, $compile, $location, HttpService, StorageUtils, CommonUserUtils) {
         $scope.currentSelectTab = '';
         $scope.currentUser = StorageUtils.getSessionStorage('currentUser');
 
@@ -39,14 +39,14 @@ blogManagerModule.controller('BlogManagerController', ['$scope', '$compile', '$l
         }
 
         function getUserInfo() {
-            HttpService.get({
-                url: 'api/user/getUserInfo/' + $scope.currentUser._id,
-                success: function (data) {
+            var result = CommonUserUtils.getUserInfo();
+            if (result instanceof Promise) {
+                result.then(function (data) {
                     $scope.userInfo = data;
-                },
-                error: function (data) {
-                }
-            });
+                });
+            } else {
+                $scope.userInfo = data;
+            }
         }
 
     }
