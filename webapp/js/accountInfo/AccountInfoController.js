@@ -37,8 +37,8 @@ accountInfoModule.controller('AccountInfoController', ['$scope', '$location', '$
         function getUserInfo(userId) {
             var result = CommonUserUtils.getUserBlogInfo(userId);
             if (result instanceof Promise) {
-                result.then(function (data) {
-                    $timeout(function () {
+                result.then( (data) => {
+                    $timeout(() => {
                         $scope.userBlogInfo = data.userBlogInfo;
                         $scope.user = data.userInfo;
                     }, 0);
