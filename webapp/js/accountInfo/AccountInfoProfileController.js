@@ -5,7 +5,19 @@ var accountInfoProfileModule = angular.module('accountInfoProfile', []);
 
 accountInfoProfileModule.controller('AccountInfoProfileController', ['$scope',
     function ($scope) {
+        $scope.edit = false;
 
+        $scope.editProfile = function () {
+            $scope.edit = true;
+        };
+
+        $scope.updateProfile = function () {
+            $scope.edit = false;
+        };
+
+        $scope.cancelEdit = function () {
+            $scope.edit = false;
+        };
     }
 ]);
 

@@ -9,9 +9,12 @@ var UserSchema = new Schema({
     headImgPath: { type: String },
     country: { type: String },
     birthday: { type: Date },
+    birthPlace: {type: String}, 
     sex: { type: String },
     industry: { type: String },
-    occupation: { type: String }
+    occupation: { type: String },
+    briefIntroduction: { type: String },
+    createDate: { type: Date }
 });
 
 module.exports = mongoose.model('User', UserSchema);
