@@ -47,7 +47,7 @@ app.service('CommonUserUtils', ['HttpService', function (HttpService) {
     var userInfo;
     var userBlogInfo = {};
 
-    function getUserInfo() {
+    function getCurrentUserInfo() {
         if (!userInfo) {
             return new Promise(function (resolve, reject) {
                 var currentUserId = localStorage.getItem('currentUserId');
@@ -89,7 +89,7 @@ app.service('CommonUserUtils', ['HttpService', function (HttpService) {
     }
 
     return {
-        getUserInfo: getUserInfo,
+        getCurrentUserInfo: getCurrentUserInfo,
         getUserBlogInfo: getUserBlogInfo
     };
 }]);

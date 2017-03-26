@@ -39,7 +39,7 @@ blogManagerModule.controller('BlogManagerController', ['$scope', '$compile', '$l
         }
 
         function getUserInfo() {
-            var result = CommonUserUtils.getUserInfo();
+            var result = CommonUserUtils.getCurrentUserInfo();
             if (result instanceof Promise) {
                 result.then(function (data) {
                     $scope.userInfo = data;

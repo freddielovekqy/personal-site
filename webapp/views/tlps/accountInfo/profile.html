@@ -10,48 +10,51 @@
         <div class="account-info-header">
             <span class="header-text">基本信息</span>
             <button class="btn btn-default btn-xs" ng-show="!edit" ng-click="editProfile()">编辑</button>
-            <button class="btn btn-default btn-xs" ng-show="edit">取消</button>
-            <button class="btn btn-default btn-xs" ng-show="edit">保存</button>
+            <button class="btn btn-default btn-xs" ng-show="edit" ng-click="cancelEdit()">取消</button>
+            <button class="btn btn-default btn-xs" ng-show="edit" ng-click="updateProfile()">保存</button>
         </div>
         <div class="account-basic-info-div">
             <div class="account-basic-info-item">
                 <div class="account-info-item-label">邮箱</div>
-                <div class="account-info-item-value" ng-show="!edit">59604272@qq.com</div>
-                <div class="account-info-item-edit" ng-show="edit"></div>
+                <div class="account-info-item-value">{{userInfo.email}}</div>
             </div>
             <div class="account-basic-info-item">
                 <div class="account-info-item-label">昵称</div>
-                <div class="account-info-item-value" ng-show="!edit">xxxxx</div>
-                <div class="account-info-item-edit" ng-show="edit"></div>
+                <div class="account-info-item-value" ng-show="!edit">{{userInfo.username}}</div>
+                <div class="account-info-item-edit" ng-show="edit">
+                    <input type="text" class="form-control" placeholder="请输入昵称" ng-model="userInfo.username">
+                </div>
             </div>
             <div class="account-basic-info-item">
                 <div class="account-info-item-label">真实姓名</div>
-                <div class="account-info-item-value" ng-show="!edit">59604272@qq.com</div>
-                <div class="account-info-item-edit" ng-show="edit"></div>
+                <div class="account-info-item-value" ng-show="!edit">{{userInfo.realName}}</div>
+                <div class="account-info-item-edit" ng-show="edit">
+                    <input type="text" class="form-control" placeholder="请输入真实名称" ng-model="userInfo.realName">
+                </div>
             </div>
             <div class="account-basic-info-item">
                 <div class="account-info-item-label">性别</div>
-                <div class="account-info-item-value" ng-show="!edit">59604272@qq.com</div>
+                <div class="account-info-item-value" ng-show="!edit">{{userInfo.sex}}</div>
                 <div class="account-info-item-edit" ng-show="edit"></div>
             </div>
             <div class="account-basic-info-item">
                 <div class="account-info-item-label">生日</div>
-                <div class="account-info-item-value" ng-show="!edit">59604272@qq.com</div>
+                <div class="account-info-item-value" ng-show="!edit">{{userInfo.birthday}}</div>
                 <div class="account-info-item-edit" ng-show="edit"></div>
             </div>
             <div class="account-basic-info-item">
                 <div class="account-info-item-label">出生地</div>
-                <div class="account-info-item-value" ng-show="!edit">59604272@qq.com</div>
+                <div class="account-info-item-value" ng-show="!edit">{{userInfo.birthPlace}}</div>
                 <div class="account-info-item-edit" ng-show="edit"></div>
             </div>
             <div class="account-basic-info-item">
                 <div class="account-info-item-label">简介</div>
-                <div class="account-info-item-value" ng-show="!edit">59604272@qq.com</div>
+                <div class="account-info-item-value" ng-show="!edit">{{userInfo.briefIntroduction}}</div>
                 <div class="account-info-item-edit" ng-show="edit"></div>
             </div>
             <div class="account-basic-info-item" ng-show="!edit">
                 <div class="account-info-item-label">注册时间</div>
-                <div class="account-info-item-value">59604272@qq.com</div>
+                <div class="account-info-item-value">{{userInfo.createDate}}</div>
             </div>
         </div>
     </div>
