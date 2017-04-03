@@ -3,7 +3,7 @@
     width: 180px;
     float: left;
   }
-  .account-basic-info {
+  .account-info-category-item {
     width: 945px;
     background: #ffffff;
     float: right;
@@ -23,8 +23,8 @@
         margin-top: -5px;
       }
     }
-    .account-basic-info-div {
-      .account-basic-info-item {
+    .account-info-page-div {
+      .account-info-item {
         line-height: 45px;
         .account-info-item-label {
           display: inline-block;
@@ -41,6 +41,20 @@
           display: inline-block;
           .sex-radios {
             margin-right: 10px;
+          }
+          .choice {
+            display: inline-block;
+            margin: 0 5px;
+            padding: 0 10px;
+            border: 1px solid #ccc;
+            height: 25px;
+            line-height: 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            &.select {
+              border-color: #2ba7ff;
+              background: #2ba7ff;
+            }
           }
           select {
             display: inline-block;
