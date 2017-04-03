@@ -34,6 +34,16 @@ router.post('/login', function (request, response, next) {
     });
 });
 
+router.post('/update', function (request, response, next) {
+    var userInfo = request.body.userInfo;
+    var promise = userService.update(userInfo);
+    promise.then(function (data) {
+        response.send(JSON.stringify(data));
+    }).catch(function (data) {
+        response.send(JSON.stringify(data));
+    });
+});
+
 router.get('/getUserInfo/:userId', function (request, response, next) {
     var userId = request.params.userId;
     var promise = userService.getUserInfo(userId);

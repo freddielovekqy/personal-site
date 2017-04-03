@@ -1,13 +1,7 @@
 var UserBlogInfo = require("../model/userBlogInfo");
 
 function findByUser(userId) {
-    var promise = UserBlogInfo.find({userId: userId}).exec();
-    promise.then(function (data) {
-        return data;
-    }).catch(function (error) {
-        return error;
-    });
-    return promise;
+    return UserBlogInfo.findOne({userId: userId}).exec();
 }
 
 function save(userBlogInfoDTO) {
@@ -18,13 +12,7 @@ function save(userBlogInfoDTO) {
         integral: userBlogInfoDTO.integral,
         ranking: userBlogInfoDTO.ranking
     });
-    var promise  = userBlogInfo.save();
-    promise.then(function (data) {
-        return data;
-    }).catch(function (error) {
-        return error;
-    });
-    return promise;
+    return userBlogInfo.save();
 }
 
 module.exports.findByUser = findByUser;

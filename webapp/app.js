@@ -67,6 +67,19 @@ app.controller('initController', ['$rootScope', '$scope', '$location', '$timeout
             }, 2000);
         });
 
+        var updateUserInfoSub = postal.subscribe({
+            channel: 'user',
+            topic: 'updateUserInfo',
+            callback: function (data) {
+                console.log(data, '...')
+            }
+        });
+
+        $scope.$on('destroy', data => {
+            updateUserInfoSub.unsubscribe();
+        });
+
+
         //var lastScollPosition = 0;
         //$(window).scroll(function () {
         //    var currentScollPosition = $(window).scrollTop();

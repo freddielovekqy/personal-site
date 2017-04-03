@@ -10,7 +10,7 @@
 - **body-parser**：express推荐使用的解析客户端请求中间件https://github.com/expressjs/body-parser
 - **log4js**：nodejs的日志
 - **express-session**：用于管理nodeJS后台的session
-- **underscore**：工具类
+- **lodash**：工具类
 ```
 // 全局安装grunt管理工具
 npm install -g grunt-cli
@@ -20,8 +20,9 @@ npm install -g grunt-cli
 - **bootstrap**：前台css框架
 - **font-awesome**：使用到的字体与icon
 - **iCheck**：单选框与多选框美化
-- **underscore**：js工具插件
+- **lodash**：js工具插件
 - **wangeditor**：富文本编辑器
+- **postaljs**：前台事物发布订阅器
 
 > 网站所有静态文件全部交由nginx进行管理
 

@@ -11,7 +11,7 @@
             <span class="header-text">基本信息</span>
             <button class="btn btn-default btn-xs" ng-show="!edit" ng-click="editProfile()">编辑</button>
             <button class="btn btn-default btn-xs" ng-show="edit" ng-click="cancelEdit()">取消</button>
-            <button class="btn btn-default btn-xs" ng-show="edit" ng-click="updateProfile()">保存</button>
+            <button class="btn btn-default btn-xs" ng-show="edit" ng-click="updateBaseInfo()">保存</button>
         </div>
         <div class="account-basic-info-div">
             <div class="account-basic-info-item">
@@ -35,24 +35,42 @@
             <div class="account-basic-info-item">
                 <div class="account-info-item-label">性别</div>
                 <div class="account-info-item-value" ng-show="!edit">{{userInfo.sex}}</div>
-                <div class="account-info-item-edit" ng-show="edit"></div>
+                <div class="account-info-item-edit" ng-show="edit">
+                    <span class="sex-radios">
+                        <input type="radio" name="sexRadios" id="sexRadiosMan" value="男" ng-model="userInfo.sex">
+                        男
+                    </span>
+                    <span class="sex-radios">
+                        <input type="radio" name="sexRadios" id="sexRadiosWoman" value="女" ng-model="userInfo.sex">
+                        女
+                    </span>
+                </div>
             </div>
             <div class="account-basic-info-item">
                 <div class="account-info-item-label">生日</div>
-                <div class="account-info-item-value" ng-show="!edit">{{userInfo.birthday}}</div>
-                <div class="account-info-item-edit" ng-show="edit"></div>
+                <div class="account-info-item-value" ng-show="!edit">{{userInfo.birthday.format('yyyy-MM-dd')}}</div>
+                <div class="account-info-item-edit" ng-show="edit">
+                    <input class="form-control" type="date" ng-model="userInfo.birthday"/>
+                </div>
             </div>
             <div class="account-basic-info-item">
                 <div class="account-info-item-label">出生地</div>
                 <div class="account-info-item-value" ng-show="!edit">{{userInfo.birthPlace}}</div>
-                <div class="account-info-item-edit" ng-show="edit"></div>
+                <div class="account-info-item-edit" ng-show="edit">
+                    <select ng-model="selectedProvince" ng-options="city.label for city in chinaCities" class="form-control">
+                        </select>
+                    <select ng-model="selectedCity" ng-options="city.label for city in selectedProvince.cities" class="form-control">
+                    </select>
+                </div>
             </div>
             <div class="account-basic-info-item">
-                <div class="account-info-item-label">简介</div>
+                <div class="account-info-item-label" style="float: left; margin-right: 25px;">简介</div>
                 <div class="account-info-item-value" ng-show="!edit">{{userInfo.briefIntroduction}}</div>
-                <div class="account-info-item-edit" ng-show="edit"></div>
+                <div class="account-info-item-edit" ng-show="edit">
+                    <textarea class="form-control" rows="3" ng-model="userInfo.briefIntroduction"></textarea>
+                </div>
             </div>
-            <div class="account-basic-info-item" ng-show="!edit">
+            <div class="account-basic-info-item">
                 <div class="account-info-item-label">注册时间</div>
                 <div class="account-info-item-value">{{userInfo.createDate}}</div>
             </div>

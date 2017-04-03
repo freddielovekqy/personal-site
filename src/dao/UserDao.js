@@ -12,10 +12,20 @@ function findByEmail(email) {
     return User.find({ email: email }).exec();
 }
 
+function update(userDTO) {
+    var userId = userDTO._id;
+    return getById(userId).then(user => {
+        user = Object.assign(user, userDTO);
+        delete user._id;
+        return User.update({'_id': userId}, user);
+    });
+}
+
 function getById(userId) {
-    return User.find({_id: userId}).exec();
+    return User.findById({_id: userId}).exec();
 }
 
 module.exports.save = save;
+module.exports.update = update;
 module.exports.getById = getById;
 module.exports.findByEmail = findByEmail;

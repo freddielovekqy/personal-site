@@ -2,12 +2,12 @@ var userDao = require('../dao/UserDao');
 var logger = require('../common/log/log4js').logger;
 
 function register(userDTO) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
         if (userDTO.password !== userDTO.rePassword) {
             reject({ message: '两次输入的密码不一致' });
         }
         var promise = userDao.findByEmail(userDTO.email);
-        promise.then(function (data) {
+        promise.then(data => {
             console.log('findByEmail', data);
             // 根据邮件名查看是否已经有账号
             if (data.length === 0) {
@@ -23,9 +23,9 @@ function register(userDTO) {
 }
 
 function login(email, password) 　{
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
         var promise = userDao.findByEmail(email);
-        promise.then(function (data) {
+        promise.then(data => {
             if (!data || data.length === 0) {
                 reject({ errorMessage: '用户名不存在' });
             } else {
@@ -42,18 +42,23 @@ function login(email, password) 　{
     });
 }
 
+function update(userInfo) {
+    return new Promise((resolve, reject) => {
+        var promise = userDao.update(userInfo);
+        promise.then(data => {
+            resolve(data);
+        }).catch(data => {
+            reject({errorMessage: '数据库异常'});
+        });
+    });
+}
+
 function getUserInfo(userId) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
         var promise = userDao.getById(userId);
-        promise.then(function (data) {
-            if (data.length === 1) {
-                var user = data[0];
-                delete user['password'];
-                resolve(user);
-            } else {
-                logger.error();
-                reject({ errorMessage: '数据异常' });
-            }
+        promise.then(user => {
+            delete user['password'];
+            resolve(user);
         });
     });
 }
@@ -61,3 +66,4 @@ function getUserInfo(userId) {
 module.exports.register = register;
 module.exports.login = login;
 module.exports.getUserInfo = getUserInfo;
+module.exports.update = update;

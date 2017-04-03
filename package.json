@@ -13,6 +13,7 @@
     "grunt": "^1.0.1",
     "less": "^2.7.1",
     "less-middleware": "^2.2.0",
+    "lodash": "^4.17.4",
     "log4js": "^1.0.1",
     "mongoose": "^4.7.0",
     "underscore": "^1.8.3"
