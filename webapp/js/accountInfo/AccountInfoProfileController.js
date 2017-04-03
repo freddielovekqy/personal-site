@@ -7,16 +7,7 @@ accountInfoProfileModule.controller('AccountInfoProfileController', ['$scope', '
     function ($scope, $timeout, HttpService, CommonUserUtils, CommonConstants) {
         var userInfoBack = {};
         (function () {
-            var result = CommonUserUtils.getCurrentUserInfo();
-            if (result instanceof Promise) {
-                result.then((data) => {
-                    $timeout(() => {
-                        getUserInfo(data);
-                    }, 0);
-                });
-            } else {
-                getUserInfo(data);
-            }
+            getUserInfo();
             $scope.edit = false;
         })();
 
@@ -34,12 +25,7 @@ accountInfoProfileModule.controller('AccountInfoProfileController', ['$scope', '
                     userInfo: userInfoBack
                 },
                 success: function (data) {
-                    // 通知所有部件更新用户信息
-                    postal.publish({
-                        channel: 'user',
-                        topic: 'updateUserInfo',
-                        data: userInfoBack
-                    });
+                    CommonUserUtils.updateCurrentUserInfo();
                 }
             });
         };
@@ -52,7 +38,20 @@ accountInfoProfileModule.controller('AccountInfoProfileController', ['$scope', '
             $scope.edit = false;
         };
 
-        function getUserInfo(data) {
+        function getUserInfo() {
+            var result = CommonUserUtils.getCurrentUserInfo();
+            if (result && result instanceof Promise) {
+                result.then((data) => {
+                    $timeout(() => {
+                        setUserInfo(data);
+                    }, 0);
+                });
+            } else if (result) {
+                setUserInfo(result);
+            }
+        }
+
+        function setUserInfo(data) {
             userInfoBack = angular.copy(data);
             $scope.userInfo = data;
             $scope.userInfo.createDate = new Date($scope.userInfo.createDate).format('yyyy-MM-dd');
@@ -66,6 +65,18 @@ accountInfoProfileModule.controller('AccountInfoProfileController', ['$scope', '
             $scope.selectedProvince = $scope.chinaCities[_.findIndex($scope.chinaCities, {label: myCity.province})];
             $scope.selectedCity = $scope.selectedProvince.cities[_.findIndex($scope.selectedProvince.cities, {label: myCity.city})];
         }
+
+        var updateUserInfoSub = postal.subscribe({
+            channel: 'user',
+            topic: 'updateUserInfo',
+            callback: data => {
+                getUserInfo();
+            }
+        });
+
+        $scope.$on('destroy', () => {
+            updateUserInfoSub.unsubscribe();
+        });
     }
 ]);
 

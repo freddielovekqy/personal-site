@@ -35,8 +35,8 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
     $locationProvider.html5Mode(true);
 }]);
 
-app.controller('initController', ['$rootScope', '$scope', '$location', '$timeout', 'CommonUtils', 'HttpService', 'StorageUtils',
-    function ($rootScope, $scope, $location, $timeout, CommonUtils, HttpService, StorageUtils) {
+app.controller('initController', ['$rootScope', '$scope', '$location', '$timeout', 'CommonUtils', 'HttpService', 'StorageUtils', 'CommonUserUtils',
+    function ($rootScope, $scope, $location, $timeout, CommonUtils, HttpService, StorageUtils, CommonUserUtils) {
         $scope.showHeader = true;
         $scope.showLoginBtn = false;
         $scope.currentPath = getRootPath($location.path());
@@ -47,9 +47,9 @@ app.controller('initController', ['$rootScope', '$scope', '$location', '$timeout
         });
 
         $scope.$on('loginSuccess', function () {
-            $scope.currentUser = StorageUtils.getSessionStorage('currentUser');
+            getUserInfo();
         });
-        $scope.currentUser = StorageUtils.getSessionStorage('currentUser');
+        getUserInfo();
 
         $scope.changePath = function (path) {
             $scope.currentPath = getRootPath(path);
@@ -67,11 +67,24 @@ app.controller('initController', ['$rootScope', '$scope', '$location', '$timeout
             }, 2000);
         });
 
+        function getUserInfo() {
+            var result = CommonUserUtils.getCurrentUserInfo();
+            if (result && result instanceof Promise) {
+                result.then((data) => {
+                    $timeout(() => {
+                        $scope.currentUser = data;
+                    }, 0);
+                });
+            } else if (result) {  
+                $scope.currentUser = result;
+            }
+        }
+
         var updateUserInfoSub = postal.subscribe({
             channel: 'user',
             topic: 'updateUserInfo',
             callback: function (data) {
-                console.log(data, '...')
+                getUserInfo();
             }
         });
 

@@ -40,14 +40,26 @@ blogManagerModule.controller('BlogManagerController', ['$scope', '$compile', '$l
 
         function getUserInfo() {
             var result = CommonUserUtils.getCurrentUserInfo();
-            if (result instanceof Promise) {
+            if (result && result instanceof Promise) {
                 result.then(function (data) {
                     $scope.userInfo = data;
                 });
-            } else {
-                $scope.userInfo = data;
+            } else if (result) {
+                $scope.userInfo = result;
             }
         }
+        
+        var updateUserInfoSub = postal.subscribe({
+            channel: 'user',
+            topic: 'updateUserInfo',
+            callback: data => {
+                getUserInfo();
+            }
+        });
+
+        $scope.$on('destroy', () => {
+            updateUserInfoSub.unsubscribe();
+        });
 
     }
 ]);

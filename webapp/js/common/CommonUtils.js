@@ -48,9 +48,12 @@ app.service('CommonUserUtils', ['HttpService', function (HttpService) {
     var userBlogInfo = {};
 
     function getCurrentUserInfo() {
+        var currentUserId = localStorage.getItem('currentUserId');
+        if (!currentUserId) {
+            return;
+        }
         if (!userInfo) {
             return new Promise(function (resolve, reject) {
-                var currentUserId = localStorage.getItem('currentUserId');
                 HttpService.get({
                     url: 'api/user/getUserInfo/' + currentUserId,
                     success: function (data) {
@@ -66,6 +69,24 @@ app.service('CommonUserUtils', ['HttpService', function (HttpService) {
             return userInfo;
         }
     }
+
+    function updateCurrentUserInfo(callback) {
+        var currentUserId = localStorage.getItem('currentUserId');
+        HttpService.get({
+            url: 'api/user/getUserInfo/' + currentUserId,
+            success: function (data) {
+                userInfo = data;
+                postal.publish({
+                    channel: 'user',
+                    topic: 'updateUserInfo',
+                    data: {}
+                });
+                callback && callback(userInfo);
+            },
+            error: function (data) {
+            }
+        });
+    } 
 
     function getUserBlogInfo(userId) {
         if (!userBlogInfo[userId]) {
@@ -90,6 +111,7 @@ app.service('CommonUserUtils', ['HttpService', function (HttpService) {
 
     return {
         getCurrentUserInfo: getCurrentUserInfo,
+        updateCurrentUserInfo: updateCurrentUserInfo,
         getUserBlogInfo: getUserBlogInfo
     };
 }]);
