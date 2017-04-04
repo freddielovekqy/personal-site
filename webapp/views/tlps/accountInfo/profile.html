@@ -3,8 +3,7 @@
         <a href="#" class="list-group-item" ng-class="{'active': currentShowInfo === 'basicInfo'}" ng-click="changeInfoType('basicInfo')">基本信息</a>
         <a href="#" class="list-group-item" ng-class="{'active': currentShowInfo === 'detailInfo'}" ng-click="changeInfoType('detailInfo')">详细信息</a>
         <a href="#" class="list-group-item" ng-class="{'active': currentShowInfo === 'hobbies'}" ng-click="changeInfoType('hobbies')">兴趣爱好</a>
-        <a href="#" class="list-group-item" ng-class="{'active': currentShowInfo === 'education'}" ng-click="changeInfoType('education')">教育背景</a>
-        <a href="#" class="list-group-item" ng-class="{'active': currentShowInfo === 'workInfo'}" ng-click="changeInfoType('workInfo')">工作信息</a>
+        <a href="#" class="list-group-item" ng-class="{'active': currentShowInfo === 'educationAndWork'}" ng-click="changeInfoType('educationAndWork')">教育及职业</a>
     </div>
     <div class="account-info-category-item" ng-show="currentShowInfo === 'basicInfo'">
         <div class="account-info-header">
@@ -88,7 +87,9 @@
                 <div class="account-info-item-label">感情状况</div>
                 <div class="account-info-item-value" ng-show="!edit">{{userInfo.relationshipStatus}}</div>
                 <div class="account-info-item-edit" ng-show="edit">
-                    <div ng-repeat="relationship in relationshipStatuses" class="choice" ng-class="{'select': $scope.userInfo.relationshipStatus === relationship}">{{relationship}}</div>
+                    <div ng-repeat="relationship in relationshipStatuses" class="choice"
+                         ng-class="{'select': userInfo.relationshipStatus === relationship}"
+                         ng-click="changeRelationShip(relationship)">{{relationship}}</div>
                 </div>
             </div>
             <div class="account-info-item">
@@ -105,7 +106,7 @@
                 <div class="account-info-item-label">血型</div>
                 <div class="account-info-item-value" ng-show="!edit">{{userInfo.blood}}</div>
                 <div class="account-info-item-edit" ng-show="edit">
-                    <div ng-repeat="blood in bloods" class="choice" ng-class="{'select': $scope.userInfo.blood === blood}">{{blood}}</div>
+                    <div ng-repeat="blood in bloods" class="choice" ng-class="{'select': userInfo.blood === blood}" ng-click="changeBlood(blood)">{{blood}}</div>
                 </div>
             </div>
             <div class="account-info-item">
@@ -143,6 +144,102 @@
                 <div class="account-info-item-edit" ng-show="edit">
                     <input type="text" class="form-control" placeholder="请输入个人域名" ng-model="userInfo.personalWebsite">
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="account-info-category-item" ng-show="currentShowInfo === 'hobbies'">
+        <div class="account-info-header">
+            <span class="header-text">兴趣爱好</span>
+            <button class="btn btn-default btn-xs" ng-show="!edit" ng-click="editProfile()">编辑</button>
+            <button class="btn btn-default btn-xs" ng-show="edit" ng-click="cancelEdit()">取消</button>
+            <button class="btn btn-default btn-xs" ng-show="edit" ng-click="updateHobbyInfo()">保存</button>
+        </div>
+        <div class="account-info-page-div">
+            <div class="account-info-item">
+                <div class="account-info-item-label">音乐</div>
+                <div class="account-info-item-value" ng-show="!edit">{{userInfo.hobby.music}}</div>
+                <div class="account-info-item-edit" ng-show="edit">
+                    <input type="text" class="form-control" placeholder="请输入你喜欢的音乐" ng-model="userInfo.hobby.music">
+                </div>
+            </div>
+            <div class="account-info-item">
+                <div class="account-info-item-label">电影</div>
+                <div class="account-info-item-value" ng-show="!edit">{{userInfo.hobby.movie}}</div>
+                <div class="account-info-item-edit" ng-show="edit">
+                    <input type="text" class="form-control" placeholder="请输入你喜欢的电影" ng-model="userInfo.hobby.movie">
+                </div>
+            </div>
+            <div class="account-info-item">
+                <div class="account-info-item-label">运动</div>
+                <div class="account-info-item-value" ng-show="!edit">{{userInfo.hobby.sport}}</div>
+                <div class="account-info-item-edit" ng-show="edit">
+                    <input type="text" class="form-control" placeholder="请输入你喜欢的运动" ng-model="userInfo.hobby.sport">
+                </div>
+            </div>
+            <div class="account-info-item">
+                <div class="account-info-item-label">游戏</div>
+                <div class="account-info-item-value" ng-show="!edit">{{userInfo.hobby.game}}</div>
+                <div class="account-info-item-edit" ng-show="edit">
+                    <input type="text" class="form-control" placeholder="请输入你喜欢的游戏" ng-model="userInfo.hobby.game">
+                </div>
+            </div>
+            <div class="account-info-item">
+                <div class="account-info-item-label">食物</div>
+                <div class="account-info-item-value" ng-show="!edit">{{userInfo.hobby.food}}</div>
+                <div class="account-info-item-edit" ng-show="edit">
+                    <input type="text" class="form-control" placeholder="请输入你喜欢的食物" ng-model="userInfo.hobby.food">
+                </div>
+            </div>
+            <div class="account-info-item">
+                <div class="account-info-item-label">书籍</div>
+                <div class="account-info-item-value" ng-show="!edit">{{userInfo.hobby.book}}</div>
+                <div class="account-info-item-edit" ng-show="edit">
+                    <input type="text" class="form-control" placeholder="请输入你喜欢的书籍" ng-model="userInfo.hobby.book">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="account-info-category-item" ng-show="currentShowInfo === 'educationAndWork'">
+        <div class="account-info-header">
+            <span class="header-text">教育背景</span>
+        </div>
+        <div class="account-info-page-div" style="margin-bottom: 30px;">
+            <div class="add-education-or-work-button" ng-click="editEducation()" ng-show="!edit">
+                <span class="icon-plus"></span>
+                <span>添加教育信息</span>
+            </div>
+            <div class="edit-education-or-work" ng-show="edit">
+                <div class="education-or-work-label">
+                    <div>学校类型</div>
+                    <div>学校名称</div>
+                    <div>入学时间</div>
+                    <div ng-show="editEducation.schoolType === '大学' || editEducation.schoolType === '高职'">院系</div>
+                    <div ng-show="editEducation.schoolType !== '大学' && editEducation.schoolType !== '高职'">班级</div>
+                </div>
+                <div class="education-or-work-value">
+                    <div>
+                        <select ng-model="editEducation.schoolType" ng-options="schoolType for schoolType in schoolTypes" class="form-control"></select>
+                    </div>
+                    <div><input type="text" class="form-control" placeholder="请输入学校名称" ng-model="editEducation.schoolName"></div>
+                    <div>
+                        <select ng-model="editEducation.inYear" ng-options="year for year in years" class="form-control"></select>
+                    </div>
+                    <div ng-show="editEducation.schoolType === '大学' || editEducation.schoolType === '高职'">
+                        <input type="text" class="form-control" placeholder="请输入院系名称" ng-model="editEducation.department">
+                    </div>
+                    <div ng-show="editEducation.schoolType !== '大学' && editEducation.schoolType !== '高职'">
+                        <input type="text" class="form-control" placeholder="请输入班级名称" ng-model="editEducation.className">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="account-info-header">
+            <span class="header-text">职业信息</span>
+        </div>
+        <div class="account-info-page-div">
+            <div class="add-education-or-work-button">
+                <span class="icon-plus"></span>
+                <span>添加职业信息</span>
             </div>
         </div>
     </div>

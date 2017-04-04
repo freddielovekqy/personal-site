@@ -1,6 +1,15 @@
 var mongoose = require('../dao/db.js'),
     Schema = mongoose.Schema;
 
+var hobbySchema = new Schema({
+    music: { type: String },
+    movie: { type: String },
+    sport: { type: String },
+    game: { type: String },
+    food: { type: String },
+    book: { type: String }
+});
+
 var UserSchema = new Schema({
     email: { type: String },
     username: { type: String },
@@ -26,7 +35,12 @@ var UserSchema = new Schema({
     phoneNumber: { type: String },
     otherEmail: { type: String },
     QQ: { type: String },
-    personalWebsite: { type: String }
+    personalWebsite: { type: String },
+
+    /**
+     * 兴趣爱好
+     */
+    hobby: { type: hobbySchema }
 });
 
 module.exports = mongoose.model('User', UserSchema);

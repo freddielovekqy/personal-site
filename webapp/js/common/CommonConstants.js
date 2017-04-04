@@ -87,5 +87,6 @@ app.constant('CommonConstants', {
             label: '双鱼座'
         }
     ],
-    RELATIONSHIP_STATUS: ['单身', '恋爱中', '已婚']
+    RELATIONSHIP_STATUS: ['单身', '恋爱中', '已婚'],
+    SCHOOL_TYPES: ['小学', '初中', '中专', '高中', '高职', '大学', '硕士']
 });

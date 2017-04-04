@@ -10,7 +10,20 @@ accountInfoProfileModule.controller('AccountInfoProfileController', ['$scope', '
         $scope.constellations = CommonConstants.CONSTELLATIONS;
         $scope.bloods = CommonConstants.BLOOD_TYPES;
         $scope.relationshipStatuses = CommonConstants.RELATIONSHIP_STATUS;
+        $scope.schoolTypes = CommonConstants.SCHOOL_TYPES;
+        $scope.years = [];
+        for (var i = new Date().getFullYear(); i > 1990; i--) {
+            $scope.years.push(i);
+        }
+
         $scope.currentShowInfo = 'basicInfo';
+        $scope.editEducation = {
+            schoolType: '',
+            schoolName: '',
+            inYear: '',
+            department: '',
+            className: ''
+        };
 
         (function () {
             getUserInfo();
@@ -29,19 +42,36 @@ accountInfoProfileModule.controller('AccountInfoProfileController', ['$scope', '
             userInfoBack.birthday = $scope.userInfo.birthday;
             userInfoBack.birthPlace = $scope.selectedProvince.label + '-' + $scope.selectedCity.label;
             userInfoBack.briefIntroduction = $scope.userInfo.briefIntroduction;
-            HttpService.post({
-                url: 'api/user/update',
-                params: {
-                    userInfo: userInfoBack
-                },
-                success: function (data) {
-                    CommonUserUtils.updateCurrentUserInfo();
-                }
-            });
+            updateUserInfo();
         };
 
         $scope.updateDetailInfo = function () {
+            $scope.edit = false;
+            userInfoBack.relationshipStatus = $scope.userInfo.relationshipStatus;
+            userInfoBack.livePlace = $scope.selectedLiveProvince.label + '-' + $scope.selectedLiveCity.label;
+            userInfoBack.blood = $scope.userInfo.blood;
+            userInfoBack.constellation = $scope.selectedConstellation.label;
+            userInfoBack.phoneNumber = $scope.userInfo.phoneNumber;
+            userInfoBack.otherEmail = $scope.userInfo.otherEmail;
+            userInfoBack.QQ = $scope.userInfo.QQ;
+            userInfoBack.personalWebsite = $scope.userInfo.personalWebsite;
+            updateUserInfo();
+        };
 
+        $scope.updateHobbyInfo = function () {
+            $scope.edit = false;
+            userInfoBack.hobby = $scope.userInfo.hobby;
+            updateUserInfo();
+        };
+
+        $scope.updateEducationInfo = function () {
+            $scope.edit = false;
+            userInfoBack.hobby = $scope.userInfo.hobby;
+            updateUserInfo();
+        };
+
+        $scope.editEducation = function () {
+            $scope.edit = true;
         };
 
         $scope.editProfile = function () {
@@ -50,6 +80,14 @@ accountInfoProfileModule.controller('AccountInfoProfileController', ['$scope', '
 
         $scope.cancelEdit = function () {
             $scope.edit = false;
+        };
+
+        $scope.changeRelationShip = function (relationship) {
+            $scope.userInfo.relationshipStatus = relationship;
+        };
+
+        $scope.changeBlood = function (blood) {
+            $scope.userInfo.blood = blood;
         };
 
         function getUserInfo() {
@@ -63,6 +101,18 @@ accountInfoProfileModule.controller('AccountInfoProfileController', ['$scope', '
             } else if (result) {
                 setUserInfo(result);
             }
+        }
+
+        function updateUserInfo() {
+            HttpService.post({
+                url: 'api/user/update',
+                params: {
+                    userInfo: userInfoBack
+                },
+                success: function (data) {
+                    CommonUserUtils.updateCurrentUserInfo();
+                }
+            });
         }
 
         function setUserInfo(data) {
