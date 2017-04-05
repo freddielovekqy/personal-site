@@ -18,7 +18,13 @@ accountInfoProfileModule.controller('AccountInfoProfileController', ['$scope', '
 
         $scope.currentShowInfo = 'basicInfo';
         $scope.editedEducation = {};
+        $scope.editedWork = {};
         $scope.educations = [];
+        $scope.works = [];
+
+        $scope.editEducationFlag = false;
+        $scope.editWorkFlag = false;
+        $scope.edit = false;
 
         (function () {
             getUserInfo();
@@ -60,9 +66,9 @@ accountInfoProfileModule.controller('AccountInfoProfileController', ['$scope', '
         };
 
         $scope.confirmEducation = function () {
-            $scope.edit = false;
+            $scope.editEducationFlag = false;
             HttpService.post({
-                url: 'api/user/addOrUpdateEducation',
+                url: 'api/user/education',
                 params: {
                     userId: $scope.userInfo._id,
                     educationInfo: $scope.editedEducation
@@ -74,10 +80,29 @@ accountInfoProfileModule.controller('AccountInfoProfileController', ['$scope', '
             });
         };
 
+        $scope.confirmWork = function () {
+            $scope.editWorkFlag = false;
+            HttpService.post({
+                url: 'api/user/work',
+                params: {
+                    userId: $scope.userInfo._id,
+                    workInfo: $scope.editedWork
+                },
+                success: function (data) {
+                    $scope.editedWork = {};
+                    CommonUserUtils.updateCurrentUserInfo();
+                }
+            });
+        };
 
-        $scope.editEducation = function (education) {
+        $scope.editWork = function (work = {}) {
+            $scope.editedWork = angular.copy(work);
+            $scope.editWorkFlag = true;
+        };
+
+        $scope.editEducation = function (education = {}) {
             $scope.editedEducation = angular.copy(education);
-            $scope.edit = true;
+            $scope.editEducationFlag = true;
         };
 
         $scope.editProfile = function () {
@@ -86,7 +111,10 @@ accountInfoProfileModule.controller('AccountInfoProfileController', ['$scope', '
 
         $scope.cancelEdit = function () {
             $scope.edit = false;
-            $scope.editEducation = {};
+            $scope.editWorkFlag = false;
+            $scope.editEducationFlag = false;
+            $scope.editedEducation = {};
+            $scope.editedWork = {};
         };
 
         $scope.changeRelationShip = function (relationship) {

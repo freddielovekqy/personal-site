@@ -12,9 +12,9 @@ router.post('/register', function (request, response, next) {
     logger.info('register', userDTO);
     
     var promise = userService.register(userDTO);
-    promise.then(function (data) {
+    promise.then(data => {
         response.send(JSON.stringify(data));
-    }).catch(function (data) {
+    }).catch(data => {
         response.send(JSON.stringify(data));
     });
 });
@@ -23,43 +23,50 @@ router.post('/login', function (request, response, next) {
     var email = request.body.email;
     var password = request.body.password;
     logger.info('login', email);
-    var promise = userService.login(email, password);
-    promise.then(function (data) {
+    userService.login(email, password).then(data => {
         request.session.currentUser = {
             id: data._id
         };
         response.send(JSON.stringify(data));
-    }).catch(function (data) {
+    }).catch(data => {
         response.send(JSON.stringify(data));
     });
 });
 
 router.post('/update', function (request, response, next) {
     var userInfo = request.body.userInfo;
-    var promise = userService.update(userInfo);
-    promise.then(function (data) {
+    userService.update(userInfo).then(data => {
         response.send(JSON.stringify(data));
-    }).catch(function (data) {
+    }).catch(data => {
         response.send(JSON.stringify(data));
     });
 });
 
 router.get('/getUserInfo/:userId', function (request, response, next) {
     var userId = request.params.userId;
-    var promise = userService.getUserInfo(userId);
-    promise.then(function (data) {
+    userService.getUserInfo(userId).then(data => {
         response.send(JSON.stringify(data));
     }).catch(function (data) {
         response.send(JSON.stringify(data));
     });
 });
 
-router.post('/addOrUpdateEducation', (request, response, next) => {
-    console.log('addEducation..');
+router.post('/education', (request, response, next) => {
     var userId = request.body.userId;
     var educationInfo = request.body.educationInfo;
-    var promise = userService.addOrUpdateEducation(userId, educationInfo);
-    promise.then(data => {
+
+    userService.saveOrUpdateEducation(userId, educationInfo).then(data => {
+        response.send(JSON.stringify(data));
+    }).catch(data => {
+        response.send(JSON.stringify(data));
+    });
+});
+
+router.post('/work', (request, response, next) => {
+    var userId = request.body.userId;
+    var workInfo = request.body.workInfo;
+
+    userService.saveOrUpdateWork(userId, workInfo).then(data => {
         response.send(JSON.stringify(data));
     }).catch(data => {
         response.send(JSON.stringify(data));

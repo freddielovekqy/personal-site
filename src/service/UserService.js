@@ -63,7 +63,7 @@ function getUserInfo(userId) {
     });
 }
 
-function addOrUpdateEducation(userId, educationInfo) {
+function saveOrUpdateEducation(userId, educationInfo) {
     return new Promise((resolve, reject) => {
         console.log('addEducationInfo service..');
         var promise;
@@ -80,8 +80,25 @@ function addOrUpdateEducation(userId, educationInfo) {
     });
 }   
 
+function saveOrUpdateWork(userId, workInfo) {
+    return new Promise((resolve, reject) => {
+        var promise;
+        if (workInfo._id) {
+            promise = userDao.updateWorkInfo(userId, workInfo);
+        } else {
+            promise = userDao.addWorkInfo(userId, workInfo);
+        }
+        promise.then(data => {
+            resolve(data);
+        }).catch(data => {
+            reject({errorMessage: '数据库异常'});
+        });
+    });
+}
+
 module.exports.register = register;
 module.exports.login = login;
 module.exports.getUserInfo = getUserInfo;
 module.exports.update = update;
-module.exports.addOrUpdateEducation = addOrUpdateEducation;
+module.exports.saveOrUpdateEducation = saveOrUpdateEducation;
+module.exports.saveOrUpdateWork = saveOrUpdateWork;

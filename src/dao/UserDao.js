@@ -1,6 +1,7 @@
 var UserSchemaModule = require("../model/user.js");
 var User = UserSchemaModule.User;
 var Education = UserSchemaModule.Education;
+var Work = UserSchemaModule.Work;
 
 function save(userDTO) {
     var user = new User({
@@ -51,9 +52,33 @@ function updateEducationInfo(userId, educationInfo) {
     return User.update({'educations._id': educationInfo._id}, {$set: {'educations.$': educationEntity}});
 }
 
+function addWorkInfo(userId, workInfo) {
+    var workEntity = new Work({
+        company: workInfo.company,
+        department: workInfo.department,
+        startYear: workInfo.startYear,
+        endYear: workInfo.endYear,
+        location: workInfo.location
+    });
+    return User.update({'_id': userId}, {$addToSet: {'works': workEntity}});
+}
+
+function updateWorkInfo(userId, workInfo) {
+    var workEntity = new Work({
+        company: workInfo.company,
+        department: workInfo.department,
+        startYear: workInfo.startYear,
+        endYear: workInfo.endYear,
+        location: workInfo.location
+    });
+    return User.update({'works._id': workInfo._id}, {$set: {'works.$': workEntity}});
+}
+
 module.exports.save = save;
 module.exports.update = update;
 module.exports.getById = getById;
 module.exports.findByEmail = findByEmail;
 module.exports.addEducationInfo = addEducationInfo;
 module.exports.updateEducationInfo = updateEducationInfo;
+module.exports.addWorkInfo = addWorkInfo;
+module.exports.updateWorkInfo = updateWorkInfo;

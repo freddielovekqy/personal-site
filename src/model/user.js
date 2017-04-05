@@ -71,3 +71,4 @@ var UserSchema = new Schema({
 
 module.exports.User = mongoose.model('User', UserSchema);
 module.exports.Education = mongoose.model('Education', EducationInfoSchema);
+module.exports.Work = mongoose.model('Wrok', WorkInfoSchema);
