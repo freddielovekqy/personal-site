@@ -202,9 +202,11 @@
     <div class="account-info-category-item" ng-show="currentShowInfo === 'educationAndWork'">
         <div class="account-info-header">
             <span class="header-text">教育背景</span>
+            <!--<button class="btn btn-default btn-xs" ng-show="edit" ng-click="cancelEdit()">取消</button>-->
+            <!--<button class="btn btn-default btn-xs" ng-show="edit" ng-click="updateEducationAndWork()">保存</button>-->
         </div>
         <div class="account-info-page-div" style="margin-bottom: 30px;">
-            <div class="add-education-or-work-button" ng-click="editEducation()" ng-show="!edit">
+            <div class="add-education-or-work-button" ng-click="editProfile()" ng-show="!edit">
                 <span class="icon-plus"></span>
                 <span>添加教育信息</span>
             </div>
@@ -213,28 +215,41 @@
                     <div>学校类型</div>
                     <div>学校名称</div>
                     <div>入学时间</div>
-                    <div ng-show="editEducation.schoolType === '大学' || editEducation.schoolType === '高职'">院系</div>
-                    <div ng-show="editEducation.schoolType !== '大学' && editEducation.schoolType !== '高职'">班级</div>
+                    <div ng-show="editedEducation.schoolType === '大学' || editedEducation.schoolType === '高职'">院系</div>
+                    <div ng-show="editedEducation.schoolType !== '大学' && editedEducation.schoolType !== '高职'">班级</div>
                 </div>
                 <div class="education-or-work-value">
                     <div>
-                        <select ng-model="editEducation.schoolType" ng-options="schoolType for schoolType in schoolTypes" class="form-control"></select>
+                        <select ng-model="editedEducation.schoolType" ng-options="schoolType for schoolType in schoolTypes" class="form-control"></select>
                     </div>
-                    <div><input type="text" class="form-control" placeholder="请输入学校名称" ng-model="editEducation.schoolName"></div>
+                    <div><input type="text" class="form-control" placeholder="请输入学校名称" ng-model="editedEducation.schoolName"></div>
                     <div>
-                        <select ng-model="editEducation.inYear" ng-options="year for year in years" class="form-control"></select>
+                        <select ng-model="editedEducation.inYear" ng-options="year for year in years" class="form-control"></select>
                     </div>
-                    <div ng-show="editEducation.schoolType === '大学' || editEducation.schoolType === '高职'">
-                        <input type="text" class="form-control" placeholder="请输入院系名称" ng-model="editEducation.department">
+                    <div ng-show="editedEducation.schoolType === '大学' || editedEducation.schoolType === '高职'">
+                        <input type="text" class="form-control" placeholder="请输入院系名称" ng-model="editedEducation.department">
                     </div>
-                    <div ng-show="editEducation.schoolType !== '大学' && editEducation.schoolType !== '高职'">
-                        <input type="text" class="form-control" placeholder="请输入班级名称" ng-model="editEducation.className">
+                    <div ng-show="editedEducation.schoolType !== '大学' && editedEducation.schoolType !== '高职'">
+                        <input type="text" class="form-control" placeholder="请输入班级名称" ng-model="editedEducation.className">
                     </div>
                 </div>
+                <div class="submit-education-or-work-button">
+                    <button type="button" class="btn btn-primary btn-sm" ng-click="confirmEducation()">确定</button>
+                    <button type="button" class="btn btn-link btn-sm" ng-click="cancelEdit()">取消</button>
+                </div>
+            </div>
+            <div class="education-item" ng-repeat="education in educations">
+                <div>{{education.schoolType}}</div>
+                <div>{{education.schoolName}}({{education.inYear}})</div>
+                <div style="margin-right: 40px;">{{education.department || education.className}}</div>
+                <span class="icon-pencil" ng-click="editEducation(education)"></span>
+                <span class="icon-remove"></span>
             </div>
         </div>
         <div class="account-info-header">
             <span class="header-text">职业信息</span>
+            <button class="btn btn-default btn-xs" ng-show="edit" ng-click="cancelEdit()">取消</button>
+            <button class="btn btn-default btn-xs" ng-show="edit" ng-click="updateEducationAndWork()">保存</button>
         </div>
         <div class="account-info-page-div">
             <div class="add-education-or-work-button">

@@ -1,4 +1,6 @@
-var User = require("../model/user.js");
+var UserSchemaModule = require("../model/user.js");
+var User = UserSchemaModule.User;
+var Education = UserSchemaModule.Education;
 
 function save(userDTO) {
     var user = new User({
@@ -25,7 +27,33 @@ function getById(userId) {
     return User.findById({_id: userId}).exec();
 }
 
+function addEducationInfo(userId, educationInfo) {
+    console.log('addEducationInfo dao:', userId, educationInfo);
+    var educationEntity = new Education({
+        schoolType: educationInfo.schoolType,
+        schoolName: educationInfo.schoolName,
+        inYear: educationInfo.inYear,
+        className: educationInfo.className,
+        department: educationInfo.department
+    });
+    console.log("educationEntity", educationEntity);
+    return User.update({'_id': userId}, {$addToSet: {'educations': educationEntity}});
+}
+
+function updateEducationInfo(userId, educationInfo) {
+    var educationEntity = new Education({
+        schoolType: educationInfo.schoolType,
+        schoolName: educationInfo.schoolName,
+        inYear: educationInfo.inYear,
+        className: educationInfo.className,
+        department: educationInfo.department
+    });
+    return User.update({'educations._id': educationInfo._id}, {$set: {'educations.$': educationEntity}});
+}
+
 module.exports.save = save;
 module.exports.update = update;
 module.exports.getById = getById;
 module.exports.findByEmail = findByEmail;
+module.exports.addEducationInfo = addEducationInfo;
+module.exports.updateEducationInfo = updateEducationInfo;

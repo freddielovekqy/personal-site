@@ -54,4 +54,16 @@ router.get('/getUserInfo/:userId', function (request, response, next) {
     });
 });
 
+router.post('/addOrUpdateEducation', (request, response, next) => {
+    console.log('addEducation..');
+    var userId = request.body.userId;
+    var educationInfo = request.body.educationInfo;
+    var promise = userService.addOrUpdateEducation(userId, educationInfo);
+    promise.then(data => {
+        response.send(JSON.stringify(data));
+    }).catch(data => {
+        response.send(JSON.stringify(data));
+    });
+});
+
 module.exports = router;

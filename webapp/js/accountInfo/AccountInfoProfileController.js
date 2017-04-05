@@ -17,13 +17,8 @@ accountInfoProfileModule.controller('AccountInfoProfileController', ['$scope', '
         }
 
         $scope.currentShowInfo = 'basicInfo';
-        $scope.editEducation = {
-            schoolType: '',
-            schoolName: '',
-            inYear: '',
-            department: '',
-            className: ''
-        };
+        $scope.editedEducation = {};
+        $scope.educations = [];
 
         (function () {
             getUserInfo();
@@ -64,13 +59,24 @@ accountInfoProfileModule.controller('AccountInfoProfileController', ['$scope', '
             updateUserInfo();
         };
 
-        $scope.updateEducationInfo = function () {
+        $scope.confirmEducation = function () {
             $scope.edit = false;
-            userInfoBack.hobby = $scope.userInfo.hobby;
-            updateUserInfo();
+            HttpService.post({
+                url: 'api/user/addOrUpdateEducation',
+                params: {
+                    userId: $scope.userInfo._id,
+                    educationInfo: $scope.editedEducation
+                },
+                success: function (data) {
+                    $scope.editedEducation = {};
+                    CommonUserUtils.updateCurrentUserInfo();
+                }
+            });
         };
 
-        $scope.editEducation = function () {
+
+        $scope.editEducation = function (education) {
+            $scope.editedEducation = angular.copy(education);
             $scope.edit = true;
         };
 
@@ -80,6 +86,7 @@ accountInfoProfileModule.controller('AccountInfoProfileController', ['$scope', '
 
         $scope.cancelEdit = function () {
             $scope.edit = false;
+            $scope.editEducation = {};
         };
 
         $scope.changeRelationShip = function (relationship) {
@@ -120,6 +127,8 @@ accountInfoProfileModule.controller('AccountInfoProfileController', ['$scope', '
             $scope.userInfo = data;
             $scope.userInfo.createDate = new Date($scope.userInfo.createDate).format('yyyy-MM-dd');
             $scope.userInfo.birthday = new Date($scope.userInfo.birthday);
+
+            $scope.educations = $scope.userInfo.educations;
 
             if ($scope.userInfo.birthPlace) {
                 var myCity = {

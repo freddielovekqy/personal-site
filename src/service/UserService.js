@@ -63,7 +63,25 @@ function getUserInfo(userId) {
     });
 }
 
+function addOrUpdateEducation(userId, educationInfo) {
+    return new Promise((resolve, reject) => {
+        console.log('addEducationInfo service..');
+        var promise;
+        if (educationInfo._id) {
+            promise = userDao.updateEducationInfo(userId, educationInfo);
+        } else {
+            promise = userDao.addEducationInfo(userId, educationInfo);
+        }
+        promise.then(data => {
+            resolve(data);
+        }).catch(data => {
+            reject({errorMessage: '数据库异常'});
+        });
+    });
+}   
+
 module.exports.register = register;
 module.exports.login = login;
 module.exports.getUserInfo = getUserInfo;
 module.exports.update = update;
+module.exports.addOrUpdateEducation = addOrUpdateEducation;

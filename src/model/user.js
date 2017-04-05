@@ -1,13 +1,29 @@
 var mongoose = require('../dao/db.js'),
     Schema = mongoose.Schema;
 
-var hobbySchema = new Schema({
+var HobbySchema = new Schema({
     music: { type: String },
     movie: { type: String },
     sport: { type: String },
     game: { type: String },
     food: { type: String },
     book: { type: String }
+});
+
+var EducationInfoSchema = new Schema({
+    schoolType: { type: String },
+    schoolName: { type: String },
+    inYear: { type: Number },
+    className: { type: String },
+    department: { type: String }
+});
+
+var WorkInfoSchema = new Schema({
+    company: { type: String },
+    department: { type: String },
+    startYear: { type: Number },
+    endYear: { type: Number },
+    location: { type: String }
 });
 
 var UserSchema = new Schema({
@@ -40,7 +56,18 @@ var UserSchema = new Schema({
     /**
      * 兴趣爱好
      */
-    hobby: { type: hobbySchema }
+    hobby: { type: HobbySchema },
+
+    /**
+     * 教育信息
+     */
+    educations: [EducationInfoSchema],
+
+    /**
+     * 职业信息
+     */
+    works: [WorkInfoSchema]
 });
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports.User = mongoose.model('User', UserSchema);
+module.exports.Education = mongoose.model('Education', EducationInfoSchema);
