@@ -52,6 +52,10 @@ function updateEducationInfo(userId, educationInfo) {
     return User.update({'educations._id': educationInfo._id}, {$set: {'educations.$': educationEntity}});
 }
 
+function deleteEducationInfo(userId, educationId) {
+    return User.update({_id: userId}, {$pull: {educations: {_id: educationId}}});
+}
+
 function addWorkInfo(userId, workInfo) {
     var workEntity = new Work({
         company: workInfo.company,
@@ -74,11 +78,17 @@ function updateWorkInfo(userId, workInfo) {
     return User.update({'works._id': workInfo._id}, {$set: {'works.$': workEntity}});
 }
 
+function deleteWorkInfo(userId, workId) {
+    return User.update({_id: userId}, {$pull: {works: {_id: workId}}});
+}
+
 module.exports.save = save;
 module.exports.update = update;
 module.exports.getById = getById;
 module.exports.findByEmail = findByEmail;
 module.exports.addEducationInfo = addEducationInfo;
 module.exports.updateEducationInfo = updateEducationInfo;
+module.exports.deleteEducationInfo = deleteEducationInfo;
 module.exports.addWorkInfo = addWorkInfo;
 module.exports.updateWorkInfo = updateWorkInfo;
+module.exports.deleteWorkInfo = deleteWorkInfo;

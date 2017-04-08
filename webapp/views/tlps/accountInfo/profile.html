@@ -242,8 +242,10 @@
                 <div>{{education.schoolType}}</div>
                 <div>{{education.schoolName}}({{education.inYear}})</div>
                 <div style="margin-right: 40px;">{{education.department || education.className}}</div>
-                <span class="icon-pencil" ng-click="editEducation(education)"></span>
-                <span class="icon-remove"></span>
+                <div class="operation">
+                    <span class="icon-pencil" ng-click="editEducation(education)"></span>
+                    <span class="icon-remove" ng-click="deleteEducation(education)"></span>
+                </div>
             </div>
         </div>
         <div class="account-info-header">
@@ -280,6 +282,16 @@
                     <button type="button" class="btn btn-primary btn-sm" ng-click="confirmWork()">确定</button>
                     <button type="button" class="btn btn-link btn-sm" ng-click="cancelEdit()">取消</button>
                 </div>
+            </div>
+            <div class="work-item" ng-repeat="work in userInfo.works">
+                <div style="margin-left: 10px;">{{work.company}}</div>
+                <div>({{work.startYear}} - {{work.endYear}})</div>
+                <div style="margin: 0 40px 0 20px;">职位：{{work.department}}</div>
+                <div class="operation">
+                    <span class="icon-pencil" ng-click="editWork(work)"></span>
+                    <span class="icon-remove" ng-click="deleteWork(work)"></span>
+                </div>
+                <div class="location">地区：{{work.location}}</div>
             </div>
         </div>
     </div>

@@ -20,7 +20,6 @@ accountInfoProfileModule.controller('AccountInfoProfileController', ['$scope', '
         $scope.editedEducation = {};
         $scope.editedWork = {};
         $scope.educations = [];
-        $scope.works = [];
 
         $scope.editEducationFlag = false;
         $scope.editWorkFlag = false;
@@ -80,6 +79,21 @@ accountInfoProfileModule.controller('AccountInfoProfileController', ['$scope', '
             });
         };
 
+        $scope.deleteEducation = function (education) {
+            $scope.editEducationFlag = false;
+            HttpService.delete({
+                url: 'api/user/education',
+                params: {
+                    userId: $scope.userInfo._id,
+                    educationId: education._id
+                },
+                success: function (data) {
+                    $scope.editedEducation = {};
+                    CommonUserUtils.updateCurrentUserInfo();
+                }
+            });
+        };
+
         $scope.confirmWork = function () {
             $scope.editWorkFlag = false;
             HttpService.post({
@@ -87,6 +101,21 @@ accountInfoProfileModule.controller('AccountInfoProfileController', ['$scope', '
                 params: {
                     userId: $scope.userInfo._id,
                     workInfo: $scope.editedWork
+                },
+                success: function (data) {
+                    $scope.editedWork = {};
+                    CommonUserUtils.updateCurrentUserInfo();
+                }
+            });
+        };
+
+        $scope.deleteWork = function (work) {
+            $scope.editWorkFlag = false;
+            HttpService.delete({
+                url: 'api/user/work',
+                params: {
+                    userId: $scope.userInfo._id,
+                    workId: work._id
                 },
                 success: function (data) {
                     $scope.editedWork = {};

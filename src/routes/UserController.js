@@ -62,11 +62,32 @@ router.post('/education', (request, response, next) => {
     });
 });
 
+router.delete('/education', (request, response, next) => {
+    var userId = request.query.userId;
+    var educationId = request.query.educationId;
+
+    userService.deleteEducation(userId, educationId).then(data => {
+        response.send(JSON.stringify(data));
+    }).catch(data => {
+        response.send(JSON.stringify(data));
+    });
+});
+
 router.post('/work', (request, response, next) => {
     var userId = request.body.userId;
     var workInfo = request.body.workInfo;
 
     userService.saveOrUpdateWork(userId, workInfo).then(data => {
+        response.send(JSON.stringify(data));
+    }).catch(data => {
+        response.send(JSON.stringify(data));
+    });
+});
+
+router.delete('/work', (request, response, next) => {
+    var userId = request.query.userId;
+    var workId = request.query.workId;
+    userService.deleteWork(userId, workId).then(data => {
         response.send(JSON.stringify(data));
     }).catch(data => {
         response.send(JSON.stringify(data));

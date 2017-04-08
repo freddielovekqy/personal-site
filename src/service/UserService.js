@@ -22,7 +22,7 @@ function register(userDTO) {
 
 }
 
-function login(email, password) 　{
+function login(email, password) {
     return new Promise((resolve, reject) => {
         var promise = userDao.findByEmail(email);
         promise.then(data => {
@@ -48,7 +48,7 @@ function update(userInfo) {
         promise.then(data => {
             resolve(data);
         }).catch(data => {
-            reject({errorMessage: '数据库异常'});
+            reject({ errorMessage: '数据库异常' });
         });
     });
 }
@@ -75,10 +75,21 @@ function saveOrUpdateEducation(userId, educationInfo) {
         promise.then(data => {
             resolve(data);
         }).catch(data => {
-            reject({errorMessage: '数据库异常'});
+            reject({ errorMessage: '数据库异常' });
         });
     });
-}   
+}
+
+function deleteEducation(userId, educationId) {
+    console.log("delete education", userId, educationId)
+    return new Promise((resolve, rejcet) => {
+        userDao.deleteEducationInfo(userId, educationId).then(data => {
+            resolve(data);
+        }).catch(data => {
+            rejcet({errorMessage: '数据库异常'});
+        });
+    });
+}
 
 function saveOrUpdateWork(userId, workInfo) {
     return new Promise((resolve, reject) => {
@@ -91,7 +102,17 @@ function saveOrUpdateWork(userId, workInfo) {
         promise.then(data => {
             resolve(data);
         }).catch(data => {
-            reject({errorMessage: '数据库异常'});
+            reject({ errorMessage: '数据库异常' });
+        });
+    });
+}
+
+function deleteWork(userId, workId) {
+    return new Promise((resolve, rejcet) => {
+        userDao.deleteWorkInfo(userId, workId).then(data => {
+            resolve(data);
+        }).catch(data => {
+            rejcet({errorMessage: '数据库异常'});
         });
     });
 }
@@ -101,4 +122,6 @@ module.exports.login = login;
 module.exports.getUserInfo = getUserInfo;
 module.exports.update = update;
 module.exports.saveOrUpdateEducation = saveOrUpdateEducation;
+module.exports.deleteEducation = deleteEducation;
 module.exports.saveOrUpdateWork = saveOrUpdateWork;
+module.exports.deleteWork = deleteWork;
