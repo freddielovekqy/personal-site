@@ -177,7 +177,10 @@ body {
         height: -moz-calc(~"100% - @{top-height} - @{paddingTop}");
         height: -webkit-calc(~"100% - @{top-height} - @{paddingTop}");
         height: calc(~"100% - @{top-height} - @{paddingTop}");
-        position: relative;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
         top: @header-height;
     }
 }

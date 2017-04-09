@@ -1,0 +1,114 @@
+.dynamic-item {
+  background: #ffffff;
+  margin-top: 10px;
+  position: relative;
+  border-radius: 3px;
+  .icon-angle-down {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+    &:hover {
+      color: #2ba7ff;
+    }
+  }
+  .dynamic-info() {
+    .user-image {
+      width: 50px;
+      height: 50px;
+      line-height: 25px;
+      float: left;
+      margin-right: 10px;
+      img {
+        width: 100%;
+        border-radius: 50%;
+      }
+    }
+    .username {
+      line-height: 25px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .dynamic-other-info {
+      font-size: 12px;
+      color: #999;
+      line-height: 20px;
+    }
+  }
+
+  .dynamic-foot-operation() {
+    overflow: auto;
+    & > div {
+      width: 25%;
+      line-height: 40px;
+      float: left;
+      display: inline-block;
+      text-align: center;
+      position: relative;
+      .operation-text {
+        width: 100%;
+        display: inline-block;
+        height: 25px;
+        line-height: 25px;
+        border-right: 1px solid #ccc;
+        cursor: pointer;
+        &:hover {
+          color: #2ba7ff;
+        }
+        .icon {
+          margin-right: 5px;
+          &.operated, &.icon-star {
+            color: #2ba7ff;
+          }
+        }
+      }
+    }
+    .good {
+      span {
+        border-right: none;
+      }
+    }
+  }
+
+  .personal-dynamic-info {
+    padding: 20px 20px 5px 20px;
+    .dynamic-info();
+  }
+  .original-dynamic-info {
+    padding: 5px 20px 0 80px;
+    background: #efefef;
+    .dynamic-info();
+    .dynamic-info-detail {
+      font-size: 12px;
+    }
+    .dynamic-foot-div {
+      overflow: auto;
+      font-size: 12px;
+      color: #999;
+      line-height: 20px;
+      .dynamic-other-info {
+        padding: 5px 0;
+        float: left;
+      }
+      .dynamic-foot-operation {
+        .dynamic-foot-operation();
+        overflow: auto;
+        float: right;
+        width: initial;
+        & > div {
+          width: inherit;
+          line-height: 30px;
+          .operation-text {
+            height: 15px;
+            line-height: 15px;
+            padding: 0 10px;
+          }
+        }
+      }
+    }
+  }
+
+  .dynamic-foot-operation {
+    .dynamic-foot-operation();
+  }
+}

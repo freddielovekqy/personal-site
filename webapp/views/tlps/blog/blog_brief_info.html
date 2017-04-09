@@ -1,0 +1,49 @@
+<div class="dynamic-item">
+    <div class="icon-angle-down icon-large"></div>
+    <div class="personal-dynamic-info">
+        <div class="user-image">
+            <img src="{{blogInfo.userImage}}" alt=""/>
+        </div>
+        <div class="username">{{blogInfo.userName}}</div>
+        <div class="dynamic-other-info">{{blogInfo.createDate}} 来自 {{blogInfo.source}}</div>
+        <div class="personal-dynamic-info-detail">{{blogInfo.content}}</div>
+    </div>
+    <div class="original-dynamic-info">
+        <div class="username">{{blogInfo.originBlogInfo.userName}}</div>
+        <div class="dynamic-info-detail">{{blogInfo.originBlogInfo.content}}</div>
+        <div class="dynamic-foot-div">
+            <div class="dynamic-other-info">{{blogInfo.originBlogInfo.createDate}} 来自 {{blogInfo.originBlogInfo.source}}</div>
+            <div class="dynamic-foot-operation">
+                <div class="forward">
+                    <span class="operation-text"><span class="icon icon-reply"></span>{{blogInfo.originBlogInfo.replyNum > 0 ? blogInfo.originBlogInfo.replyNum : '转发'}}</span>
+                </div>
+                <div class="comment">
+                    <span class="operation-text"><span class="icon icon-comments-alt"></span>{{blogInfo.originBlogInfo.commentsNum > 0 ? blogInfo.originBlogInfo.commentsNum : '评论'}}</span>
+                </div>
+                <div class="good">
+            <span class="operation-text"><span class="icon icon-thumbs-up" ng-class="{'operated':blogInfo.originBlogInfo.isHaveFavor}"></span>
+                {{blogInfo.originBlogInfo.goodNum > 0 ? blogInfo.originBlogInfo.goodNum : '赞'}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="dynamic-foot-operation">
+        <div class="reader" ng-show="blogInfo.isCurrentUser">
+            <span class="operation-text">阅读 175</span>
+        </div>
+        <div class="collection" ng-hide="blogInfo.isCurrentUser">
+            <span class="operation-text" ng-hide="blogInfo.isHaveCollected"><span class="icon icon-star-empty"></span>收藏</span>
+            <span class="operation-text" ng-show="blogInfo.isHaveCollected"><span class="icon icon-star"></span>已收藏</span>
+        </div>
+        <div class="forward">
+            <span class="operation-text"><span class="icon icon-reply"></span>{{blogInfo.replyNum > 0 ? blogInfo.replyNum : '转发'}}</span>
+        </div>
+        <div class="comment">
+            <span class="operation-text"><span class="icon icon-comments-alt"></span>{{blogInfo.commentsNum > 0 ? blogInfo.commentsNum : '评论'}}</span>
+        </div>
+        <div class="good">
+            <span class="operation-text"><span class="icon icon-thumbs-up" ng-class="{'operated':blogInfo.isHaveFavor}"></span>
+                {{blogInfo.goodNum > 0 ? blogInfo.goodNum : '赞'}}</span>
+        </div>
+    </div>
+</div>

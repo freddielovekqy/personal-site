@@ -1,6 +1,6 @@
 'use strict';
 
-var blogModule = angular.module('blog', ['ngRoute', 'blogManager', 'blogList', 'blogDetail', 'createBlog', 'blogCategory', 'blogArticleManager']);
+var blogModule = angular.module('blog', ['ngRoute', 'blogManager', 'blogList', 'blogDetail', 'createBlog', 'blogCategory', 'blogArticleManager', 'blogBriefInfo']);
 
 blogModule.config(['$routeProvider', '$locationProvider', function ($routeProvider) {
     $routeProvider
