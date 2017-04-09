@@ -238,7 +238,7 @@
                     <button type="button" class="btn btn-link btn-sm" ng-click="cancelEdit()">取消</button>
                 </div>
             </div>
-            <div class="education-item" ng-repeat="education in educations">
+            <div class="education-item" ng-repeat="education in educations" ng-hide="editedEducation._id === education._id">
                 <div>{{education.schoolType}}</div>
                 <div>{{education.schoolName}}({{education.inYear}})</div>
                 <div style="margin-right: 40px;">{{education.department || education.className}}</div>
@@ -274,8 +274,8 @@
                         <select ng-model="editedWork.endYear" ng-options="year for year in years" class="form-control work-year-select"></select>
                     </div>
                     <div>
-                        <select ng-model="selectedProvince" ng-options="city.label for city in chinaCities" class="form-control work-location-select"></select>
-                        <select ng-model="selectedCity" ng-options="city.label for city in selectedProvince.cities" class="form-control work-location-select"></select>
+                        <select ng-model="editedWork.selectedProvince" ng-options="city.label for city in chinaCities" class="form-control work-location-select"></select>
+                        <select ng-model="editedWork.selectedCity" ng-options="city.label for city in editedWork.selectedProvince.cities" class="form-control work-location-select"></select>
                     </div>
                 </div>
                 <div class="submit-education-or-work-button">
@@ -283,7 +283,7 @@
                     <button type="button" class="btn btn-link btn-sm" ng-click="cancelEdit()">取消</button>
                 </div>
             </div>
-            <div class="work-item" ng-repeat="work in userInfo.works">
+            <div class="work-item" ng-repeat="work in userInfo.works" ng-hide="editedWork._id === work._id">
                 <div style="margin-left: 10px;">{{work.company}}</div>
                 <div>({{work.startYear}} - {{work.endYear}})</div>
                 <div style="margin: 0 40px 0 20px;">职位：{{work.department}}</div>

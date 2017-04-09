@@ -96,6 +96,7 @@ accountInfoProfileModule.controller('AccountInfoProfileController', ['$scope', '
 
         $scope.confirmWork = function () {
             $scope.editWorkFlag = false;
+            $scope.editedWork.location = $scope.editedWork.selectedProvince.label + '-' + $scope.editedWork.selectedCity.label;
             HttpService.post({
                 url: 'api/user/work',
                 params: {
@@ -126,6 +127,8 @@ accountInfoProfileModule.controller('AccountInfoProfileController', ['$scope', '
 
         $scope.editWork = function (work = {}) {
             $scope.editedWork = angular.copy(work);
+            $scope.editedWork.selectedProvince = $scope.chinaCities[_.findIndex($scope.chinaCities, {label: work.location.split('-')[0]})];
+            $scope.editedWork.selectedCity = $scope.editedWork.selectedProvince.cities[_.findIndex($scope.editedWork.selectedProvince.cities, {label: work.location.split('-')[1]})];
             $scope.editWorkFlag = true;
         };
 
