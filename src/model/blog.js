@@ -1,17 +1,23 @@
 var mongoose = require('../dao/db.js'),
     Schema = mongoose.Schema;
 
-var blogCommentSchema = new Schema({
+var BlogCommentSchema = new Schema({
     userId: { type: String },
     content: { type: String },
     floor: { type: Number },
     replyFloor: { type: Number },
+    replyUserId: { type: String },
     createDate: { type: Date, default: Date.now }
 });
 
-var blogReaderSchema = new Schema({
+var BlogReaderSchema = new Schema({
     userId: { type: String },
     readDate: { type: Date, default: Date.now }
+});
+
+var GooderSchema = new Schema({
+    userId: { type: String },
+    createDate: { type: Date, default: Date.now }
 });
 
 
@@ -28,10 +34,21 @@ var BlogSchema = new Schema({
     createDate: { type: Date, default: Date.now },
     lastUpdateDate: { type: Date, default: Date.now },
     topShow: { type: Boolean, default: false },
-    comment: [blogCommentSchema],
-    reader: [blogReaderSchema],
-    readCount: { type: Number, default: 0 }
+    comments: [BlogCommentSchema],
+    readers: [BlogReaderSchema],
+    hitCount: { type: Number, default: 0 },
+    source: { type: String },
+    originBlogId: { type: String },
+    gooders: [GooderSchema],
+});
+
+// 设置虚拟属性，虚拟属性不会入库
+BlogSchema.virtual('readCount').get(() => {
+    return this.readers.length;
 });
 
 
-module.exports = mongoose.model('Blog', BlogSchema);
+module.exports.Blog = mongoose.model('Blog', BlogSchema);
+module.exports.BlogComment = mongoose.model('BlogComment', BlogCommentSchema);
+module.exports.BlogReader = mongoose.model('BlogReader', BlogReaderSchema);
+module.exports.Gooder = mongoose.model('Gooder', GooderSchema);

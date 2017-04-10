@@ -1,4 +1,8 @@
-var Blog = require("../model/blog.js");
+var BlogSchemaModule = require("../model/blog.js");
+var Blog = BlogSchemaModule.Blog;
+var BlogComment = BlogSchemaModule.BlogComment;
+var BlogReader = BlogSchemaModule.BlogReader;
+var Gooder = BlogSchemaModule.Gooder;
 
 function save(blogDTO) {
     var blog = new Blog({

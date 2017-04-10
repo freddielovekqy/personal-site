@@ -5,7 +5,7 @@
   background-color: rgba(249, 175, 138, 0.41);
   font-size: 0;
   @left-width: 180px;
-  @right-width: 300px;
+  @right-width: 250px;
   .home-bar {
     width: @left-width - 10px;
     display: inline-block;
@@ -134,22 +134,26 @@
     width: @right-width;
     vertical-align: top;
     margin-left: 10px;
-    .current-user-info {
+    .right-divs() {
       border-radius: 3px;
       border: 1px solid #fff;
       box-sizing: border-box;
       background-color: #ffffff;
       width: 100%;
+    }
+    .current-user-info {
+      .right-divs();
+      .user-background-img {
+        background-color: rgba(0, 0, 204, 0.17);
+        height: 79px;
+        width: 100%;
+      }
       .user-image {
-        height: 50px;
-        position: relative;
+        text-align: center;
+        margin-top: -41px;
         img {
-          height: 100%;
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          margin: 0 auto;
+          height: 50px;
+          border-radius: 25px;
         }
       }
       .username {
@@ -175,47 +179,88 @@
         text-align: center;
         .user-brief-info-item() {
           display: inline-block;
-          padding: 0 22px;
+          padding: 0 16px;
           border-right: 1px solid #ccc;
-          margin: 10px 0;
+          margin: 5px 0;
           float: left;
+          .user-brief-info-count {
+            line-height: 15px;
+            font-weight: bold;
+          }
+          .user-brief-info-label {
+            line-height: 15px;
+            color: #999;
+          }
         }
         .follow {
           .user-brief-info-item();
-          .follow-count {
-            font-weight: bold;
-          }
-          .follow-label {
-            color: #999;
-          }
         }
         .fan {
           .user-brief-info-item();
-          .fan-count {
-            font-weight: bold;
-          }
-          .fan-label {
-            color: #999;
-          }
         }
         .blog {
           .user-brief-info-item();
-          .blog-count {
-            font-weight: bold;
-          }
-          .blog-label {
-            color: #999;
-          }
         }
         .simple-blog {
           .user-brief-info-item();
           border-right: none;
-          .simple-blog-count {
-            font-weight: bold;
+        }
+      }
+    }
+    .advertisement {
+      .right-divs();
+      height: 200px;
+      margin-top: 10px;
+    }
+    .hot-topic {
+      .right-divs();
+      margin-top: 10px;
+      .hot-topic-header {
+        height: 40px;
+        line-height: 40px;
+        border-bottom: 1px solid #eeeeee;
+        .header-title {
+          margin-left: 10px;
+          float: left;
+          font-weight: bold;
+        }
+        .change-new-ones {
+          float: right;
+          margin-right: 10px;
+          cursor: pointer;
+          color: #333;
+          font-size: 12px;
+          &:hover {
+            cursor: pointer;
+            color: #2ba7ff;
           }
-          .simple-blog-label {
-            color: #999;
+        }
+      }
+      .hot-topic-items {
+        padding: 10px 15px;
+        .hot-topic-item {
+          overflow: auto;
+          padding: 5px 0;
+          font-size: 12px;
+          .topic-title {
+            float: left;
           }
+          .topic-index {
+            float: right;
+          }
+        }
+      }
+      .hot-topic-footer {
+        border-top: 1px solid #EEEEEE;
+        text-align: center;
+        font-size: 12px;
+        line-height: 30px;
+        .see-more:hover {
+          cursor: pointer;
+          color: #2ba7ff;
+        }
+        .icon-angle-right {
+          margin-left: 5px;
         }
       }
     }

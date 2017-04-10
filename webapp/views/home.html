@@ -65,21 +65,42 @@
             </div>
             <div class="user-brief-info">
                 <div class="follow">
-                    <div class="follow-count">6</div>
-                    <div class="follow-label">关注</div>
+                    <div class="user-brief-info-count">6</div>
+                    <div class="user-brief-info-label">关注</div>
                 </div>
                 <div class="fan">
-                    <div class="fan-count">0</div>
-                    <div class="fan-label">粉丝</div>
+                    <div class="user-brief-info-count">0</div>
+                    <div class="user-brief-info-label">粉丝</div>
                 </div>
                 <div class="blog">
-                    <div class="blog-count">8</div>
-                    <div class="blog-label">博客</div>
+                    <div class="user-brief-info-count">8</div>
+                    <div class="user-brief-info-label">博客</div>
                 </div>
                 <div class="simple-blog">
-                    <div class="simple-blog-count">8</div>
-                    <div class="simple-blog-label">微博</div>
+                    <div class="user-brief-info-count">8</div>
+                    <div class="user-brief-info-label">微博</div>
                 </div>
+            </div>
+        </div>
+        <div class="advertisement">
+            广告区
+        </div>
+        <div class="hot-topic">
+            <div class="hot-topic-header">
+                <div class="header-title">热门话题</div>
+                <div class="change-new-ones">
+                    <span class="icon-refresh"></span>
+                    <span>换一换</span>
+                </div>
+            </div>
+            <div class="hot-topic-items">
+                <div class="hot-topic-item" ng-repeat="topic in hotTopics">
+                    <a class="topic-title">#{{topic.topicName}}#</a>
+                    <div class="topic-index">{{topic.topicIndex}}</div>
+                </div>
+            </div>
+            <div class="hot-topic-footer">
+                <span class="see-more">查看更多<span class="icon-angle-right"></span></span>
             </div>
         </div>
     </div>
