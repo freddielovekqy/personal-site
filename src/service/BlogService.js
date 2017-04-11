@@ -44,7 +44,7 @@ function getBlogsByUser(blogUserId, visitUserId, searchOptions, paginationParams
 
 function getBlogById(blogId) {
     return new Promise(function (resolve, reject) {
-        var promise = BlogDao.findByBlogId(blogId);
+        var promise = BlogDao.findById(blogId);
         promise.then(function (data) {
             if (data.length === 1) {
                 resolve(data[0]);
@@ -65,7 +65,7 @@ function saveBlog(blogDTO) {
 
 function updateBlog(blog) {
     return new Promise(function (resolve, reject) {
-        var promise = BlogDao.findByBlogId(blog._id);
+        var promise = BlogDao.findById(blog._id);
         promise.then(function (data) {
             var oldBlog = data[0];
             blog.createDate = oldBlog.createDate;

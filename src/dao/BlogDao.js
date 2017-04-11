@@ -1,6 +1,5 @@
 var BlogSchemaModule = require("../model/blog.js");
 var Blog = BlogSchemaModule.Blog;
-var BlogComment = BlogSchemaModule.BlogComment;
 var BlogReader = BlogSchemaModule.BlogReader;
 var Gooder = BlogSchemaModule.Gooder;
 
@@ -43,8 +42,8 @@ function findByUser(candition, paginationParams) {
     return Blog.find(candition).skip(paginationParams.startIndex).limit(paginationParams.pageSize).sort(paginationParams.sort).exec();
 }
 
-function findByBlogId(blogId) {
-    var promise = Blog.find({ _id: blogId }).exec();
+function findById(blogId) {
+    var promise = Blog.findById({ _id: blogId }).exec();
     promise.then(function (data) {
         return data;
     }).catch(function (error) {
@@ -65,5 +64,5 @@ module.exports.save = save;
 module.exports.update = update;
 module.exports.updateBlogAttr = updateBlogAttr;
 module.exports.findByUser = findByUser;
-module.exports.findByBlogId = findByBlogId;
+module.exports.findById = findById;
 module.exports.getBlogCountByCondition = getBlogCountByCondition;

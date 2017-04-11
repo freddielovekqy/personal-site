@@ -1,15 +1,6 @@
 var mongoose = require('../dao/db.js'),
     Schema = mongoose.Schema;
 
-var BlogCommentSchema = new Schema({
-    userId: { type: String },
-    content: { type: String },
-    floor: { type: Number },
-    replyFloor: { type: Number },
-    replyUserId: { type: String },
-    createDate: { type: Date, default: Date.now }
-});
-
 var BlogReaderSchema = new Schema({
     userId: { type: String },
     readDate: { type: Date, default: Date.now }
@@ -34,7 +25,7 @@ var BlogSchema = new Schema({
     createDate: { type: Date, default: Date.now },
     lastUpdateDate: { type: Date, default: Date.now },
     topShow: { type: Boolean, default: false },
-    comments: [BlogCommentSchema],
+    comments: { type: [String], default: [] },
     readers: [BlogReaderSchema],
     hitCount: { type: Number, default: 0 },
     source: { type: String },
@@ -49,6 +40,5 @@ BlogSchema.virtual('readCount').get(() => {
 
 
 module.exports.Blog = mongoose.model('Blog', BlogSchema);
-module.exports.BlogComment = mongoose.model('BlogComment', BlogCommentSchema);
 module.exports.BlogReader = mongoose.model('BlogReader', BlogReaderSchema);
 module.exports.Gooder = mongoose.model('Gooder', GooderSchema);
