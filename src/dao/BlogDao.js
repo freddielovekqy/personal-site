@@ -43,7 +43,7 @@ function findByUser(candition, paginationParams) {
 }
 
 function findById(blogId) {
-    var promise = Blog.findById({ _id: blogId }).exec();
+    var promise = Blog.findById(blogId).exec();
     promise.then(function (data) {
         return data;
     }).catch(function (error) {

@@ -73,6 +73,83 @@
     }
     .blog-content {
       padding: 0 10px;
+      min-height: 700px;
+    }
+    .header() {
+      font-weight: bold;
+      line-height: 30px;
+      background: #ddd;
+      border-radius: 5px;
+      padding-left: 10px;
+    }
+    .comments {
+      .comment-header {
+        .header();
+      }
+      .comment-item {
+        margin: 5px 10px 25px 10px;
+        .comment-item-header() {
+          line-height: 25px;
+          padding-left: 5px;
+          background: #EEEEEE;
+          border-radius: 5px;
+          span {
+            display: inline-block;
+            margin-right: 5px;
+          }
+        }
+        .comment-item-header {
+          .comment-item-header();
+        }
+        .comment-item-content {
+          margin: 5px;
+          .comment-user-img {
+            width: 40px;
+            height: 40px;
+            background: #000;
+            display: inline-block;
+          }
+          .comment-content {
+            display: inline-block;
+            vertical-align: top;
+          }
+          .reply-comments {
+            margin: 10px 0 0 50px;
+            background: #fafafa;
+            border-radius: 5px 5px 0 0;
+            .reply-comment {
+              margin-bottom: 15px;
+              .reply-comment-header {
+                .comment-item-header();
+                margin-bottom: 5px;
+              }
+              .reply-comment-user-img {
+                width: 40px;
+                height: 40px;
+                background: #000;
+                display: inline-block;
+                margin-left: 5px;
+              }
+              .reply-comment-content {
+                display: inline-block;
+                vertical-align: top;
+                .reply-to-user {
+                  color: #2ba7ff;
+                  cursor: pointer;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .add-comment {
+      .add-comment-header {
+        .header();
+      }
+      .add-comment-content {
+        margin: 10px;
+      }
     }
   }
 }

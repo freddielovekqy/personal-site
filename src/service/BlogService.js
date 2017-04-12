@@ -46,9 +46,9 @@ function getBlogById(blogId) {
     return new Promise(function (resolve, reject) {
         var promise = BlogDao.findById(blogId);
         promise.then(function (data) {
-            if (data.length === 1) {
-                resolve(data[0]);
-            }
+            resolve(data);
+        }).catch(data => {
+            throw data;
         });
     });
 }

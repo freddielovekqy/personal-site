@@ -10,6 +10,7 @@ var routes = require('./src/routes/index');
 var user = require('./src/routes/UserController');
 var blog = require('./src/routes/BlogController');
 var userBlogInfo = require('./src/routes/UserBlogInfoController');
+var comment = require('./src/routes/CommentController');
 
 var app = express();
 
@@ -51,9 +52,20 @@ app.post('/api/*', function (req, res, next) {
     next();
 });
 
+app.put('/api/*', function (req, res, next) {
+    log4js.logger.info('currentUser', req.session.currentUser);
+    next();
+});
+
+app.delete('/api/*', function (req, res, next) {
+    log4js.logger.info('currentUser', req.session.currentUser);
+    next();
+});
+
 app.use('/api/user', user);
 app.use('/api/blog', blog);
 app.use('/api/userBlogInfo', userBlogInfo);
+app.use('/api/comment', comment);
 
 // nodejs提供restful的api接口
 app.get('/api/about', function (request, response) {
@@ -91,8 +103,8 @@ app.get('/api/about', function (request, response) {
 //   });
 // });
 
-app.listen(8888, function () {
-    console.log('Server start, listen 8888 port...');
+app.listen(8080, function () {
+    console.log('Server start, listen 8080 port...');
 });
 
 

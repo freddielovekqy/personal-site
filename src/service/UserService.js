@@ -8,11 +8,9 @@ function register(userDTO) {
         }
         var promise = userDao.findByEmail(userDTO.email);
         promise.then(data => {
-            console.log('findByEmail', data);
             // 根据邮件名查看是否已经有账号
             if (data.length === 0) {
                 userDao.save(userDTO);
-                console.log(userDTO);
                 resolve(userDTO);
             } else {
                 reject({ errorMessage: '该邮箱已经被注册' });
@@ -30,7 +28,6 @@ function login(email, password) {
                 reject({ errorMessage: '用户名不存在' });
             } else {
                 var user = data[0];
-                console.log('findByEmail', user);
 
                 if (user.email === email && user.password === password) {
                     resolve(user);
@@ -65,7 +62,6 @@ function getUserInfo(userId) {
 
 function saveOrUpdateEducation(userId, educationInfo) {
     return new Promise((resolve, reject) => {
-        console.log('addEducationInfo service..');
         var promise;
         if (educationInfo._id) {
             promise = userDao.updateEducationInfo(userId, educationInfo);
@@ -81,7 +77,6 @@ function saveOrUpdateEducation(userId, educationInfo) {
 }
 
 function deleteEducation(userId, educationId) {
-    console.log("delete education", userId, educationId)
     return new Promise((resolve, rejcet) => {
         userDao.deleteEducationInfo(userId, educationId).then(data => {
             resolve(data);

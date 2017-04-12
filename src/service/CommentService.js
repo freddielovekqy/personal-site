@@ -2,38 +2,30 @@ var commentDao = require('../dao/CommentDao');
 var blogDao = require('../dao/BlogDao');
 
 function addComment(objectId, userId, commentInfo) {
-    commentInfo.objectId = objectId;
-    commentInfo.userId = userId;
     return new Promise((resolve, reject) => {
-        var canAddPromise = new Promise((canAddPromiseResolve, canAddPromiseReject) => {
+        commentInfo.objectId = objectId;
+        commentInfo.userId = userId;
+        new Promise((canAddPromiseResolve, canAddPromiseReject) => {
             if (commentInfo.type === 'blog') {
                 blogDao.findById(objectId).then(data => {
+                    console.log(data);
                     if (data && data.commentAble) {
-                        canAddPromiseResolve.resolve();
+                        canAddPromiseResolve();
                     } else {
-
+                        canAddPromiseReject({ errorMessage: '当前博客不可以评论' });
                     }
                 });
             }
+        }).then(data => {
+            console.log("comment", commentInfo);
+            commentDao.addComment(commentInfo).then(data => {
+                resolve(data);
+            }).catch(data => {
+                reject({ errorMessage: '数据库异常' });
+            });
+        }, data => {
+            reject(data);
         });
-        canAddPromise.then();
-        // if (commentInfo.type === 'blog') {
-        //     canAddPromise = blogDao.findById(objectId);
-        //     canAddPromise.then(data => {
-        //         if (data && data.commentAble) {
-                    
-        //         } else {
-
-        //         }
-        //     });
-        // } else {
-        //     commentDao.addComment(commentInfo).then(data => {
-        //         resolve(data);
-        //     }).catch(data => {
-        //         reject({ errorMessage: '数据库异常' });
-        //     });
-        // }
-        
     });
 }
 

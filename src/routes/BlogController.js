@@ -24,6 +24,19 @@ router.get('/list', function (request, response, next) {
     });
 }); 
 
+router.get('/', (request, response, next) => {
+    var blogId = request.query.blogId;
+    console.log('blogId', blogId);
+    var promise = blogService.getBlogById(blogId);
+    promise.then(data => {
+        response.send(JSON.stringify(data));
+    }, data => {
+        response.send(JSON.stringify(data));
+    }).catch(data => {
+        response.send(JSON.stringify(data));
+    });
+});
+
 router.get('/getBlog/:blogId', function (request, response, next) {
     var blogId = request.params.blogId;
     var promise = blogService.getBlogById(blogId);

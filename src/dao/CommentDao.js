@@ -15,14 +15,15 @@ function addComment(commentInfo) {
 }
 
 function deleteComment(commentId) {
-    return Comment.udpate({_id: commentId}, {$set: {status: 0}});
+    console.log(commentId);
+    return Comment.update({_id: commentId}, {$set: {status: 0}});
 }
 
 function findCommentsByUser(userId, paginationParams) {
     if (paginationParams) {
-        return Blog.find({userId: userId}).skip(paginationParams.startIndex).limit(paginationParams.pageSize).sort({createDate: -1}).exec();
+        return Comment.find({userId: userId}).skip(paginationParams.startIndex).limit(paginationParams.pageSize).sort({createDate: -1}).exec();
     } else {
-        return Blog.find({userId: userId}).sort({createDate: -1}).exec();
+        return Comment.find({userId: userId}).sort({createDate: -1}).exec();
     }
 }
 

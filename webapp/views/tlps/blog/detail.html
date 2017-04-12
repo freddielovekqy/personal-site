@@ -35,5 +35,57 @@
         <div class="blog-content">
             <div ng-bind-html="blogInfo.content"></div>
         </div>
+        <div class="comments">
+            <div class="comment-header">查看评论</div>
+            <div class="comment-item">
+                <div class="comment-item-header">
+                    <span>#1楼</span>
+                    <span>2016-4-13 21:19</span>
+                    <span>王超</span>
+                </div>
+                <div class="comment-item-content">
+                    <div class="comment-user-img"></div>
+                    <div class="comment-content">123123123123123</div>
+
+                    <div class="reply-comments">
+                        <div class="reply-comment">
+                            <div class="reply-comment-header">
+                                <span>Re:</span>
+                                <span>2016-4-13 21:19</span>
+                                <span>王超</span>
+                            </div>
+                            <div class="reply-comment-user-img"></div>
+                            <div class="reply-comment-content">回复<span class="reply-to-user">@柯沁怡</span>：123123123123</div>
+                        </div>
+                        <div class="reply-comment">
+                            <div class="reply-comment-header">
+                                <span>Re:</span>
+                                <span>2016-4-13 21:19</span>
+                                <span>柯沁怡</span>
+                            </div>
+                            <div class="reply-comment-user-img"></div>
+                            <div class="reply-comment-content">回复<span class="reply-to-user">@王超</span>：123123123123</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="comment-item">
+                <div class="comment-item-header">
+                    <span>#2楼</span>
+                    <span>2016-4-13 21:19</span>
+                    <span>王超</span>
+                </div>
+                <div class="comment-item-content">
+                    <div class="comment-user-img"></div>
+                    <div class="comment-content">123123123123123</div>
+                </div>
+            </div>
+        </div>
+        <div class="add-comment">
+            <div class="add-comment-header">发表评论</div>
+            <div class="add-comment-content">
+                <div id="createBlogComment" ng-model="blogInfo.content" wang-editor="true"></div>
+            </div>
+        </div>
     </div>
 </div>

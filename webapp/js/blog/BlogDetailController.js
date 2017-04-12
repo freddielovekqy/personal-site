@@ -22,7 +22,7 @@ blogDetailModule.controller('BlogDetailController', ['$scope', '$sce', 'HttpServ
 
         function getBlogInfo(blogId) {
             HttpService.get({
-                url: 'api/blog/getBlog/' + blogId,
+                url: 'api/blog?blogId=' + blogId,
                 success: function (data) {
                     data.createDate = new Date(data.createDate).format('yyyy-MM-dd hh:mm:ss');
                     data.lastUpdateDate = new Date(data.lastUpdateDate).format('yyyy-MM-dd hh:mm:ss');
