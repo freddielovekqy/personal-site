@@ -27,6 +27,15 @@ function findCommentsByUser(userId, paginationParams) {
     }
 }
 
+function findCommentsByBlog(blogId, paginationParams) {
+    if (paginationParams) {
+        return Comment.find({objectId: blogId, status: 1}).skip(paginationParams.startIndex).limit(paginationParams.pageSize).sort({floor: 1}).exec();
+    } else {
+        return Comment.find({objectId: blogId, status: 1}).sort({floor: 1}).exec();
+    }
+}
+
 module.exports.addComment = addComment;
 module.exports.deleteComment = deleteComment;
 module.exports.findCommentsByUser = findCommentsByUser;
+module.exports.findCommentsByBlog = findCommentsByBlog;

@@ -27,9 +27,20 @@ router.delete('/', (request, response, next) => {
     });
 });
 
-router.get('/', (request, response, next) => {
+router.get('/getCommentByUser', (request, response, next) => {
     var userId = request.query.userId;
     commentService.findCommentsByUser(userId).then(data => {
+        response.send(JSON.stringify(data));
+    }, data => {
+        response.send(JSON.stringify(data));
+    }).catch(data => {
+        response.send(JSON.stringify(data));
+    });
+});
+
+router.get('/getCommentByBlog', (request, response, next) => {
+    var blogId = request.query.blogId;
+    commentService.findCommentsByBlog(blogId).then(data => {
         response.send(JSON.stringify(data));
     }, data => {
         response.send(JSON.stringify(data));

@@ -1,5 +1,6 @@
 var commentDao = require('../dao/CommentDao');
 var blogDao = require('../dao/BlogDao');
+var userDao = require('../dao/UserDao');
 
 function addComment(objectId, userId, commentInfo) {
     return new Promise((resolve, reject) => {
@@ -51,6 +52,31 @@ function findCommentsByUser(userId) {
     });
 }
 
+function findCommentsByBlog(blogId) {
+    return new Promise((resolve, reject) => {
+        var promise = commentDao.findCommentsByBlog(blogId);
+        promise.then(comments => {
+            if (comments && comments.length > 0) {
+                var findAllUserPromises = [];
+                comments.forEach(comment => {
+                    findAllUserPromises.push(userDao.getById(comment.userId));
+                });
+                Promise.all(findAllUserPromises).then(data => {
+                    comments = comments.map((comment, index) => {
+                        comment = comment.toObject();
+                        comment.userName = data[index].username;
+                        return comment;
+                    });
+                    resolve(comments);
+                });
+            } else {
+                resolve(comments);
+            }
+        });
+    });
+}
+
 module.exports.addComment = addComment;
 module.exports.deleteComment = deleteComment;
 module.exports.findCommentsByUser = findCommentsByUser;
+module.exports.findCommentsByBlog = findCommentsByBlog;
