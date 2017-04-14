@@ -1,6 +1,7 @@
 var commentDao = require('../dao/CommentDao');
 var blogDao = require('../dao/BlogDao');
 var userDao = require('../dao/UserDao');
+var _ = require('lodash');
 
 function addComment(objectId, userId, commentInfo) {
     return new Promise((resolve, reject) => {
@@ -64,7 +65,10 @@ function findCommentsByBlog(blogId) {
                 Promise.all(findAllUserPromises).then(data => {
                     comments = comments.map((comment, index) => {
                         comment = comment.toObject();
-                        comment.userName = data[index].username;
+                        comment.userInfo = data[index];
+                        var replyUserIndex = _.findIndex(data, {_id: comment.replyUserId});
+                        console.log(data, replyUserIndex);
+                        replyUserIndex > -1 && (comment.replyUserName = data[replyUserIndex].username);
                         return comment;
                     });
                     resolve(comments);

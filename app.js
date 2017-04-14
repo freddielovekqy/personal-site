@@ -2,9 +2,9 @@ var express = require('express');
 var session = require('express-session');
 var lessMiddleware = require('less-middleware');
 var path = require('path');
-var _ = require('lodash');
 var bodyParser = require('body-parser');
 var log4js = require('./src/common/log/log4js');
+_ = require('lodash');
 
 var routes = require('./src/routes/index');
 var user = require('./src/routes/UserController');
