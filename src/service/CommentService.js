@@ -60,15 +60,23 @@ function findCommentsByBlog(blogId) {
             if (comments && comments.length > 0) {
                 var findAllUserPromises = [];
                 comments.forEach(comment => {
-                    findAllUserPromises.push(userDao.getById(comment.userId));
+                    findAllUserPromises.push(new Promise((getUserResolve, getUserReject) => {
+                        userDao.getById(comment.userId).then(user => {
+                            var userInfo = user.toObject();
+                            userInfo._id = userInfo._id.toString();
+                            delete userInfo.hobby;
+                            delete userInfo.works;
+                            delete userInfo.educations;
+                            getUserResolve(userInfo);
+                        });
+                    }));
                 });
                 Promise.all(findAllUserPromises).then(data => {
                     comments = comments.map((comment, index) => {
                         comment = comment.toObject();
-                        comment.userInfo = data[index];
                         var replyUserIndex = _.findIndex(data, {_id: comment.replyUserId});
-                        console.log(data, replyUserIndex);
                         replyUserIndex > -1 && (comment.replyUserName = data[replyUserIndex].username);
+                        comment.userInfo = data[index];
                         return comment;
                     });
                     resolve(comments);
