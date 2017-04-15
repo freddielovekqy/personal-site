@@ -121,7 +121,12 @@ createBlogModule.controller('EditBlogController', ['$scope', '$rootScope', '$com
                     $scope.blogInfo.createDate = new Date(data.createDate).format('yyyy-MM-dd hh:mm:ss');
                     $scope.blogInfo.lastUpdateDate = new Date(data.lastUpdateDate).format('yyyy-MM-dd hh:mm:ss');
                     $scope.option.checked = ($scope.blogInfo.status == '1');
-                    RadioBroadcast.broadcast('initEditorContent', $scope.blogInfo);
+                    // RadioBroadcast.broadcast('initEditorContent', $scope.blogInfo);
+                    postal.publish({
+                        channel: 'wangEditor',
+                        topic: 'initContent',
+                        data: $scope.blogInfo
+                    });
                     getBlogCategories($scope.blogInfo.categories);
                 },
                 error: function (data) {

@@ -5,7 +5,7 @@ var CommentSchema = new Schema({
     userId: { type: String },
     content: { type: String },
     floor: { type: Number },
-    replyFloor: { type: Number },
+    replyFloor: { type: Number, default: 0 },
     replyUserId: { type: String },
     createDate: { type: Date, default: Date.now },
     objectId: { type: String },

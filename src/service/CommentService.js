@@ -74,10 +74,22 @@ function findCommentsByBlog(blogId) {
                 Promise.all(findAllUserPromises).then(data => {
                     comments = comments.map((comment, index) => {
                         comment = comment.toObject();
+                        comment.replyComments = comments.filter(com => {
+                            return com.replyFloor === comment.floor;
+                        });
                         var replyUserIndex = _.findIndex(data, {_id: comment.replyUserId});
                         replyUserIndex > -1 && (comment.replyUserName = data[replyUserIndex].username);
                         comment.userInfo = data[index];
                         return comment;
+                    });
+                    comments = comments.map(comment => {
+                        comment.replyComments = comments.filter(com => {
+                            return com.replyFloor === comment.floor && !comment.replyUserId;
+                        });
+                        return comment;
+                    });
+                    comments = comments.filter(comment => {
+                        return !comment.replyUserId;
                     });
                     resolve(comments);
                 });

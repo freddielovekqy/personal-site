@@ -8,14 +8,10 @@ app.service('HttpService', ['$rootScope', '$http', function ($rootScope, $http) 
             method: 'POST',
             data: httpParams.params
         }).success(function (data) {
-            if (data.errorMessage) {
-                $rootScope.$broadcast('showAlertMessage', {
-                    type: 'danger',
-                    message: data.errorMessage
-                })
-            }
+            showErrorMessage(data);
             httpParams.success && httpParams.success(data);
         }).error(function (data) {
+            showErrorMessage(data);
             httpParams.error && httpParams.error();
         });
     }
@@ -34,6 +30,7 @@ app.service('HttpService', ['$rootScope', '$http', function ($rootScope, $http) 
             }
             httpParams.success && httpParams.success(data);
         }).error(function (data) {
+            showErrorMessage(data);
             httpParams.error && httpParams.error();
         });
     }
@@ -52,8 +49,22 @@ app.service('HttpService', ['$rootScope', '$http', function ($rootScope, $http) 
             }
             httpParams.success && httpParams.success(data);
         }).error(function (data) {
+            showErrorMessage(data);
             httpParams.error && httpParams.error();
         });
+    }
+
+    function showErrorMessage(data) {
+        if (data.errorMessage) {
+            postal.publish({
+                channel: 'showAlertMessage',
+                topic: 'showAlertMessage',
+                data: {
+                    type: 'danger',
+                    message: data.errorMessage
+                }
+            });
+        }
     }
 
     return {

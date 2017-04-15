@@ -41,6 +41,24 @@ app.directive('wangEditor', function() {
             };
             editor.create();
 
+            var emptyContentSub = postal.subscribe({
+                channel: 'wangEditor',
+                topic: 'emptyContent',
+                callback: data => {
+                    editor.$txt.html('<p><br></p>');
+                }
+            });
+
+            var initContentSub = postal.subscribe({
+                channel: 'wangEditor',
+                topic: 'initContent',
+                callback: data => {
+                    if (data && data.content) {
+                        editor.$txt.html(data.content);
+                    }
+                }
+            });
+
             scope.$on('initEditorContent', function (name, data) {
                 if (data && data.content) {
                     editor.$txt.html(data.content);
@@ -51,6 +69,12 @@ app.directive('wangEditor', function() {
                     editor.destroy();
                     editor = null;
                 }
+            });
+
+            scope.$on('destroy', () => {
+                console.log('wangEditor destroy');
+                emptyContentSub.unsubscribe();
+                initContentSub.unsubscribe();
             });
         }
     };

@@ -10,14 +10,14 @@ router.post('/', (request, response, next) => {
     commentService.addComment(objectId, userId, comment).then(data => {
         response.send(JSON.stringify(data));
     }, data => {
-        response.send(JSON.stringify(data));
+        response.status(400).send(JSON.stringify(data));
     }).catch(data => {
-        response.send(JSON.stringify(data));
+        response.status(500).send(JSON.stringify(data));
     });
 });
 
-router.delete('/', (request, response, next) => {
-    var commentId = request.query.commentId;
+router.delete('/:commentId', (request, response, next) => {
+    var commentId = request.params.commentId;
     commentService.deleteComment(commentId).then(data => {
         response.send(JSON.stringify(data));
     }, data => {
@@ -38,8 +38,8 @@ router.get('/getCommentByUser', (request, response, next) => {
     });
 });
 
-router.get('/getCommentByBlog', (request, response, next) => {
-    var blogId = request.query.blogId;
+router.get('/blog/:blogId', (request, response, next) => {
+    var blogId = request.params.blogId;
     commentService.findCommentsByBlog(blogId).then(data => {
         response.send(JSON.stringify(data));
     }, data => {

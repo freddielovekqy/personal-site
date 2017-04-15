@@ -88,8 +88,20 @@ app.controller('initController', ['$rootScope', '$scope', '$location', '$timeout
             }
         });
 
+        var showAlertMessageSubs = postal.subscribe({
+            channel: 'showAlertMessage',
+            topic: 'showAlertMessage',
+            callback: data => {
+                $scope.alertObj = data;
+                $timeout(function () {
+                    $scope.alertObj = null;
+                }, 2000);
+            }
+        });
+
         $scope.$on('destroy', data => {
             updateUserInfoSub.unsubscribe();
+            showAlertMessageSubs.unsubscribe();
         });
 
 
