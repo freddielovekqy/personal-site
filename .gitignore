@@ -25,3 +25,11 @@
 /webapp/framework/postal.js-master/package.json
 /webapp/framework/postal.js-master/postal-js.nupkg
 /webapp/framework/postal.js-master/README.md
+/webapp/framework/font-awesome/4.7.0/*
+/webapp/framework/font-awesome/4.7.0/*.gitignore
+/webapp/framework/font-awesome/4.7.0/*.npmignore
+/webapp/framework/font-awesome/4.7.0/*.yml
+/webapp/framework/font-awesome/4.7.0/*.json
+/webapp/framework/font-awesome/4.7.0/*.md
+/webapp/framework/font-awesome/4.7.0/*.lock
+/webapp/framework/font-awesome/4.7.0/*.txt

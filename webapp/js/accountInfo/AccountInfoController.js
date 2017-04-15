@@ -2,7 +2,7 @@
  * Created by freddie on 2017/3/10.
  */
 'use strict';
-var accountInfoModule = angular.module('account-info', ['ngRoute', 'accountInfoMain', 'accountInfoProfile']);
+var accountInfoModule = angular.module('account-info', ['ngRoute', 'accountInfoMain', 'accountInfoProfile', 'accountInfoRelationship']);
 
 accountInfoModule.config(['$routeProvider', '$locationProvider', function ($routeProvider) {
     $routeProvider
@@ -26,6 +26,9 @@ accountInfoModule.controller('AccountInfoController', ['$scope', '$location', '$
                 baseEle.append(ele);
             } else if (type === 'profile') {
                 ele = $compile('<account-info-profile></account-info-profile>')($scope);
+                baseEle.append(ele);
+            } else if (type === 'relationship') {
+                ele = $compile('<account-info-relationship></account-info-relationship>')($scope);
                 baseEle.append(ele);
             }
         })();

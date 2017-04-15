@@ -1,0 +1,46 @@
+.relationship-page {
+  .relationship-left-bar {
+    display: inline-block;
+    width: 350px;
+    background: #fff;
+    padding: 2px;
+    .level-one-bar {
+      border-bottom: 1px solid #efefef;
+      &:last-child {
+        border-bottom: none;
+      }
+      .level-one-bar-title {
+        padding-left: 20px;
+        line-height: 40px;
+        cursor: pointer;
+        span {
+          margin-right: 7px;
+        }
+        &:hover {
+          background: #f2f2f5;
+          color: #2ba7ff;
+        }
+      }
+      .level-two-bar {
+        padding-left: 40px;
+        line-height: 30px;
+        cursor: pointer;
+        .level-two-bar-title {
+          span {
+            margin-right: 7px;
+          }
+          &:hover {
+            color: #2ba7ff;
+          }
+        }
+      }
+      .add-new-group {
+        margin: 5px 0 5px 40px;
+        span {
+          color: #2ba7ff;
+        }
+      }
+
+    }
+  }
+}
