@@ -1,7 +1,8 @@
 .relationship-page {
+  @leftBarWidth: 300px;
   .relationship-left-bar {
-    display: inline-block;
-    width: 350px;
+    float: left;
+    width: @leftBarWidth;
     background: #fff;
     padding: 2px;
     .level-one-bar {
@@ -40,6 +41,48 @@
           color: #2ba7ff;
         }
       }
+
+    }
+  }
+  .relationship-main-content {
+    @marginLeft: 10px;
+    float: left;
+    vertical-align: top;
+    margin-left: @marginLeft;
+    background: #fff;
+    width: -moz-calc(~"100% - @{leftBarWidth} - @{marginLeft}");
+    width: -webkit-calc(~"100% - @{leftBarWidth} - @{marginLeft}");
+    width: calc(~"100% - @{leftBarWidth} - @{marginLeft}");
+    .relationship-header {
+      line-height: 40px;
+      border-bottom: 1px solid #efefef;
+      padding-left: 20px;
+    }
+    .relationship-operation {
+      line-height: 40px;
+      .batch-operation {
+        display: inline-block;
+        margin-left: 20px;
+      }
+      .sort {
+        display: inline-block;
+        margin-left: 20px;
+      }
+      .relationship-search {
+        float: right;
+        margin: 3px 20px 0 0;
+        display: inline-block;
+        position: relative;
+        .fa-search {
+          position: absolute;
+          right: 10px;
+          top: 10px;
+        }
+      }
+    }
+
+    .attention-users {
+      padding-left: 20px;
 
     }
   }
