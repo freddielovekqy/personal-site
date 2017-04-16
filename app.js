@@ -11,6 +11,7 @@ var user = require('./src/routes/UserController');
 var blog = require('./src/routes/BlogController');
 var userBlogInfo = require('./src/routes/UserBlogInfoController');
 var comment = require('./src/routes/CommentController');
+var relationship = require('./src/routes/RelationshipController');
 
 var app = express();
 
@@ -66,6 +67,7 @@ app.use('/api/user', user);
 app.use('/api/blog', blog);
 app.use('/api/userBlogInfo', userBlogInfo);
 app.use('/api/comment', comment);
+app.use('/api/relationship', relationship);
 
 // nodejs提供restful的api接口
 app.get('/api/about', function (request, response) {
