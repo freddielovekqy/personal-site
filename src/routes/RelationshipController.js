@@ -28,7 +28,19 @@ router.delete('/attention/:targetUserId', (request, response, next) => {
     }).catch(data => {
         response.send(JSON.stringify(data));
     });
-})
+});
+
+router.get('/:userId/fans', (request, response, next) => {
+    var userId = request.params.userId;
+    var promise = relationshipService.findFansByUser(userId);
+    promise.then(data => {
+        response.send(JSON.stringify(data));
+    }, data => {
+        response.send(JSON.stringify(data));
+    }).catch(data => {
+        response.send(JSON.stringify(data));
+    });
+});
 
 router.get('/:userId/attentions', (request, response, next) => {
     var userId = request.params.userId;

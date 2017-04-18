@@ -25,11 +25,14 @@ function update(userDTO) {
 }
 
 function getById(userId) {
-    return User.findById({_id: userId}).exec();
+    return User.findById(userId).exec();
+}
+
+function getBasicUserInfo(userId) {
+    return User.findById(userId, {hobby: 0, educations: 0, works: 0, password: 0}).exec();
 }
 
 function addEducationInfo(userId, educationInfo) {
-    console.log('addEducationInfo dao:', userId, educationInfo);
     var educationEntity = new Education({
         schoolType: educationInfo.schoolType,
         schoolName: educationInfo.schoolName,
@@ -37,7 +40,6 @@ function addEducationInfo(userId, educationInfo) {
         className: educationInfo.className,
         department: educationInfo.department
     });
-    console.log("educationEntity", educationEntity);
     return User.update({'_id': userId}, {$addToSet: {'educations': educationEntity}});
 }
 
@@ -85,6 +87,7 @@ function deleteWorkInfo(userId, workId) {
 module.exports.save = save;
 module.exports.update = update;
 module.exports.getById = getById;
+module.exports.getBasicUserInfo = getBasicUserInfo;
 module.exports.findByEmail = findByEmail;
 module.exports.addEducationInfo = addEducationInfo;
 module.exports.updateEducationInfo = updateEducationInfo;

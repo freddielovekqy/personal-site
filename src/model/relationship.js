@@ -3,7 +3,7 @@ var mongoose = require('../dao/db.js'),
 
 var AttentionSchema = new Schema({
     typeName: { type: String },
-    userId: { type: String } // 当userId为'1'时，表示用户的关注分类
+    userId: { type: String }
 });
 
 var RelationshipSchema = new Schema({

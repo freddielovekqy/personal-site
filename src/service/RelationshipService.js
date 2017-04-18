@@ -1,4 +1,5 @@
 var relationshipDao = require('../dao/RelationshipDao');
+var userDao = require('../dao/UserDao');
 var logger = require('../common/log/log4js').logger;
 var _ = require('lodash');
 
@@ -42,6 +43,20 @@ function deleteAttention(userId, targetUserId) {
     });
 }
 
+function findFansByUser(userId) {
+    return new Promise((resolve, reject) => {
+        relationshipDao.findFansByUser(userId).then(users => {
+            var findAllUserPromise = [];
+            users.forEach(user => {
+                findAllUserPromise.push(userDao.getBasicUserInfo(user.userId));
+            });
+            Promise.all(findAllUserPromise).then(userInfos => {
+                resolve(userInfos);
+            });
+        });
+    });
+}
+
 function findUserAttentions(userId) {
     return new Promise((resolve, reject) => {
         relationshipDao.findUserAttentions(userId).then(data => {
@@ -61,5 +76,6 @@ function findAllUserAttentionTypes(userId) {
 module.exports.initUserRelationship = initUserRelationship;
 module.exports.addAttentionUser = addAttentionUser;
 module.exports.deleteAttention = deleteAttention;
+module.exports.findFansByUser = findFansByUser;
 module.exports.findUserAttentions = findUserAttentions;
 module.exports.findAllUserAttentionTypes = findAllUserAttentionTypes;
