@@ -28,7 +28,7 @@ function findUserAttentions(userId, paginationParams) {
         // TODO 关于子数组文档的分页操作后续做
         // return Relationship.find({userId: userId}).skip(paginationParams.startIndex).limit(paginationParams.pageSize).sort(paginationParams.sort).exec();
     } else {
-        return Relationship.findOne({userId: userId}).exec();
+        return Relationship.findOne({userId: userId}).lean().exec();
     }
 }
 

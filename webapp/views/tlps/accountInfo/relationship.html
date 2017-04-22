@@ -67,9 +67,9 @@
             </div>
         </div>
         <div class="attention-users">
-            <account-info-attention-user></account-info-attention-user>
-            <account-info-attention-user></account-info-attention-user>
-            <account-info-attention-user></account-info-attention-user>
+            <div ng-repeat="attention in userAttentionInfos.attentions" style="display: inline-block;">
+                <account-info-attention-user attention-user="attention"></account-info-attention-user>
+            </div>
         </div>
     </div>
 </div>

@@ -41,9 +41,10 @@ function login(email, password) {
 
 function update(userInfo) {
     return new Promise((resolve, reject) => {
-        var promise = userDao.update(userInfo);
-        promise.then(data => {
-            resolve(data);
+        userDao.update(userInfo).then(data => {
+            return userDao.getBasicUserInfo(userInfo._id);
+        }).then(user => {
+            resolve(user);
         }).catch(data => {
             reject({ errorMessage: '数据库异常' });
         });
@@ -54,7 +55,6 @@ function getUserInfo(userId) {
     return new Promise((resolve, reject) => {
         var promise = userDao.getById(userId);
         promise.then(user => {
-            delete user['password'];
             resolve(user);
         });
     });

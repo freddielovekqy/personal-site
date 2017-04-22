@@ -20,62 +20,70 @@ app.service('CommonUtils', ['HttpService', function (HttpService) {
         return isPCClient === 'true';
     }
 
-    function getCurrentUserId() {
-        var currentUserId = '';
-        var currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
-        if (!currentUser) {
-            currentUserId = localStorage.getItem('currentUserId');
-            HttpService.get({
-                url: 'api/user/getUserInfo/' + currentUserId,
-                success: function (data) {
-                    sessionStorage.setItem(currentUser, JSON.stringify(data));
-                },
-                error: function (data) {
-                }
-            });
-        }
-        return currentUser._id;
-    }
-
     return {
-        isPC: isPC,
-        getCurrentUserId: getCurrentUserId
+        isPC: isPC
     }
 }]);
 
-app.service('CommonUserUtils', ['HttpService', function (HttpService) {
-    var userInfo;
+app.service('CommonUserUtils', ['$location', 'HttpService', function ($location, HttpService) {
+    var currentUserInfo;
+    var currentUserBlogInfo;
     var userBlogInfo = {};
+    var getCurrentUserInfoPromise;
 
     function getCurrentUserInfo() {
-        var currentUserId = localStorage.getItem('currentUserId');
-        if (!currentUserId) {
-            return;
-        }
-        if (!userInfo) {
-            return new Promise(function (resolve, reject) {
-                HttpService.get({
-                    url: 'api/user/getUserInfo/' + currentUserId,
-                    success: function (data) {
-                        userInfo = data;
-                        resolve(data);
-                    },
-                    error: function (data) {
-                    }
+        if (!currentUserInfo) {
+            if (!getCurrentUserInfoPromise) {
+                getCurrentUserInfoPromise = new Promise(function (resolve, reject) {
+                    HttpService.get({
+                        url: 'api/user/currentUser',
+                        success: function (data) {
+                            if (!data) {
+                                // 跳转到登录页面
+                                $location.url('/login');
+                            } else {
+                                currentUserInfo = data;
+                                resolve(data);
+                            }
+                            getCurrentUserInfoPromise = undefined;
+                        },
+                        error: function (data) {
+                            getCurrentUserInfoPromise = undefined;
+                        }
+                    });
                 });
-            });
+            }
+            return getCurrentUserInfoPromise;
             
         } else {
-            return userInfo;
+            return currentUserInfo;
+        }
+    }
+
+    function getCurrentUserBlogInfo() {
+        if (currentUserBlogInfo) {
+            return currentUserBlogInfo;
+        } else {
+            var result = getCurrentUserInfo();
+            if (result instanceof Promise) {
+                return result.then(userInfo => {
+                    return getUserBlogInfoFunc(userInfo._id, data => {
+                        currentUserBlogInfo = data;
+                    });
+                });
+            } else {
+                return getUserBlogInfoFunc(result._id, data => {
+                    currentUserBlogInfo = data;
+                });
+            }
         }
     }
 
     function updateCurrentUserInfo(callback) {
-        var currentUserId = localStorage.getItem('currentUserId');
         HttpService.get({
-            url: 'api/user/getUserInfo/' + currentUserId,
+            url: 'api/user/currentUser',
             success: function (data) {
-                userInfo = data;
+                currentUserInfo = data;
                 postal.publish({
                     channel: 'user',
                     topic: 'updateUserInfo',
@@ -88,31 +96,25 @@ app.service('CommonUserUtils', ['HttpService', function (HttpService) {
         });
     } 
 
-    function getUserBlogInfo(userId) {
-        if (!userBlogInfo[userId]) {
-            return new Promise(function (resolve, reject) {
-                var currentUserId = localStorage.getItem('currentUserId');
-                HttpService.get({
-                    url: 'api/userBlogInfo/getInfo/' + userId,
-                    success: function (data) {
-                        userBlogInfo[userId] = data;
-                        resolve(data);
-                    },
-                    error: function (data) {
-                        console.log('get blog list error');
-                    }
-                });
+    function getUserBlogInfoFunc(userId, callback) {
+        return new Promise(function (resolve, reject) {
+            HttpService.get({
+                url: 'api/userBlogInfo/getInfo/' + userId,
+                success: function (data) {
+                    callback && callback(data);
+                    resolve(data);
+                },
+                error: function (data) {
+                    console.log('get info error');
+                }
             });
-            
-        } else {
-            return userBlogInfo[userId];
-        }
+        });
     }
 
     return {
         getCurrentUserInfo: getCurrentUserInfo,
         updateCurrentUserInfo: updateCurrentUserInfo,
-        getUserBlogInfo: getUserBlogInfo
+        getCurrentUserBlogInfo: getCurrentUserBlogInfo
     };
 }]);
 

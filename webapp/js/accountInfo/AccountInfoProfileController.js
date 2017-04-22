@@ -171,8 +171,8 @@ accountInfoProfileModule.controller('AccountInfoProfileController', ['$scope', '
         }
 
         function updateUserInfo() {
-            HttpService.post({
-                url: 'api/user/update',
+            HttpService.put({
+                url: 'api/user',
                 params: {
                     userInfo: userInfoBack
                 },

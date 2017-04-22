@@ -19,30 +19,34 @@ router.post('/register', function (request, response, next) {
     });
 });
 
-router.post('/login', function (request, response, next) {
+router.post('/login', (request, response, next) => {
     var email = request.body.email;
     var password = request.body.password;
     logger.info('login', email);
     userService.login(email, password).then(data => {
-        request.session.currentUser = {
-            id: data._id
-        };
+        request.session.currentUser = data;
         response.send(JSON.stringify(data));
     }).catch(data => {
         response.send(JSON.stringify(data));
     });
 });
 
-router.post('/update', function (request, response, next) {
+router.put('/', (request, response, next) => {
     var userInfo = request.body.userInfo;
     userService.update(userInfo).then(data => {
+        request.session.currentUser = data;
         response.send(JSON.stringify(data));
     }).catch(data => {
         response.send(JSON.stringify(data));
     });
 });
 
-router.get('/getUserInfo/:userId', function (request, response, next) {
+router.get('/currentUser', (request, response, next) => {
+    var currentUser = request.session.currentUser;
+    response.send(JSON.stringify(currentUser));
+});
+
+router.get('/:userId', (request, response, next) => {
     var userId = request.params.userId;
     userService.getUserInfo(userId).then(data => {
         response.send(JSON.stringify(data));

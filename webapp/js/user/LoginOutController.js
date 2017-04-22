@@ -36,7 +36,11 @@ loginOutModule.controller('LoginController', ['$scope', 'HttpService', '$locatio
                     if (data && data._id) {
                         StorageUtils.setSessionStorage('currentUser', data);
                         StorageUtils.setLocalStorage('currentUserId', data._id);
-                        CommonUserUtils.updateCurrentUserInfo();
+                        postal.publish({
+                            channel: 'user',
+                            topic: 'loginSuccess',
+                            data: {}
+                        });
                         $location.url('/');
                     } else {
                         $scope.password = '';

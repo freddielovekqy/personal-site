@@ -13,11 +13,29 @@ accountInfoModule.config(['$routeProvider', '$locationProvider', function ($rout
 
 accountInfoModule.controller('AccountInfoController', ['$scope', '$location', '$routeParams', '$compile', '$timeout', 'HttpService', 'StorageUtils', 'CommonUserUtils',
     function ($scope, $location, $routeParams, $compile, $timeout, HttpService, StorageUtils, CommonUserUtils) {
-        var currentUser = StorageUtils.getSessionStorage('currentUser');
-        (function () {
-            getUserInfo(currentUser._id);
-            var type = $routeParams.type;
 
+        (function () {
+            var result = CommonUserUtils.getCurrentUserBlogInfo();
+            if (result instanceof Promise) {
+                result.then( (data) => {
+                    $timeout(() => {
+                        showAccountInfo(data);
+                    }, 0);
+                });
+            } else {
+                showAccountInfo(result);
+            }
+        })();
+
+        $scope.showAccountInfoPage = function (pageType) {
+            $location.path('/account-info/' + pageType);
+        };
+
+        function showAccountInfo(data) {
+            $scope.userBlogInfo = data.userBlogInfo;
+            $scope.user = data.userInfo;
+
+            var type = $routeParams.type;
             var baseEle = $('.account-content-div');
             var ele;
             $scope.accountInfoCurrentSelectTab = type;
@@ -28,27 +46,8 @@ accountInfoModule.controller('AccountInfoController', ['$scope', '$location', '$
                 ele = $compile('<account-info-profile></account-info-profile>')($scope);
                 baseEle.append(ele);
             } else if (type === 'relationship') {
-                ele = $compile('<account-info-relationship></account-info-relationship>')($scope);
+                ele = $compile('<account-info-relationship current-user-id="' + $scope.user._id + '"></account-info-relationship>')($scope.$new());
                 baseEle.append(ele);
-            }
-        })();
-
-        $scope.showAccountInfoPage = function (pageType) {
-            $location.path('/account-info/' + pageType);
-        };
-
-        function getUserInfo(userId) {
-            var result = CommonUserUtils.getUserBlogInfo(userId);
-            if (result instanceof Promise) {
-                result.then( (data) => {
-                    $timeout(() => {
-                        $scope.userBlogInfo = data.userBlogInfo;
-                        $scope.user = data.userInfo;
-                    }, 0);
-                });
-            } else {
-                $scope.userBlogInfo = result.userBlogInfo;
-                $scope.user = result.userInfo;
             }
         }
     }

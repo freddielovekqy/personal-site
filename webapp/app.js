@@ -46,9 +46,6 @@ app.controller('initController', ['$rootScope', '$scope', '$location', '$timeout
             $scope.showLoginBtn = ($scope.currentPath === '/login' || $scope.currentPath === '/register');
         });
 
-        $scope.$on('loginSuccess', function () {
-            getUserInfo();
-        });
         getUserInfo();
 
         $scope.changePath = function (path) {
@@ -79,6 +76,14 @@ app.controller('initController', ['$rootScope', '$scope', '$location', '$timeout
                 $scope.currentUser = result;
             }
         }
+
+        var loginSub = postal.subscribe({
+            channel: 'user',
+            topic: 'loginSuccess',
+            callback: data => {
+                getUserInfo();
+            }
+        });
 
         var updateUserInfoSub = postal.subscribe({
             channel: 'user',

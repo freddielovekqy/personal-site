@@ -16,6 +16,20 @@ app.service('HttpService', ['$rootScope', '$http', function ($rootScope, $http) 
         });
     }
 
+    function put (httpParams) {
+        $http({
+            url: httpParams.url,
+            method: 'PUT',
+            data: httpParams.params
+        }).success(function (data) {
+            showErrorMessage(data);
+            httpParams.success && httpParams.success(data);
+        }).error(function (data) {
+            showErrorMessage(data);
+            httpParams.error && httpParams.error();
+        });
+    }
+
     function get(httpParams) {
         $http({
             url: httpParams.url,
@@ -70,6 +84,7 @@ app.service('HttpService', ['$rootScope', '$http', function ($rootScope, $http) 
     return {
         post: post,
         get: get,
+        put: put,
         delete: deleteFuc
     };
 }]);

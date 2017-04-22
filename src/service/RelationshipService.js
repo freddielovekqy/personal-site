@@ -3,11 +3,12 @@ var userDao = require('../dao/UserDao');
 var logger = require('../common/log/log4js').logger;
 var _ = require('lodash');
 
+const DEFAULT_ATTENTION_TYPES = ['好友圈', '特别关注'];
+
 // 注册用户时添加用户的基本关系分组等信息
 function initUserRelationship(userId) {
-    var defaultAttentionTypes = ['特别关注'];
     return new Promise((resolve, reject) => {
-        relationshipDao.addRelationship(userId, defaultAttentionTypes).then(data => {
+        relationshipDao.addRelationship(userId, DEFAULT_ATTENTION_TYPES).then(data => {
             resolve(data);
         });
     });
@@ -60,7 +61,18 @@ function findFansByUser(userId) {
 function findUserAttentions(userId) {
     return new Promise((resolve, reject) => {
         relationshipDao.findUserAttentions(userId).then(data => {
-            resolve(data);
+            var findAllUserPromise = [];
+            data.attentions.forEach(attention => {
+                findAllUserPromise.push(new Promise((getUserInfoResolve, getUserInfoReject) => {
+                    userDao.getBasicUserInfo(attention.userId).then(user => {
+                        attention = Object.assign(attention, user.toObject());
+                        getUserInfoResolve();
+                    });
+                }));
+            });
+            Promise.all(findAllUserPromise).then(userInfos => {
+                resolve(data);
+            });
         });
     });
 }

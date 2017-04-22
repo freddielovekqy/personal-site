@@ -25,7 +25,7 @@ function update(userDTO) {
 }
 
 function getById(userId) {
-    return User.findById(userId).exec();
+    return User.findById(userId, {password: 0}).exec();
 }
 
 function getBasicUserInfo(userId) {

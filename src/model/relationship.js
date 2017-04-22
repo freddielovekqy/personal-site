@@ -3,7 +3,8 @@ var mongoose = require('../dao/db.js'),
 
 var AttentionSchema = new Schema({
     typeName: { type: String },
-    userId: { type: String }
+    userId: { type: String },
+    source: { type: String } // 关注的渠道
 });
 
 var RelationshipSchema = new Schema({

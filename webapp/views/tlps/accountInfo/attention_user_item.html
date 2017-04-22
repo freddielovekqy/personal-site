@@ -3,13 +3,13 @@
         <div class="image"></div>
     </div>
     <div class="user-info">
-        <div class="username">王超</div>
+        <div class="username">{{attentionUser.username}}</div>
         <div class="attention-status">已关注</div>
-        <div class="brief-introduction">好好学习天天向上</div>
-        <div class="attention-source">通过系统推荐</div>
+        <div class="brief-introduction">{{attentionUser.briefIntroduction}}</div>
+        <div class="attention-source">{{attentionUser.source || '通过系统推荐'}}</div>
         <div class="attention-operation">
             <button class="btn btn-default btn-xs group-button" type="button">
-                <span>未分组</span>
+                <span>{{attentionUser.typeName}}</span>
                 <span class="fa fa-caret-down"></span>
             </button>
             <button class="btn btn-default btn-xs operation-button" type="button">
