@@ -85,9 +85,45 @@ function findAllUserAttentionTypes(userId) {
     });
 }
 
+function countAttentionsGroupByType(userId) {
+    return new Promise((resolve, reject) => {
+        var typeGroupCount = {};
+        var groupTypeAttentionPromises = [];
+        relationshipDao.findAllUserAttentionTypes(userId)
+            .then(userAttentionsInfo => {
+                userAttentionsInfo && userAttentionsInfo.types.forEach(type => {
+                    groupTypeAttentionPromises.push(countAttentionsByType(userId, type));
+                });
+                return Promise.all(groupTypeAttentionPromises);
+            })
+            .then(data => {
+                data.forEach(item => {
+                    typeGroupCount = Object.assign(typeGroupCount, item);
+                });
+                resolve(typeGroupCount);
+            });
+    });
+}
+
+/**
+ * 根据关注类型获取该类型下的关注的用户的个数
+ * @param {String} userId 查询的用户ID
+ * @param {String} type 关注的类型
+ */
+function countAttentionsByType(userId, type) {
+    var typeCount = {};
+    return new Promise((resolve, reject) => {
+        relationshipDao.findAttentionsByType(userId, type).then(data => {
+            typeCount[type] = data.attentions.length;
+            resolve(typeCount);
+        });
+    });
+}
+
 module.exports.initUserRelationship = initUserRelationship;
 module.exports.addAttentionUser = addAttentionUser;
 module.exports.deleteAttention = deleteAttention;
 module.exports.findFansByUser = findFansByUser;
 module.exports.findUserAttentions = findUserAttentions;
 module.exports.findAllUserAttentionTypes = findAllUserAttentionTypes;
+module.exports.countAttentionsGroupByType = countAttentionsGroupByType;

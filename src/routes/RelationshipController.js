@@ -52,9 +52,19 @@ router.get('/:userId/attentions', (request, response, next) => {
 });
 
 router.get('/types', (request, response, next) => {
-    var userId = request.session.currentUser.id;
+    var userId = request.session.currentUser._id;
     var promise = relationshipService.findAllUserAttentionTypes(userId);
     promise.then(data => {
+        response.send(JSON.stringify(data));
+    });
+});
+
+/**
+ * 查询一个用户的所有关注类型中的用户个数
+ */
+router.get('/:userId/attentions/types', (request, response, next) => {
+    var userId = request.params.userId;
+    relationshipService.countAttentionsGroupByType(userId).then(data => {
         response.send(JSON.stringify(data));
     });
 });

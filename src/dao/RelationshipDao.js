@@ -36,6 +36,10 @@ function findAllUserAttentionTypes(userId) {
     return Relationship.findOne({userId: userId}, {userId: 1, types: 1}).exec();
 }
 
+function findAttentionsByType(userId, type) {
+    return Relationship.findOne({userId: userId, attentions: {$elemMatch: {typeName: type}}}, 'attentions').lean().exec();
+}
+
 function findFansByUser(userId) {
     // TODO 后续需要添加分页方法
     return Relationship.find({attentions: {$elemMatch: {userId: userId}}}, 'userId').lean().exec();
@@ -46,4 +50,5 @@ module.exports.addAttentionUser = addAttentionUser;
 module.exports.deleteAttentionUser = deleteAttentionUser;
 module.exports.findFansByUser = findFansByUser;
 module.exports.findUserAttentions = findUserAttentions;
+module.exports.findAttentionsByType = findAttentionsByType;
 module.exports.findAllUserAttentionTypes = findAllUserAttentionTypes;
