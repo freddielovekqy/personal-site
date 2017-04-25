@@ -37,6 +37,7 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
 
 app.controller('initController', ['$rootScope', '$scope', '$location', '$timeout', 'CommonUtils', 'HttpService', 'StorageUtils', 'CommonUserUtils',
     function ($rootScope, $scope, $location, $timeout, CommonUtils, HttpService, StorageUtils, CommonUserUtils) {
+        console.log('----');
         $scope.showHeader = true;
         $scope.showLoginBtn = false;
         $scope.currentPath = getRootPath($location.path());

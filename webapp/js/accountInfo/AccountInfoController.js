@@ -13,7 +13,6 @@ accountInfoModule.config(['$routeProvider', '$locationProvider', function ($rout
 
 accountInfoModule.controller('AccountInfoController', ['$scope', '$location', '$routeParams', '$compile', '$timeout', 'HttpService', 'StorageUtils', 'CommonUserUtils',
     function ($scope, $location, $routeParams, $compile, $timeout, HttpService, StorageUtils, CommonUserUtils) {
-
         (function () {
             var result = CommonUserUtils.getCurrentUserBlogInfo();
             if (result instanceof Promise) {

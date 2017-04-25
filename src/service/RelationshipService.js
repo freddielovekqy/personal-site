@@ -87,10 +87,14 @@ function findAllUserAttentionTypes(userId) {
 
 function countAttentionsGroupByType(userId) {
     return new Promise((resolve, reject) => {
-        var typeGroupCount = {};
+        var typeGroupCount = {
+            total: 0,
+            typeGroupCount: []
+        };
         var groupTypeAttentionPromises = [];
         relationshipDao.findAllUserAttentionTypes(userId)
             .then(userAttentionsInfo => {
+                userAttentionsInfo.types.push('');
                 userAttentionsInfo && userAttentionsInfo.types.forEach(type => {
                     groupTypeAttentionPromises.push(countAttentionsByType(userId, type));
                 });
@@ -98,8 +102,11 @@ function countAttentionsGroupByType(userId) {
             })
             .then(data => {
                 data.forEach(item => {
-                    typeGroupCount = Object.assign(typeGroupCount, item);
+                    typeGroupCount.typeGroupCount.push(item);
                 });
+                return relationshipDao.findUserAttentions(userId);
+            }).then(data => {
+                typeGroupCount.total = data.attentions.length;
                 resolve(typeGroupCount);
             });
     });
@@ -111,11 +118,17 @@ function countAttentionsGroupByType(userId) {
  * @param {String} type 关注的类型
  */
 function countAttentionsByType(userId, type) {
-    var typeCount = {};
     return new Promise((resolve, reject) => {
         relationshipDao.findAttentionsByType(userId, type).then(data => {
-            typeCount[type] = data.attentions.length;
-            resolve(typeCount);
+            var attentionCount = {
+                typeName: type
+            };
+            if (data && data.attentions) {
+                attentionCount.count = data.attentions.length;
+            } else {
+                attentionCount.count = 0;
+            }
+            resolve(attentionCount);
         });
     });
 }

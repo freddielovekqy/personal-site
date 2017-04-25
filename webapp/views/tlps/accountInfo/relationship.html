@@ -1,32 +1,14 @@
 <div class="relationship-page">
     <div class="relationship-left-bar">
         <div class="level-one-bar">
-            <div class="level-one-bar-title">
+            <div class="level-one-bar-title" ng-class="{'select' : currentShowTab === 'attentions'}" ng-click="showAllAttentions()">
                 <span class="fa fa-user-o"></span>
-                <span>关注 100</span>
+                <span>关注 {{attentionTypesCount.total}}</span>
             </div>
-            <div class="level-two-bar">
-                <div class="level-two-bar-title">
-                    <span class="fa fa-heart"></span>
-                    <span>好友圈 5</span>
-                </div>
-            </div>
-            <div class="level-two-bar">
-                <div class="level-two-bar-title">
-                    <span class="fa fa-star-o"></span>
-                    <span>兴趣爱好 5</span>
-                </div>
-            </div>
-            <div class="level-two-bar">
-                <div class="level-two-bar-title">
-                    <span class="fa fa-heartbeat"></span>
-                    <span>特别关注 5</span>
-                </div>
-            </div>
-            <div class="level-two-bar">
-                <div class="level-two-bar-title">
-                    <span class="fa fa-circle fa-"></span>
-                    <span>未分组 5</span>
+            <div class="level-two-bar" ng-repeat="attentionTypeCount in attentionTypesCount.typeGroupCount" ng-click="changeShowAttentions(attentionTypeCount.typeIndex)">
+                <div class="level-two-bar-title" ng-class="{'select' : currentShowTab === attentionTypeCount.typeIndex}">
+                    <span class="fa {{attentionTypeCount.className}}"></span>
+                    <span>{{attentionTypeCount.typeName || '未分组'}} {{attentionTypeCount.count}}</span>
                 </div>
             </div>
             <button type="button" class="btn btn-default btn-sm add-new-group">
@@ -56,7 +38,7 @@
     <div class="relationship-main-content">
         <div class="relationship-header">
             <span style="font-weight: bold;">全部关注</span>
-            <span>199</span>
+            <span>{{attentionTypesCount.total}}</span>
         </div>
         <div class="relationship-operation">
             <div class="batch-operation">批量管理</div>
