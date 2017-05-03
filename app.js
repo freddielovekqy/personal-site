@@ -12,6 +12,8 @@ var blog = require('./src/routes/BlogController');
 var userBlogInfo = require('./src/routes/UserBlogInfoController');
 var comment = require('./src/routes/CommentController');
 var relationship = require('./src/routes/RelationshipController');
+var photo = require('./src/routes/PhotoController');
+var album = require('./src/routes/AlbumController');
 
 var app = express();
 
@@ -68,6 +70,8 @@ app.use('/api/blog', blog);
 app.use('/api/userBlogInfo', userBlogInfo);
 app.use('/api/comment', comment);
 app.use('/api/relationship', relationship);
+app.use('/api/album', album);
+app.use('/api/photo', photo);
 
 // nodejs提供restful的api接口
 app.get('/api/about', function (request, response) {

@@ -11,7 +11,7 @@ var AlbumSchema = new Schema({
     name: { type: String },
     userId: { type: String },
     status: { type: Number , default: 1}, // 1: 常态；0: 已删除；2：私密相册,
-    description: { tyle: String },
+    description: { type: String },
     createDate: { type: Date, default: new Date() },
     phtots: [PhotoSchema],
     defaultPhoto: {PhotoSchema} // 默认显示的相册的图片
