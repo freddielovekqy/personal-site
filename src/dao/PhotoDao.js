@@ -21,7 +21,7 @@ function updateAlbum(albumDTO) {
 }
 
 function findAlbumsByUser(userId, status = 1) {
-    return Album.find({userId: userId, status: status}, {photos: 0}).lean().exec();
+    return Album.find({userId: userId, status: status}).lean().exec();
 }
 
 

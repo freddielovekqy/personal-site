@@ -23,7 +23,7 @@
                         <div class="nav-menu">
                             <a class="nav-menu-item" href="/" ng-click="changePath('/')" ng-class="{'current-page': currentPath === '/'}">首页</a>
                             <a class="nav-menu-item" href="/blog" ng-click="changePath('/blog')" ng-class="{'current-page': currentPath === '/blog'}">博客</a>
-                            <a class="nav-menu-item">图片</a>
+                            <a class="nav-menu-item" href="/photo" ng-click="changePath('/photo')" ng-class="{'current-page': currentPath === '/photo'}">图片</a>
                             <div class="nav-menu-item dropdown">
                                 <a id="dropdownMenu1" data-toggle="dropdown">广场</a>
                                 <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
@@ -97,6 +97,9 @@
 
     <script src="js/profile/ProfileController.js"></script>
     <script src="js/profile/UserProfileInBlog.js"></script>
+
+    <script src="js/photo/PhotoController.js"></script>
+    <script src="js/photo/PhotoDirective.js"></script>
 
     <script src="js/accountInfo/AccountInfoController.js"></script>
     <script src="js/accountInfo/AccountInfoDirective.js"></script>

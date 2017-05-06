@@ -1,0 +1,47 @@
+<div class="photo-page container">
+    <div class="photo-header">
+        <div class="photo-header-title select">相册</div>
+        <div class="photo-header-title">照片</div>
+    </div>
+    <div class="photo-container">
+        <div class="photo-operation-div">
+            <button type="button" class="btn btn-info upload-photo">
+                <span class="fa fa-upload"></span>
+                <span>上传照片</span>
+            </button>
+            <button type="button" class="btn btn-default create-album" ng-click="createAlbum()">创建相册</button>
+        </div>
+        <div class="photo-album-list">
+            <div class="photo-album-item">
+                <div class="album-operations" ng-mouseleave="showAlbumOperationsClick(false)">
+                    <div class="album-operation-icon" ng-click="showAlbumOperationsClick(true)" ng-class="{'hide-bottom-border': showAlbumOperations}">
+                        <span class="fa fa-chevron-down"></span>
+                    </div>
+                    <div class="album-operation-items" ng-show="showAlbumOperations">
+                        <div class="album-operation-item">
+                            <span class="fa fa-pencil"></span>
+                            <span class="operation-text">编辑</span>
+                        </div>
+                        <div class="album-operation-item">
+                            <span class="fa fa-lock"></span>
+                            <span class="operation-text">权限设置</span>
+                        </div>
+                        <div class="album-operation-item">
+                            <span class="fa fa-trash"></span>
+                            <span class="operation-text">删除</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="album-show-photo">
+
+                </div>
+                <div class="photo-count">1</div>
+                <div class="album-title">
+                    我的相册
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="photo-popover-container"></div>
+</div>
