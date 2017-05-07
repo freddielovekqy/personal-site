@@ -4,7 +4,8 @@ var mongoose = require('../dao/db.js'),
 var PhotoSchema = new Schema({
     path: { type: String },
     name: { type: String },
-    description: { tyle: String }
+    description: { tyle: String },
+    createDate: {type: Date, default: new Date()}
 });
 
 var AlbumSchema = new Schema({

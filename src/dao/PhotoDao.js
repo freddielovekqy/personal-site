@@ -16,8 +16,12 @@ function deleteAlbum(albumId) {
     return Album.update({_id: albumId}, {$set: {status: 0}});
 }
 
-function updateAlbum(albumDTO) {
-    return Album.update({_id: albumDTO._id}, albumDTO);
+function updateAlbum(albumId, albumDTO) {
+    return Album.update({_id: albumId}, albumDTO);
+}
+
+function findAlbumById(albumId) {
+    return Album.findById(albumId).lean().exec();
 }
 
 function findAlbumsByUser(userId, status = 1) {
@@ -33,21 +37,22 @@ function addPhoto(albumId, photoDTO) {
         name: photoDTO.name,
         description: photoDTO.description
     });
-    return Album.update({_id: albumId}, {$set: {'phtots.$': photoEntity}});
+    return Album.update({'_id': albumId}, {$addToSet: {'photos': photoEntity}});
 } 
 
 function deletePhoto(albumId, photoId) {
-    return Album.update({_id: albumId}, {$pull: {_id: photoId}});
+    return Album.update({_id: albumId}, {$pull: {photos: {_id: photoId}}});
 }
 
-function findPhotosByAlbums(albumId, status = 1) {
-    return Album.find({_id: albumId, status: status}).lean().exec();
+function findPhotosByAlbum(albumId, status = 1) {
+    return Album.find({_id: albumId, status: status}, {photos: 1}).lean().exec();
 }
 
 module.exports.addAlbum = addAlbum;
 module.exports.deleteAlbum = deleteAlbum;
 module.exports.updateAlbum = updateAlbum;
+module.exports.findAlbumById = findAlbumById;
 module.exports.findAlbumsByUser = findAlbumsByUser;
 module.exports.addPhoto = addPhoto;
 module.exports.deletePhoto = deletePhoto;
-module.exports.findPhotosByAlbums = findPhotosByAlbums;
+module.exports.findPhotosByAlbum = findPhotosByAlbum;

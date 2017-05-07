@@ -14,7 +14,38 @@ router.post('/', (request, response, next) => {
         });
 });
 
-router.get('/:userId', (request, response, next) => {
+router.put('/', (request, response, next) => {
+    var album = request.body.album;
+    var userId = request.session.currentUser._id;
+    photoService.updateAlbum(album)
+        .then(data => {
+            response.send(JSON.stringify(data));
+        }).catch(function (data) {
+            response.send(JSON.stringify(data));
+        });
+});
+
+router.delete('/:albumId', (request, response, next) => {
+    var albumId = request.params.albumId;
+    photoService.deleteAlbum(albumId)
+        .then(data => {
+            response.send(JSON.stringify(data));
+        }).catch(function (data) {
+            response.send(JSON.stringify(data));
+        });
+});
+
+router.get('/:albumId', (request, response, next) => {
+    var albumId = request.params.albumId;
+    photoService.findAlbumById(albumId)
+        .then(data => {
+            response.send(JSON.stringify(data));
+        }).catch(function (data) {
+            response.send(JSON.stringify(data));
+        });
+});
+
+router.get('/user/:userId', (request, response, next) => {
     var userId = request.params.userId;
     photoService.findAlbumsByUser(userId)
         .then(data => {
@@ -23,6 +54,8 @@ router.get('/:userId', (request, response, next) => {
             response.send(JSON.stringify(data));
         });
 })
+
+
 
 
 module.exports = router;

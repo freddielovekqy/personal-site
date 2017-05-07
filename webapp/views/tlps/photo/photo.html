@@ -12,21 +12,21 @@
             <button type="button" class="btn btn-default create-album" ng-click="createAlbum()">创建相册</button>
         </div>
         <div class="photo-album-list">
-            <div class="photo-album-item">
-                <div class="album-operations" ng-mouseleave="showAlbumOperationsClick(false)">
-                    <div class="album-operation-icon" ng-click="showAlbumOperationsClick(true)" ng-class="{'hide-bottom-border': showAlbumOperations}">
+            <div class="photo-album-item" ng-repeat="album in albums" ng-click="showAlbumPhotos(album)">
+                <div class="album-operations" ng-mouseleave="showAlbumOperationsClick(album, false)">
+                    <div class="album-operation-icon" ng-click="showAlbumOperationsClick(album, true)" ng-class="{'hide-bottom-border': album.showAlbumOperations}">
                         <span class="fa fa-chevron-down"></span>
                     </div>
-                    <div class="album-operation-items" ng-show="showAlbumOperations">
-                        <div class="album-operation-item">
+                    <div class="album-operation-items" ng-show="album.showAlbumOperations">
+                        <div class="album-operation-item" ng-click="editAlbum(album)">
                             <span class="fa fa-pencil"></span>
                             <span class="operation-text">编辑</span>
                         </div>
-                        <div class="album-operation-item">
-                            <span class="fa fa-lock"></span>
-                            <span class="operation-text">权限设置</span>
-                        </div>
-                        <div class="album-operation-item">
+                        <!--<div class="album-operation-item">-->
+                            <!--<span class="fa fa-lock"></span>-->
+                            <!--<span class="operation-text">权限设置</span>-->
+                        <!--</div>-->
+                        <div class="album-operation-item" ng-click="deleteAlbum(album)">
                             <span class="fa fa-trash"></span>
                             <span class="operation-text">删除</span>
                         </div>
@@ -36,9 +36,9 @@
                 <div class="album-show-photo">
 
                 </div>
-                <div class="photo-count">1</div>
+                <div class="photo-count">{{album.photos.length}}</div>
                 <div class="album-title">
-                    我的相册
+                    {{album.name}}
                 </div>
             </div>
         </div>
