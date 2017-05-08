@@ -4,7 +4,7 @@ var mongoose = require('../dao/db.js'),
 var PhotoSchema = new Schema({
     path: { type: String },
     name: { type: String },
-    description: { tyle: String },
+    description: { type: String },
     createDate: {type: Date, default: new Date()}
 });
 
@@ -16,7 +16,7 @@ var AlbumSchema = new Schema({
     description: { type: String },
     createDate: { type: Date, default: new Date() },
     photos: [PhotoSchema],
-    defaultPhoto: { PhotoSchema } // 默认显示的相册的图片
+    defaultPhotoId: { type: String } // 默认显示的相册的图片
 });
 
 // 设置虚拟属性，虚拟属性不会入库，此处不可以用ES6的箭头方法。

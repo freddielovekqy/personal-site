@@ -1,7 +1,7 @@
-<div class="upload-photo-popover my-popover">
-    <div class="popover-title">上传照片</div>
+<div class="upload-photo-popover my-popover" ng-class="{'update-photo-info':photo._id}">
+    <div class="popover-title">{{photo._id ? '更新照片信息' : '上传照片'}}</div>
     <div class="popover-content">
-        <div class="item">
+        <div class="item" ng-show="!photo._id">
             <div class="item-label">上传到</div>
             <div class="item-input">
                 <select ng-model="selectedAlbum" ng-options="album.name for album in albums" class="form-control"></select>
@@ -19,18 +19,24 @@
                 <textarea name="" class="form-control" id="blogSummary" cols="30" rows="3" ng-model="photo.description"></textarea>
             </div>
         </div>
-        <div class="item">
+        <div class="item" ng-show="!photo._id">
             <div class="item-label">文件</div>
             <div class="item-input">
-                <input type="file" id="uploadPhoto"/>
-                <button type="button" class="btn btn-primary btn-sm upload-photo-button">
-                    <label for="uploadPhoto">选择文件</label>
-                </button>
+                <div class="upload" ng-hide="selectedFile.name">
+                    <input type="file" id="uploadPhoto" onchange="angular.element(this).scope().fileSelected()" accept=".jpg,.png" />
+                    <button type="button" class="btn btn-primary btn-sm upload-photo-button">
+                        <label for="uploadPhoto">选择文件</label>
+                    </button>
+                </div>
+                <div class="upload-selected-file" ng-show="selectedFile.name">
+                    <span>{{selectedFile.name}}</span>
+                </div>
+
             </div>
         </div>
     </div>
     <div class="popover-footer">
-        <button type="button" class="btn btn-info btn-sm" ng-click="save()">开始上传</button>
+        <button type="button" class="btn btn-info btn-sm" ng-click="upload()">开始上传</button>
         <button type="button" class="btn btn-default btn-sm" ng-click="cancel()">取消</button>
     </div>
 </div>

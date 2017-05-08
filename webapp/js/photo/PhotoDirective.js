@@ -1,4 +1,4 @@
-/**
+    /**
  * Created by freddie on 2017/5/6.
  */
 photoModule.directive('editAlbumPopover', function () {
@@ -73,16 +73,46 @@ photoModule.directive('uploadPhotoPopover', function () {
         require : '?ngModel',
         replace: true,
         templateUrl: 'views/tlps/photo/upload_photo.html',
-        controller: ['$scope', 'HttpService', 'PhotoService', function ($scope, HttpService, PhotoService) {
-
+        controller: ['$scope', '$http', '$timeout', 'HttpService', 'CommonUtils', 'PhotoService', function ($scope, $http, $timeout, HttpService, CommonUtils, PhotoService) {
             $scope.albums = PhotoService.getAlbums();
             $scope.selectedAlbum = $scope.albums[_.findIndex($scope.albums, {_id: $scope.albumId})];
-            $scope.photo = {};
+            $scope.selectedFile = {};
 
-            $scope.save = function () {
+            $scope.fileSelected = function () {
+                var file = document.querySelector('input[type=file]').files[0];
+                $timeout(function () {
+                    $scope.selectedFile.name = file.name;
+                }, 0);
+            };
 
+            $scope.upload = function () {
+                if (!$scope.photo.name) {
+                    return;
+                }
+                var formData = new FormData();
+                var file = document.querySelector('input[type=file]').files[0];
+                formData.append('file', file);
+                formData.append('albumId', $scope.selectedAlbum._id);
+                formData.append('name', $scope.photo.name);
+                formData.append('description', $scope.photo.description);
 
-                $scope.$destroy();
+                $http({
+                    method: 'POST',
+                    url: 'api/photo/upload',
+                    data: formData,
+                    headers: {'Content-Type': undefined}
+                }).then(function (data) {
+                    CommonUtils.showAlertMessage({
+                        type: 'success',
+                        message: '图片上传成功'
+                    });
+                    postal.publish({
+                        channel: 'upload',
+                        topic: 'uploadPhotoSuccess',
+                        data: {}
+                    });
+                    $scope.$destroy();
+                });
             };
 
             $scope.cancel = function () {

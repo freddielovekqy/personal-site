@@ -178,6 +178,21 @@ app.directive('switch', function () {
     };
 });
 
+// TODO 后续继续开发
+app.directive('loading', function () {
+    return {
+        restrict: 'E',
+        scope: {
+            recent: '='
+        },
+        replace: true,
+        templateUrl: 'views/tlps/common/loading.html',
+        link: function (scope, elements, attrs, ngModel) {
+            console.log(scope.list);
+        }
+    };
+});
+
 app.directive('customerCheckboxList', function () {
     return {
         restrict: 'E',

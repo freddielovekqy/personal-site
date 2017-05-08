@@ -47,6 +47,18 @@ function updateAlbum(album) {
     });
 }
 
+function setDefaultPhoto(albumId, photoId) {
+    return new Promise((resolve, reject) => {
+        photoDao.updateAlbumAttr(albumId, {defaultPhotoId: photoId})
+            .then(data => {
+                resolve(data);
+            })
+            .catch(error => {
+                reject(error);
+            });
+    });
+}
+
 function findAlbumById(albumId) {
     return new Promise((resolve, reject) => {
         photoDao.findAlbumById(albumId)
@@ -107,6 +119,7 @@ function findPhotosByAlbum(albumId) {
 module.exports.addAlbum = addAlbum;
 module.exports.deleteAlbum = deleteAlbum;
 module.exports.updateAlbum = updateAlbum;
+module.exports.setDefaultPhoto = setDefaultPhoto;
 module.exports.findAlbumById = findAlbumById;
 module.exports.findAlbumsByUser = findAlbumsByUser;
 module.exports.addPhoto = addPhoto;

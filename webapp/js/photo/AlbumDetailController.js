@@ -3,8 +3,8 @@
  */
 var albumDetailModule = angular.module('albumDetail', []);
 
-albumDetailModule.controller('AlbumDetailController', ['$scope', '$compile', '$timeout', '$routeParams', 'HttpService', 'PhotoConstant', 'PhotoService',
-    function ($scope, $compile, $timeout, $routeParams, HttpService, PhotoConstant, PhotoService) {
+albumDetailModule.controller('AlbumDetailController', ['$scope', '$compile', '$timeout', '$routeParams', 'HttpService', 'CommonUtils', 'PhotoConstant', 'PhotoService',
+    function ($scope, $compile, $timeout, $routeParams, HttpService, CommonUtils, PhotoConstant, PhotoService) {
 
         $scope.showMoreInfoFlag = false;
         $scope.albumJurisdictions = PhotoConstant.ALBUM_JURISDICTIONS;
@@ -32,20 +32,34 @@ albumDetailModule.controller('AlbumDetailController', ['$scope', '$compile', '$t
         };
 
         $scope.setToCover = function (photo) {
+            HttpService.put({
+                url: `api/album/${$scope.album._id}/default-photo/${photo._id}`,
+                success: function (data) {
+                    CommonUtils.showAlertMessage({
+                        type: 'success',
+                        message: '设置成功'
+                    });
+                    findAlbumInfo($scope.album._id);
+                }
+            });
+        };
 
+        $scope.editPhoto = function (photo) {
+            var baseEle = $('.photo-popover-container');
+            var newScope = $scope.$new();
+            newScope.albumId = $scope.album._id;
+            newScope.photo = photo;
+            var ele = $compile('<upload-photo-popover></upload-photo-popover>')(newScope);
+            baseEle.append(ele);
         };
 
         $scope.deletePhoto = function (photo) {
             HttpService.delete({
                 url: `api/photo/${photo._id}/album/${$scope.album._id}`,
                 success: function (data) {
-                    postal.publish({
-                        channel: 'showAlertMessage',
-                        topic: 'showAlertMessage',
-                        data: {
-                            type: 'success',
-                            message: '删除成功'
-                        }
+                    CommonUtils.showAlertMessage({
+                        type: 'success',
+                        message: '删除成功'
                     });
                     findAlbumInfo($scope.album._id);
                 }
@@ -61,6 +75,9 @@ albumDetailModule.controller('AlbumDetailController', ['$scope', '$compile', '$t
                     $scope.selectedJurisdiction = $scope.albumJurisdictions[_.findIndex($scope.albumJurisdictions, {value: $scope.album.jurisdiction})];
                     $scope.album.photos.forEach(photo => {
                         photo.showPhotoOperations = false;
+                        if ($scope.album.defaultPhotoId === photo._id) {
+                            $scope.album.defaultPhoto = photo;
+                        }
                     });
 
                     if (!PhotoService.getAlbums()) {
@@ -89,8 +106,17 @@ albumDetailModule.controller('AlbumDetailController', ['$scope', '$compile', '$t
             }, 0);
         }
 
+        var uploadSuccessSub = postal.subscribe({
+            channel: 'upload',
+            topic: 'uploadPhotoSuccess',
+            callback: function (data) {
+                findAlbumInfo($scope.album._id);
+            }
+        });
+
         $scope.$on('$destroy', function () {
             $('body').unbind('click', hideMoreInfo);
+            uploadSuccessSub && uploadSuccessSub.unsubscribe();
         });
     }
 ]);

@@ -25,6 +25,17 @@ router.put('/', (request, response, next) => {
         });
 });
 
+router.put('/:albumId/default-photo/:photoId', (request, response, next) => {
+    var albumId = request.params.albumId;
+    var photoId = request.params.photoId;
+    photoService.setDefaultPhoto(albumId, photoId)
+        .then(data => {
+            response.send(JSON.stringify(data));
+        }).catch(function (data) {
+            response.send(JSON.stringify(data));
+        });
+});
+
 router.delete('/:albumId', (request, response, next) => {
     var albumId = request.params.albumId;
     photoService.deleteAlbum(albumId)

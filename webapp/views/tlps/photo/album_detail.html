@@ -4,7 +4,9 @@
         <div class="photo-header-title">照片</div>
     </div>
     <div class="album-info-div">
-        <div class="album-image"></div>
+        <div class="album-image">
+            <img src="{{album.defaultPhoto.path}}" alt=""/>
+        </div>
         <div class="album-info">
             <div class="album-title">{{album.name}}</div>
             <div class="album-photos-count">{{album.photos.length}}张</div>

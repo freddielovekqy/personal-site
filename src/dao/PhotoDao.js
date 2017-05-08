@@ -20,6 +20,10 @@ function updateAlbum(albumId, albumDTO) {
     return Album.update({_id: albumId}, albumDTO);
 }
 
+function updateAlbumAttr(albumId, updateAttr) {
+    return Album.update({_id: albumId}, {$set: updateAttr});
+}
+
 function findAlbumById(albumId) {
     return Album.findById(albumId).lean().exec();
 }
@@ -51,6 +55,7 @@ function findPhotosByAlbum(albumId, status = 1) {
 module.exports.addAlbum = addAlbum;
 module.exports.deleteAlbum = deleteAlbum;
 module.exports.updateAlbum = updateAlbum;
+module.exports.updateAlbumAttr = updateAlbumAttr;
 module.exports.findAlbumById = findAlbumById;
 module.exports.findAlbumsByUser = findAlbumsByUser;
 module.exports.addPhoto = addPhoto;

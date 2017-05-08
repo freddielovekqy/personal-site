@@ -20,8 +20,17 @@ app.service('CommonUtils', ['HttpService', function (HttpService) {
         return isPCClient === 'true';
     }
 
+    function showAlertMessage(data) {
+        postal.publish({
+            channel: 'showAlertMessage',
+            topic: 'showAlertMessage',
+            data: data
+        });
+    }
+
     return {
-        isPC: isPC
+        isPC: isPC,
+        showAlertMessage: showAlertMessage
     }
 }]);
 

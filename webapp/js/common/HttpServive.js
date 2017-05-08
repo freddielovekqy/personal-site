@@ -6,7 +6,8 @@ app.service('HttpService', ['$rootScope', '$http', function ($rootScope, $http) 
         $http({
             url: httpParams.url,
             method: 'POST',
-            data: httpParams.params
+            data: httpParams.params,
+            headers: httpParams.headers
         }).success(function (data) {
             showErrorMessage(data);
             httpParams.success && httpParams.success(data);
