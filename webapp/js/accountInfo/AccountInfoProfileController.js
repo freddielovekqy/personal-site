@@ -3,8 +3,8 @@
  */
 var accountInfoProfileModule = angular.module('accountInfoProfile', []);
 
-accountInfoProfileModule.controller('AccountInfoProfileController', ['$scope', '$timeout', 'HttpService', 'CommonUserUtils', 'CommonConstants',
-    function ($scope, $timeout, HttpService, CommonUserUtils, CommonConstants) {
+accountInfoProfileModule.controller('AccountInfoProfileController', ['$scope', '$compile', '$timeout', 'HttpService', 'CommonUserUtils', 'CommonConstants',
+    function ($scope, $compile, $timeout, HttpService, CommonUserUtils, CommonConstants) {
         var userInfoBack = {};
         $scope.chinaCities = CommonConstants.CHINA_CITY;
         $scope.constellations = CommonConstants.CONSTELLATIONS;
@@ -29,6 +29,13 @@ accountInfoProfileModule.controller('AccountInfoProfileController', ['$scope', '
             getUserInfo();
             $scope.edit = false;
         })();
+
+        $scope.updatePassword = function () {
+            var baseEle = $('.popover-container');
+            var newScope = $scope.$new();
+            var ele = $compile('<update-password></update-password>')(newScope);
+            baseEle.append(ele);
+        };
 
         $scope.changeInfoType = function (showInfoType) {
             $scope.currentShowInfo = showInfoType;

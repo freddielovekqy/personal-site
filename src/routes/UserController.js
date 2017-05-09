@@ -55,6 +55,21 @@ router.get('/:userId', (request, response, next) => {
     });
 });
 
+router.put('/password', (request, response, next) => {
+    var oldPassword = request.body.oldPassword;
+    var newPassword = request.body.newPassword;
+    var userId = request.session.currentUser._id;
+    userService.updatePassword(userId, oldPassword, newPassword)
+        .then(data => {
+            response.send(JSON.stringify(data));
+        }, error => {
+            response.status(400).send(JSON.stringify(error));
+        })
+        .catch(function (data) {
+            response.send(JSON.stringify(data));
+        });
+});
+
 router.post('/education', (request, response, next) => {
     var userId = request.body.userId;
     var educationInfo = request.body.educationInfo;

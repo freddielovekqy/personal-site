@@ -24,8 +24,16 @@ function update(userDTO) {
     });
 }
 
+function updateUserAttr(userId, userAttr) {
+    return User.update({_id: userId}, {$set: userAttr});
+}
+
 function getById(userId) {
     return User.findById(userId, {password: 0}).exec();
+}
+
+function getPassword(userId) {
+    return User.findById(userId, {password: 1}).lean().exec();
 }
 
 function getBasicUserInfo(userId) {
@@ -86,7 +94,9 @@ function deleteWorkInfo(userId, workId) {
 
 module.exports.save = save;
 module.exports.update = update;
+module.exports.updateUserAttr = updateUserAttr;
 module.exports.getById = getById;
+module.exports.getPassword = getPassword;
 module.exports.getBasicUserInfo = getBasicUserInfo;
 module.exports.findByEmail = findByEmail;
 module.exports.addEducationInfo = addEducationInfo;

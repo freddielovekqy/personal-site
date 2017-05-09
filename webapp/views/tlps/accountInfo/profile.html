@@ -8,6 +8,7 @@
     <div class="account-info-category-item" ng-show="currentShowInfo === 'basicInfo'">
         <div class="account-info-header">
             <span class="header-text">基本信息</span>
+            <span class="update-password" ng-click="updatePassword()">修改密码</span>
             <button class="btn btn-default btn-xs" ng-show="!edit" ng-click="editProfile()">编辑</button>
             <button class="btn btn-default btn-xs" ng-show="edit" ng-click="cancelEdit()">取消</button>
             <button class="btn btn-default btn-xs" ng-show="edit" ng-click="updateBaseInfo()">保存</button>
@@ -295,4 +296,5 @@
             </div>
         </div>
     </div>
+    <div class="popover-container"></div>
 </div>

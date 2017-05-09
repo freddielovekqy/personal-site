@@ -39,6 +39,28 @@ function login(email, password) {
     });
 }
 
+function updatePassword(userId, oldPassword, newPassword) {
+    return new Promise((resolve, reject) => {
+        if (oldPassword === newPassword) {
+            reject({errorMessage: '输入的新密码和原密码相同'});
+        }
+        userDao.getPassword(userId)
+            .then(user => {
+                if (user.password === oldPassword) {
+                    return userDao.updateUserAttr(userId, {password: newPassword});
+                } else {
+                    reject({errorMessage: '输入的原密码有误'});
+                }
+            })
+            .then(data => {
+                resolve(data);
+            })
+            .catch(error => {
+                reject(error);
+            });
+    });
+}   
+
 function update(userInfo) {
     return new Promise((resolve, reject) => {
         userDao.update(userInfo).then(data => {
@@ -116,6 +138,7 @@ module.exports.register = register;
 module.exports.login = login;
 module.exports.getUserInfo = getUserInfo;
 module.exports.update = update;
+module.exports.updatePassword = updatePassword;
 module.exports.saveOrUpdateEducation = saveOrUpdateEducation;
 module.exports.deleteEducation = deleteEducation;
 module.exports.saveOrUpdateWork = saveOrUpdateWork;
