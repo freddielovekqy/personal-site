@@ -141,13 +141,16 @@ app.directive('popoverMovable', function () {
 app.directive('customerCheckbox', function () {
     return {
         restrict: 'E',
+        scope: {
+            option: '='
+        },
         require : '?ngModel',
         replace: true,
         templateUrl: 'views/tlps/common/f_checkbox.html',
         link: function (scope, elements, attrs, ngModel) {
-            elements.on('click', '.label-text', function (event) {
-                elements.find('[type="checkbox"]').click();
-            });
+            scope.changeValue = function () {
+                scope.option.checked = !scope.option.checked;
+            };
         }
     };
 });

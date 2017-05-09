@@ -75,8 +75,12 @@ photoModule.directive('uploadPhotoPopover', function () {
         templateUrl: 'views/tlps/photo/upload_photo.html',
         controller: ['$scope', '$http', '$timeout', 'HttpService', 'CommonUtils', 'PhotoService', function ($scope, $http, $timeout, HttpService, CommonUtils, PhotoService) {
             $scope.albums = PhotoService.getAlbums();
-            $scope.selectedAlbum = $scope.albums[_.findIndex($scope.albums, {_id: $scope.albumId})];
             $scope.selectedFile = {};
+            if ($scope.albumId) {
+                $scope.selectedAlbum = $scope.albums[_.findIndex($scope.albums, {_id: $scope.albumId})];
+            } else {
+                $scope.selectedAlbum = $scope.albums[0];
+            }
 
             $scope.fileSelected = function () {
                 var file = document.querySelector('input[type=file]').files[0];

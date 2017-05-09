@@ -1,5 +1,6 @@
 var photoDao = require('../dao/PhotoDao');
 var logger = require('../common/log/log4js').logger;
+var fs = require("fs");
 var _ = require('lodash');
 
 function addAlbum(userId, album) {
@@ -19,7 +20,17 @@ function addAlbum(userId, album) {
 
 function deleteAlbum(albumId) {
     return new Promise((resolve, reject) => {
-        photoDao.deleteAlbum(albumId)
+        photoDao.findAlbumById(albumId)
+            .then(album => {
+                var dbAlbum = album.toObject();
+                var photoIds = dbAlbum.photos.map(photo => {
+                    return photo._id;
+                });
+                return deletePhotos(albumId, photoIds);
+            })
+            .then(data => {
+                return photoDao.deleteAlbum(albumId);
+            })
             .then(data => {
                 resolve(data);
             })
@@ -33,8 +44,9 @@ function updateAlbum(album) {
     return new Promise((resolve, reject) => {
         photoDao.findAlbumById(album._id)
             .then(dbAlbum => {
+                var oldAlbum = dbAlbum.toObject();
                 var albumId = album._id;
-                var newAlbum = Object.assign(dbAlbum, album);
+                var newAlbum = Object.assign(oldAlbum, album);
                 delete newAlbum._id;
                 return photoDao.updateAlbum(albumId, newAlbum);
             })
@@ -63,7 +75,7 @@ function findAlbumById(albumId) {
     return new Promise((resolve, reject) => {
         photoDao.findAlbumById(albumId)
             .then(album => {
-                resolve(album);
+                resolve(album.toObject());
             })
             .catch(error => {
                 reject(error);
@@ -92,9 +104,31 @@ function addPhoto(albumId, photoDTO) {
     });
 }
 
+function deletePhotos(albumId, photoIds) {
+    return new Promise((resolve, reject) => {
+        var deletePhotosPromises = [];
+        photoIds.forEach(photoId => {
+            deletePhotosPromises.push(deletePhoto(albumId, photoId));
+        });
+        Promise.all(deletePhotosPromises)
+            .then(albums => {
+                resolve(albums);
+            })
+            .catch(error => {
+                reject(error);
+            });
+    });
+}
+
 function deletePhoto(albumId, photoId) {
     return new Promise((resolve, reject) => {
-        photoDao.deletePhoto(albumId, photoId)
+        photoDao.findAlbumById(albumId)
+            .then(album => {
+                var photo = album.photos.id(photoId).toObject();
+                console.log(photo);
+                fs.unlinkSync('webapp\\' + photo.path);
+                return photoDao.deletePhoto(albumId, photoId);
+            })
             .then(albums => {
                 resolve(albums);
             })
@@ -123,5 +157,6 @@ module.exports.setDefaultPhoto = setDefaultPhoto;
 module.exports.findAlbumById = findAlbumById;
 module.exports.findAlbumsByUser = findAlbumsByUser;
 module.exports.addPhoto = addPhoto;
+module.exports.deletePhotos = deletePhotos;
 module.exports.deletePhoto = deletePhoto;
 module.exports.findPhotosByAlbum = findPhotosByAlbum;

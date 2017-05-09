@@ -59,13 +59,20 @@ photoModule.controller('PhotoController', ['$scope', '$compile', '$timeout', '$l
             }
         })();
 
+        $scope.uploadPhoto = function () {
+            var baseEle = $('.photo-popover-container');
+            var ele = $compile('<upload-photo-popover></upload-photo-popover>')($scope.$new());
+            baseEle.append(ele);
+        };
+
         $scope.createAlbum = function () {
             var baseEle = $('.photo-popover-container');
             var ele = $compile('<edit-album-popover></edit-album-popover>')($scope.$new());
             baseEle.append(ele);
         };
 
-        $scope.deleteAlbum = function (album) {
+        $scope.deleteAlbum = function (album, event) {
+            event && event.stopPropagation && event.stopPropagation();
             HttpService.delete({
                 url: 'api/album/' + album._id,
                 success: (data) => {
@@ -74,7 +81,8 @@ photoModule.controller('PhotoController', ['$scope', '$compile', '$timeout', '$l
             });
         };
 
-        $scope.editAlbum = function (album) {
+        $scope.editAlbum = function (album, event) {
+            event && event.stopPropagation && event.stopPropagation();
             var baseEle = $('.photo-popover-container');
             var newScope = $scope.$new();
             newScope.albumId = album._id;
@@ -86,8 +94,9 @@ photoModule.controller('PhotoController', ['$scope', '$compile', '$timeout', '$l
             $location.path('/album/' + album._id);
         };
 
-        $scope.showAlbumOperationsClick = function (album, showOrHide) {
+        $scope.showAlbumOperationsClick = function (album, showOrHide, event) {
             album.showAlbumOperations = showOrHide;
+            event && event.stopPropagation && event.stopPropagation();
         };
 
         function findAlbumsByUser(userId) {
@@ -110,6 +119,10 @@ photoModule.controller('PhotoController', ['$scope', '$compile', '$timeout', '$l
             callback: data => {
                 findAlbumsByUser($scope.currentUser._id);
             }
+        });
+
+        $scope.$on('$destroy', function () {
+            updateAlbumListSub && updateAlbumListSub.unsubscribe();
         });
     }
 ]);

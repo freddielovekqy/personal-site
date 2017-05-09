@@ -25,7 +25,7 @@ function updateAlbumAttr(albumId, updateAttr) {
 }
 
 function findAlbumById(albumId) {
-    return Album.findById(albumId).lean().exec();
+    return Album.findById(albumId).exec();
 }
 
 function findAlbumsByUser(userId, status = 1) {
@@ -48,6 +48,10 @@ function deletePhoto(albumId, photoId) {
     return Album.update({_id: albumId}, {$pull: {photos: {_id: photoId}}});
 }
 
+function findPhoto(photoId) {
+    return Album.find({'photos._id': photoId}).exec();
+}
+
 function findPhotosByAlbum(albumId, status = 1) {
     return Album.find({_id: albumId, status: status}, {photos: 1}).lean().exec();
 }
@@ -60,4 +64,5 @@ module.exports.findAlbumById = findAlbumById;
 module.exports.findAlbumsByUser = findAlbumsByUser;
 module.exports.addPhoto = addPhoto;
 module.exports.deletePhoto = deletePhoto;
+module.exports.findPhoto = findPhoto;
 module.exports.findPhotosByAlbum = findPhotosByAlbum;

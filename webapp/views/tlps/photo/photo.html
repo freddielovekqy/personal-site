@@ -5,7 +5,7 @@
     </div>
     <div class="photo-container">
         <div class="photo-operation-div">
-            <button type="button" class="btn btn-info upload-photo">
+            <button type="button" class="btn btn-info upload-photo" ng-click="uploadPhoto()">
                 <span class="fa fa-upload"></span>
                 <span>上传照片</span>
             </button>
@@ -14,11 +14,11 @@
         <div class="photo-album-list">
             <div class="photo-album-item" ng-repeat="album in albums" ng-click="showAlbumPhotos(album)">
                 <div class="album-operations" ng-mouseleave="showAlbumOperationsClick(album, false)">
-                    <div class="album-operation-icon" ng-click="showAlbumOperationsClick(album, true)" ng-class="{'hide-bottom-border': album.showAlbumOperations}">
+                    <div class="album-operation-icon" ng-click="showAlbumOperationsClick(album, true, $event)" ng-class="{'hide-bottom-border': album.showAlbumOperations}">
                         <span class="fa fa-chevron-down"></span>
                     </div>
                     <div class="album-operation-items" ng-show="album.showAlbumOperations">
-                        <div class="album-operation-item" ng-click="editAlbum(album)">
+                        <div class="album-operation-item" ng-click="editAlbum(album, $event)">
                             <span class="fa fa-pencil"></span>
                             <span class="operation-text">编辑</span>
                         </div>
@@ -26,7 +26,7 @@
                             <!--<span class="fa fa-lock"></span>-->
                             <!--<span class="operation-text">权限设置</span>-->
                         <!--</div>-->
-                        <div class="album-operation-item" ng-click="deleteAlbum(album)">
+                        <div class="album-operation-item" ng-click="deleteAlbum(album, $event)">
                             <span class="fa fa-trash"></span>
                             <span class="operation-text">删除</span>
                         </div>

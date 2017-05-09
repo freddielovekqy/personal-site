@@ -1,7 +1,7 @@
 <div>
     <div class="my-checkbox-div mycheck">
-        <input type="checkbox" id="{{option.id}}" name="{{option.name}}" class="my-checkbox chk_1" ng-model="option.checked" ng-checked="option.checked" ng-disabled="option.disabled">
-        <label for="{{option.id}}" class="custom-checkbox-label"></label>
+        <input type="checkbox" id="{{option.id}}" name="{{option.name}}" class="my-checkbox chk_1" ng-model="option.checked" ng-checked="option.checked" ng-disabled="option.disabled" ng-click="changeValue()">
+        <label for="{{option.id}}" class="custom-checkbox-label" ng-click="changeValue()"></label>
         <span class="label-text">{{option.label}}</span>
     </div>
 </div>

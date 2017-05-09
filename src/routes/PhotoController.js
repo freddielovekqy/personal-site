@@ -43,8 +43,23 @@ router.delete('/:photoId/album/:albumId', (request, response, next) => {
     photoService.deletePhoto(albumId, photoId)
         .then(data => {
             response.send(JSON.stringify(data));
+        }, data => {
+            response.status(400).send(JSON.stringify(data));
         }).catch(function (data) {
+            response.status(500).send(JSON.stringify(data));
+        });
+});
+
+router.delete('/', (request, response, next) => {
+    var albumId = request.query.albumId;
+    var photoIds = request.query.photoIds;
+    photoService.deletePhotos(albumId, photoIds)
+        .then(data => {
             response.send(JSON.stringify(data));
+        }, data => {
+            response.status(400).send(JSON.stringify(data));
+        }).catch(function (data) {
+            response.status(500).send(JSON.stringify(data));
         });
 });
 

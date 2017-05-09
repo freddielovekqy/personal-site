@@ -29,22 +29,30 @@
                 </div>
             </div>
         </div>
-        <div class="operations-div">
+        <div class="operations-div" ng-hide="multiOperate">
             <button type="button" class="btn btn-info upload-photo" ng-click="uploadPhoto()">
                 <span class="fa fa-upload"></span>
                 <span>上传照片</span>
             </button>
-            <button type="button" class="btn btn-info multi-operation">批量管理</button>
-            <button type="button" class="btn btn-info edit-album">编辑相册</button>
-            <button type="button" class="btn btn-link delete-album">删除相册</button>
+            <button type="button" class="btn btn-info multi-operation" ng-click="multiOperation()">批量管理</button>
+            <button type="button" class="btn btn-info edit-album" ng-click="editAlbum()">编辑相册</button>
+            <button type="button" class="btn btn-link delete-album" ng-click="deleteAlbum()">删除相册</button>
+        </div>
+        <div class="operations-div" ng-show="multiOperate">
+            <button type="button" class="btn btn-info multi-operation" ng-click="multiOperation()">取消</button>
+            <button type="button" class="btn btn-link multi-operate-all-select" ng-click="multiOperateSelectedAll()">全选</button>
+            <button type="button" class="btn btn-link delete-selected-photos" ng-click="deleteSelectedPhotos()">删除</button>
         </div>
     </div>
     <div class="photos-in-album">
         <div class="photo-item-div" ng-repeat="photo in album.photos">
-            <img src="{{photo.path}}" alt=""/>
+            <img src="{{photo.path}}" alt="" ng-class="{'multi-operate-selected': photo.option.checked}"/>
             <div class="photo-operations" ng-mouseleave="showPhotoOperationsClick(photo, false)">
-                <div class="photo-operation-icon" ng-click="showPhotoOperationsClick(photo, true)" ng-class="{'hide-bottom-border': photo.showPhotoOperations}">
+                <div class="photo-operation-icon" ng-click="showPhotoOperationsClick(photo, true)" ng-class="{'hide-bottom-border': photo.showPhotoOperations}" ng-hide="multiOperate">
                     <span class="fa fa-chevron-down"></span>
+                </div>
+                <div class="photo-multi-operate">
+                    <customer-checkbox option="photo.option" ng-show="multiOperate"></customer-checkbox>
                 </div>
                 <div class="photo-operation-items" ng-show="photo.showPhotoOperations">
                     <div class="photo-operation-item" ng-click="editPhoto(photo)">

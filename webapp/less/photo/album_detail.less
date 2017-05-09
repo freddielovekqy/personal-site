@@ -85,7 +85,7 @@
       .multi-operation {
 
       }
-      .delete-album {
+      .delete-album, .delete-selected-photos {
         color: #FF0000;
       }
     }
@@ -105,10 +105,16 @@
       img {
         width: 100%;
         height: 160px;
+        &.multi-operate-selected {
+          border: 2px solid #2489c5;
+        }
       }
+
       &:hover {
-        .photo-operation-icon {
-          display: block !important;
+        .photo-operations {
+          .photo-operation-icon {
+            display: block;
+          }
         }
       }
       .photo-operations {
@@ -137,6 +143,11 @@
             border-radius: 3px 3px 0 0;
             box-shadow: none;
           }
+        }
+        .photo-multi-operate {
+          position: absolute;
+          top: 0;
+          left: 5px;
         }
         .photo-operation-items {
           width: 130px;
