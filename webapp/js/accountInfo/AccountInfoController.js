@@ -2,12 +2,13 @@
  * Created by freddie on 2017/3/10.
  */
 'use strict';
-var accountInfoModule = angular.module('account-info', ['ngRoute', 'accountInfoMain', 'accountInfoProfile', 'accountInfoRelationship']);
+var accountInfoModule = angular.module('account-info', ['ngRoute', 'accountInfoMain', 'accountInfoProfile', 'accountInfoRelationship', 'accountInfoPhoto', 'accountInfoAlbumDetail']);
 
 accountInfoModule.config(['$routeProvider', '$locationProvider', function ($routeProvider) {
     $routeProvider
         .when('/account-info', { templateUrl: '/views/tlps/accountInfo/account_info.html', controller: 'AccountInfoController' })
         .when('/account-info/:type', { templateUrl: '/views/tlps/accountInfo/account_info.html', controller: 'AccountInfoController' })
+        .when('/account-info/:type/:typeId', { templateUrl: '/views/tlps/accountInfo/account_info.html', controller: 'AccountInfoController' })
         .otherwise({ redirectTo: '/account-info' });
 }]);
 
@@ -43,6 +44,12 @@ accountInfoModule.controller('AccountInfoController', ['$scope', '$location', '$
                 baseEle.append(ele);
             } else if (type === 'profile') {
                 ele = $compile('<account-info-profile></account-info-profile>')($scope);
+                baseEle.append(ele);
+            } else if (type === 'photo') {
+                ele = $compile('<account-info-photo></account-info-photo>')($scope);
+                baseEle.append(ele);
+            } else if (type === 'album') {
+                ele = $compile('<account-info-album-detail></account-info-album-detail>')($scope);
                 baseEle.append(ele);
             } else if (type === 'relationship') {
                 ele = $compile('<account-info-relationship current-user-id="' + $scope.user._id + '"></account-info-relationship>')($scope.$new());

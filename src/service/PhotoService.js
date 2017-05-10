@@ -138,6 +138,24 @@ function deletePhoto(albumId, photoId) {
     });
 }
 
+function updatePhoto(albumId, photoDTO) {
+    return new Promise((resolve, reject) => {
+        photoDao.findAlbumById(albumId)
+            .then(album => {
+                var photo = album.photos.id(photoDTO._id).toObject();
+                photoDTO.path = photo.path;
+                photoDTO.createDate = photo.createDate;
+                return photoDao.updatePhoto(photoDTO);
+            })
+            .then(albums => {
+                resolve(albums);
+            })
+            .catch(error => {
+                reject(error);
+            });
+    });
+}
+
 function findPhotosByAlbum(albumId) {
     return new Promise((resolve, reject) => {
         photoDao.findPhotosByAlbum(albumId)
@@ -159,4 +177,5 @@ module.exports.findAlbumsByUser = findAlbumsByUser;
 module.exports.addPhoto = addPhoto;
 module.exports.deletePhotos = deletePhotos;
 module.exports.deletePhoto = deletePhoto;
+module.exports.updatePhoto = updatePhoto;
 module.exports.findPhotosByAlbum = findPhotosByAlbum;

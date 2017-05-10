@@ -37,6 +37,19 @@ router.post('/upload', (request, response, next) => {
     });
 });
 
+router.put('/', (request, response, next) => {
+    var albumId = request.body.albumId;
+    var photo = request.body.photo;
+    photoService.updatePhoto(albumId, photo)
+        .then(data => {
+            response.send(JSON.stringify(data));
+        }, data => {
+            response.status(400).send(JSON.stringify(data));
+        }).catch(function (data) {
+            response.status(500).send(JSON.stringify(data));
+        });
+});
+
 router.delete('/:photoId/album/:albumId', (request, response, next) => {
     var albumId = request.params.albumId;
     var photoId = request.params.photoId;

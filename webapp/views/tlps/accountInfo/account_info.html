@@ -42,7 +42,7 @@
     <div class="account-section">
         <div class="account-section-tab">
             <div class="account-section-tab-item" ng-class="{'account-section-tab-item-selected': accountInfoCurrentSelectTab === 'main'}" ng-click="showAccountInfoPage('main')">我的主页</div>
-            <div class="account-section-tab-item" ng-class="{'account-section-tab-item-selected': accountInfoCurrentSelectTab === 'photo'}" ng-click="showAccountInfoPage('photo')">我的相册</div>
+            <div class="account-section-tab-item" ng-class="{'account-section-tab-item-selected': accountInfoCurrentSelectTab === 'photo' || accountInfoCurrentSelectTab === 'album'}" ng-click="showAccountInfoPage('photo')">我的相册</div>
             <div class="account-section-tab-item" ng-class="{'account-section-tab-item-selected': accountInfoCurrentSelectTab === 'profile'}" ng-click="showAccountInfoPage('profile')">我的资料</div>
             <div class="account-section-tab-item" ng-class="{'account-section-tab-item-selected': accountInfoCurrentSelectTab === 'relationship'}" ng-click="showAccountInfoPage('relationship')">我的关系</div>
             <div class="account-section-tab-item" ng-class="{'account-section-tab-item-selected': accountInfoCurrentSelectTab === 'manager'}" ng-click="showAccountInfoPage('manager')">管理中心</div>

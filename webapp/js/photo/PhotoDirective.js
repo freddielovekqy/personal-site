@@ -89,6 +89,28 @@ photoModule.directive('uploadPhotoPopover', function () {
                 }, 0);
             };
 
+            $scope.update = function () {
+                HttpService.put({
+                    url: 'api/photo',
+                    params: {
+                        albumId: $scope.selectedAlbum._id,
+                        photo: $scope.photo
+                    },
+                    success: (data) => {
+                        CommonUtils.showAlertMessage({
+                            type: 'success',
+                            message: '更新成功'
+                        });
+                        postal.publish({
+                            channel: 'upload',
+                            topic: 'uploadPhotoSuccess',
+                            data: {}
+                        });
+                        $scope.$destroy();
+                    }
+                });
+            };
+
             $scope.upload = function () {
                 if (!$scope.photo.name) {
                     return;

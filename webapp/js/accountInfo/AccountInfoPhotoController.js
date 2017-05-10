@@ -1,47 +1,11 @@
 /**
- * Created by freddie on 2017/5/6.
+ * Created by freddie on 2017/5/10.
  */
-var photoModule = angular.module('photo', ['ngRoute', 'albumDetail']);
+var accountInfoPhotoModule = angular.module('accountInfoPhoto', []);
 
-photoModule.config(['$routeProvider', '$locationProvider', function ($routeProvider) {
-    $routeProvider
-        .when('/photo', { templateUrl: '/views/tlps/photo/photo.html', controller: 'PhotoController' })
-        .when('/album/:albumId', { templateUrl: '/views/tlps/photo/album_detail.html', controller: 'AlbumDetailController' });
-}]);
-
-photoModule.constant('PhotoConstant', {
-    ALBUM_JURISDICTIONS: [
-        {
-            label: '所有人可见',
-            value: 1
-        }, {
-            label: '仅好友可见',
-            value: 2
-        }, {
-            label: '仅自己可见',
-            value: 3
-        }
-    ]
-});
-
-photoModule.service('PhotoService', function () {
-    var albums;
-    function setAlbums(albumList) {
-        albums = albumList;
-    }
-
-    function getAlbums() {
-        return albums;
-    }
-
-    return {
-        setAlbums: setAlbums,
-        getAlbums: getAlbums
-    }
-});
-
-photoModule.controller('PhotoController', ['$scope', '$compile', '$timeout', '$location', 'HttpService', 'PhotoService', 'CommonUserUtils',
-    function ($scope, $compile, $timeout, $location, HttpService, PhotoService, CommonUserUtils) {
+accountInfoPhotoModule.controller('AccountInfoPhotoController', ['$scope', '$compile', '$location', 'HttpService', 'CommonUserUtils', 'PhotoService',
+    function ($scope, $compile, $location, HttpService, CommonUserUtils, PhotoService) {
+        $scope.isAccountInfoPage = true;
         $scope.currentUser = {};
 
         (function () {
@@ -91,7 +55,7 @@ photoModule.controller('PhotoController', ['$scope', '$compile', '$timeout', '$l
         };
 
         $scope.showAlbumPhotos = function (album) {
-            $location.path('/album/' + album._id);
+            $location.path('/account-info/album/' + album._id);
         };
 
         $scope.showAlbumOperationsClick = function (album, showOrHide, event) {
@@ -134,3 +98,16 @@ photoModule.controller('PhotoController', ['$scope', '$compile', '$timeout', '$l
         });
     }
 ]);
+
+accountInfoPhotoModule.directive('accountInfoPhoto', function () {
+    return {
+        restrict: 'E',
+        require: '?ngModel',
+        replace: true,
+        templateUrl: 'views/tlps/photo/photo.html',
+        controller: 'AccountInfoPhotoController',
+        link: function (scope, elements, attrs, ngModel) {
+
+        }
+    };
+});

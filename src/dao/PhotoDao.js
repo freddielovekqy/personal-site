@@ -52,6 +52,17 @@ function findPhoto(photoId) {
     return Album.find({'photos._id': photoId}).exec();
 }
 
+function updatePhoto(photoDTO) {
+    var photoEntity = new Photo({
+        _id: photoDTO._id,
+        path: photoDTO.path,
+        name: photoDTO.name,
+        description: photoDTO.description,
+        createDate: photoDTO.createDate
+    });
+    return Album.update({'photos._id': photoDTO._id}, {$set: {'photos.$': photoEntity}});
+}
+
 function findPhotosByAlbum(albumId, status = 1) {
     return Album.find({_id: albumId, status: status}, {photos: 1}).lean().exec();
 }
@@ -64,5 +75,6 @@ module.exports.findAlbumById = findAlbumById;
 module.exports.findAlbumsByUser = findAlbumsByUser;
 module.exports.addPhoto = addPhoto;
 module.exports.deletePhoto = deletePhoto;
+module.exports.updatePhoto = updatePhoto;
 module.exports.findPhoto = findPhoto;
 module.exports.findPhotosByAlbum = findPhotosByAlbum;

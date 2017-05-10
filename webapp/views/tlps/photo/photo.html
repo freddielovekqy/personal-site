@@ -1,5 +1,5 @@
 <div class="photo-page container">
-    <div class="photo-header">
+    <div class="photo-header" ng-hide="isAccountInfoPage">
         <div class="photo-header-title select">相册</div>
         <div class="photo-header-title">照片</div>
     </div>
@@ -34,7 +34,7 @@
                 </div>
 
                 <div class="album-show-photo">
-
+                    <img src="{{album.defaultPhoto.path}}" alt=""/>
                 </div>
                 <div class="photo-count">{{album.photos.length}}</div>
                 <div class="album-title">

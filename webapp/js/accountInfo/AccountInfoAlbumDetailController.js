@@ -1,11 +1,11 @@
 /**
- * Created by freddie on 2017/5/7.
+ * Created by freddie on 2017/5/10.
  */
-var albumDetailModule = angular.module('albumDetail', []);
+var accountInfoAlbumDetailModule = angular.module('accountInfoAlbumDetail', []);
 
-albumDetailModule.controller('AlbumDetailController', ['$scope', '$compile', '$location', '$timeout', '$routeParams', 'HttpService', 'CommonUtils', 'CommonUserUtils', 'PhotoConstant', 'PhotoService',
-    function ($scope, $compile, $location, $timeout, $routeParams, HttpService, CommonUtils, CommonUserUtils, PhotoConstant, PhotoService) {
-
+accountInfoAlbumDetailModule.controller('AccountInfoAlbumDetailController', ['$scope', '$timeout', '$routeParams', '$location', '$compile', 'PhotoConstant', 'CommonUserUtils', 'HttpService', 'PhotoService', 'CommonUtils',
+    function ($scope, $timeout, $routeParams, $location, $compile, PhotoConstant, CommonUserUtils, HttpService, PhotoService, CommonUtils) {
+        $scope.isAccountInfoPage = true;
         $scope.showMoreInfoFlag = false;
         $scope.multiOperate = false;
         $scope.albumJurisdictions = PhotoConstant.ALBUM_JURISDICTIONS;
@@ -21,7 +21,7 @@ albumDetailModule.controller('AlbumDetailController', ['$scope', '$compile', '$l
             } else {
                 $scope.currentUser = result;
             }
-            findAlbumInfo($routeParams.albumId);
+            findAlbumInfo($routeParams.typeId);
         })();
 
         /**
@@ -188,7 +188,7 @@ albumDetailModule.controller('AlbumDetailController', ['$scope', '$compile', '$l
             HttpService.delete({
                 url: 'api/album/' + $scope.album._id,
                 success: (data) => {
-                    $location.path('/photo')
+                    $location.path('/account-info/photo')
                 }
             });
         };
@@ -204,10 +204,6 @@ albumDetailModule.controller('AlbumDetailController', ['$scope', '$compile', '$l
             baseEle.append(ele);
         };
 
-        /**
-         * 获取相册信息以及其中的所有照片
-         * @param albumId
-         */
         function findAlbumInfo(albumId) {
             HttpService.get({
                 url: 'api/album/' + albumId,
@@ -244,7 +240,6 @@ albumDetailModule.controller('AlbumDetailController', ['$scope', '$compile', '$l
             });
         }
 
-
         $('body').bind('click', hideMoreInfo);
 
         function hideMoreInfo(event) {
@@ -277,3 +272,16 @@ albumDetailModule.controller('AlbumDetailController', ['$scope', '$compile', '$l
         });
     }
 ]);
+
+accountInfoAlbumDetailModule.directive('accountInfoAlbumDetail', function () {
+    return {
+        restrict: 'E',
+        require: '?ngModel',
+        replace: true,
+        templateUrl: 'views/tlps/photo/album_detail.html',
+        controller: 'AccountInfoAlbumDetailController',
+        link: function (scope, elements, attrs, ngModel) {
+
+        }
+    };
+});
