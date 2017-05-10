@@ -1,0 +1,42 @@
+<div class="show-photo-popover my-popover">
+    <div class="show-photo-content">
+        <div class="photo-div">
+            <div class="photo-image">
+                <span class="fa fa-angle-left" ng-click="lastPhoto()"></span>
+                <img src="{{photo.path}}" alt=""/>
+                <span class="fa fa-angle-right" ng-click="nextPhoto()"></span>
+                <div class="album-info">
+                    <span>{{album.name}}</span>
+                    <span>{{currentPhotoIndex + 1}} / {{album.photos.length}}</span>
+                </div>
+            </div>
+            <div class="photos-bar">
+                <span class="fa fa-angle-left" ng-click="lastPhoto()"></span>
+                <div class="photos-bar-item" ng-class="{'select': photo1._id === photo._id}" ng-repeat="photo1 in album.photos">
+                    <img src="{{photo1.path}}" alt=""/>
+                </div>
+                <span class="fa fa-angle-right" ng-click="nextPhoto()"></span>
+            </div>
+        </div>
+
+        <div class="photo-info">
+            <div class="photo-basic-info">
+                <div class="user-image">
+                    <img src="{{currentUser.headImgPath}}" alt=""/>
+                </div>
+                <div class="basic-info">
+                    <div class="username">{{currentUser.username}}</div>
+                    <span style="color: #b1b1b1;">的</span>
+                    <div class="photo-name">{{photo.name}}</div>
+                    <div class="create-date">{{photo.createDate}}</div>
+                </div>
+            </div>
+            <div class="photo-description">{{photo.description}}</div>
+            <div class="location">
+                上海
+            </div>
+        </div>
+    </div>
+    <div class="fa fa-times-circle close-button" ng-click="cancel()"></div>
+    <div class="popover-mark"></div>
+</div>

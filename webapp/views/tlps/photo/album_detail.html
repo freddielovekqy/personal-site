@@ -46,7 +46,7 @@
     </div>
     <div class="photos-in-album">
         <div class="photo-item-div" ng-repeat="photo in album.photos">
-            <img src="{{photo.path}}" alt="" ng-class="{'multi-operate-selected': photo.option.checked}"/>
+            <img src="{{photo.path}}" alt="" ng-class="{'multi-operate-selected': photo.option.checked}" ng-click="showPhoto(photo)"/>
             <div class="photo-operations" ng-mouseleave="showPhotoOperationsClick(photo, false)">
                 <div class="photo-operation-icon" ng-click="showPhotoOperationsClick(photo, true)" ng-class="{'hide-bottom-border': photo.showPhotoOperations}" ng-hide="multiOperate">
                     <span class="fa fa-chevron-down"></span>

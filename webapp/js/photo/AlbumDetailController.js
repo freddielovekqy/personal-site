@@ -3,14 +3,24 @@
  */
 var albumDetailModule = angular.module('albumDetail', []);
 
-albumDetailModule.controller('AlbumDetailController', ['$scope', '$compile', '$location', '$timeout', '$routeParams', 'HttpService', 'CommonUtils', 'PhotoConstant', 'PhotoService',
-    function ($scope, $compile, $location, $timeout, $routeParams, HttpService, CommonUtils, PhotoConstant, PhotoService) {
+albumDetailModule.controller('AlbumDetailController', ['$scope', '$compile', '$location', '$timeout', '$routeParams', 'HttpService', 'CommonUtils', 'CommonUserUtils', 'PhotoConstant', 'PhotoService',
+    function ($scope, $compile, $location, $timeout, $routeParams, HttpService, CommonUtils, CommonUserUtils, PhotoConstant, PhotoService) {
 
         $scope.showMoreInfoFlag = false;
         $scope.multiOperate = false;
         $scope.albumJurisdictions = PhotoConstant.ALBUM_JURISDICTIONS;
 
         (function () {
+            var result = CommonUserUtils.getCurrentUserInfo();
+            if (result instanceof Promise) {
+                result.then( (data) => {
+                    $timeout(() => {
+                        $scope.currentUser = data;
+                    }, 0);
+                });
+            } else {
+                $scope.currentUser = result;
+            }
             findAlbumInfo($routeParams.albumId);
         })();
 
@@ -122,6 +132,20 @@ albumDetailModule.controller('AlbumDetailController', ['$scope', '$compile', '$l
         };
 
         /**
+         * 显示照片
+         * @param photo
+         */
+        $scope.showPhoto = function (photo) {
+            var baseEle = $('.photo-popover-container');
+            var newScope = $scope.$new();
+            newScope.album = $scope.album;
+            newScope.photo = photo;
+            newScope.currentUser = $scope.currentUser;
+            var ele = $compile('<show-photo-popover></show-photo-popover>')(newScope);
+            baseEle.append(ele);
+        };
+
+        /**
          * 编辑照片信息
          * @param photo
          */
@@ -198,6 +222,7 @@ albumDetailModule.controller('AlbumDetailController', ['$scope', '$compile', '$l
                             name: photo._id,
                             checked: false
                         };
+                        photo.createDate = new Date(photo.createDate).format('yyyy-MM-dd hh:mm');
                         if ($scope.album.defaultPhotoId === photo._id) {
                             $scope.album.defaultPhoto = photo;
                         }

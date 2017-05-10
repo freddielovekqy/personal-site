@@ -130,3 +130,44 @@ photoModule.directive('uploadPhotoPopover', function () {
         }
     };
 });
+
+photoModule.directive('showPhotoPopover', function () {
+    return {
+        restrict: 'E',
+        require: '?ngModel',
+        replace: true,
+        templateUrl: 'views/tlps/photo/show_photo.html',
+        controller: ['$scope', function ($scope) {
+            $scope.currentPhotoIndex = _.findIndex($scope.album.photos, {_id: $scope.photo._id});
+
+            $scope.lastPhoto = function () {
+                if ($scope.currentPhotoIndex > 0) {
+                    $scope.currentPhotoIndex--;
+                    $scope.photo = $scope.album.photos[$scope.currentPhotoIndex];
+                }
+            };
+
+            $scope.nextPhoto = function () {
+                if ($scope.currentPhotoIndex < $scope.album.photos.length - 1) {
+                    $scope.currentPhotoIndex++;
+                    $scope.photo = $scope.album.photos[$scope.currentPhotoIndex];
+                }
+            };
+
+            $scope.cancel = function () {
+                $scope.$destroy();
+            };
+        }],
+        link: function (scope, element, attrs, ngModel) {
+            element.width(document.body.clientHeight * 1.8);
+            window.onresize = function (event) {
+                console.log(document.body.clientWidth, document.body.clientHeight);
+                console.log(element);
+                element.width(document.body.clientHeight * 1.8);
+            };
+            scope.$on('$destroy', function () {
+                element.remove();
+            });
+        }
+    };
+});

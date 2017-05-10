@@ -26,6 +26,7 @@ accountInfoModule.directive('updatePassword', function () {
         replace: true,
         templateUrl: 'views/tlps/accountInfo/update_password.html',
         controller: ['$scope', 'HttpService', 'CommonUtils', function ($scope, HttpService, CommonUtils) {
+            $scope.ttt = '11111111111';
             $scope.updatePassword = function () {
                 if ($scope.rePassword !== $scope.newPassword) {
                     return;
