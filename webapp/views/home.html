@@ -12,25 +12,25 @@
             <div class="content-above-input">
                 <span>有什么新鲜事想告诉大家</span>
             </div>
-            <textarea name="" id="" rows="4"></textarea>
+            <textarea name="" id="" rows="4" ng-model="simpleBlog.content"></textarea>
             <div class="simple-blog-option">
                 <div class="add-expression simple-blog-option-item">
-                    <span></span>
+                    <span class="fa fa-smile-o" style="color: #ffa405;"></span>
                     <span>表情</span>
                 </div>
                 <div class="add-picture simple-blog-option-item">
-                    <span class="icon-picture" style="color: #84c002;"></span>
+                    <span class="fa fa-picture-o" style="color: #84c002;"></span>
                     <span>图片</span>
                 </div>
                 <div class="add-timeout simple-blog-option-item">
-                    <span class="icon-time" style="color: #4c9dc1;"></span>
+                    <span class="fa fa-clock-o" style="color: #4c9dc1;"></span>
                     <span>定时发</span>
                 </div>
                 <div class="write-blog simple-blog-option-item">
-                    <span class="icon-edit" style="color: #5a8ce6;"></span>
-                    <span>发表博客</span>
+                    <span class="fa fa-pencil-square-o" style="color: #5a8ce6;"></span>
+                    <a href="/blog/create">发表博客</a>
                 </div>
-                <button type="button" class="btn btn-primary">发布</button>
+                <button type="button" class="btn btn-primary" ng-click="saveSimpleBlog()">发布</button>
                 <div class="simple-blog-privilege-level-set simple-blog-option-item">
                     <span>公开</span>
                     <span class="icon-chevron-down"></span>
@@ -50,18 +50,21 @@
             </div>
         </div>
         <div class="blog-infos">
-            <blog-brief-info></blog-brief-info>
+            <div ng-repeat="content in contents">
+                <blog-brief-info content="content" current-user="currentUserBlogInfo.userInfo"></blog-brief-info>
+            </div>
+
         </div>
     </div>
     <div class="right-div">
         <div class="current-user-info">
             <div class="user-background-img"></div>
             <div class="user-image">
-                <img src="image/users/58426f4f482bc73140d93211/head.jpg" alt=""/>
+                <img src="{{currentUserBlogInfo.userInfo.headImgPath}}" alt=""/>
             </div>
             <div class="username">
-                <span class="username-label">柯沁怡</span>
-                <span class="level">Lv.11</span>
+                <span class="username-label">{{currentUserBlogInfo.userInfo.username}}</span>
+                <span class="level">Lv.{{currentUserBlogInfo.userBlogInfo.level}}</span>
             </div>
             <div class="user-brief-info">
                 <div class="follow">

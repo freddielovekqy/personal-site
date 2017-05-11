@@ -10,8 +10,8 @@ blogListModule.constant('blogConstants', {
     BLOG_TYPES_TRANSLATION: '译文',
     BLOG_TYPES_TRANSLATION_SHOW: '译'
 });
-blogListModule.controller('BlogListController', ['$scope', '$location', 'HttpService', 'StorageUtils', 'blogConstants', '$routeParams',
-    function ($scope, $location, HttpService, StorageUtils, blogConstants, $routeParams) {
+blogListModule.controller('BlogListController', ['$scope', '$location', 'HttpService', 'StorageUtils', 'blogConstants', '$routeParams', 'CommonUserUtils', 
+    function ($scope, $location, HttpService, StorageUtils, blogConstants, $routeParams, CommonUserUtils) {
         init();
 
         $scope.createBlog = function () {
@@ -72,11 +72,19 @@ blogListModule.controller('BlogListController', ['$scope', '$location', 'HttpSer
         }
 
         function init() {
-            $scope.currentUser = StorageUtils.getSessionStorage('currentUser');
-            $scope.userId = $routeParams.userId || $scope.currentUser._id;
-            console.log('$scope.userId', $scope.userId);
-            if ($scope.userId) {
-                getBlogList($scope.userId);
+            var result = CommonUserUtils.getCurrentUserInfo();
+            if (result instanceof Promise) {
+                result.then( (data) => {
+                    $timeout(() => {
+                        $scope.currentUser = data;
+                        $scope.userId = $routeParams.userId || $scope.currentUser._id;
+                        $scope.userId && getBlogList($scope.userId);
+                    }, 0);
+                });
+            } else {
+                $scope.currentUser = result;
+                $scope.userId = $routeParams.userId || $scope.currentUser._id;
+                $scope.userId && getBlogList($scope.userId);
             }
         }
     }

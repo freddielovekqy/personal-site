@@ -7,7 +7,7 @@ var blogCategoryService = require('../service/BlogCategoryService');
 
 router.get('/list', function (request, response, next) {
     var blogUserId = request.query.userId;
-    var visitUserId = request.session.currentUser.id;
+    var visitUserId = request.session.currentUser._id;
     var paginationParams = commonUtils.generateBlogPaginationFromReq(request);
 
     var searchOptions = {

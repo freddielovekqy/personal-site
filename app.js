@@ -9,11 +9,13 @@ _ = require('lodash');
 var routes = require('./src/routes/index');
 var user = require('./src/routes/UserController');
 var blog = require('./src/routes/BlogController');
+var simpleBlog = require('./src/routes/SimpleBlogController');
 var userBlogInfo = require('./src/routes/UserBlogInfoController');
 var comment = require('./src/routes/CommentController');
 var relationship = require('./src/routes/RelationshipController');
 var photo = require('./src/routes/PhotoController');
 var album = require('./src/routes/AlbumController');
+var home = require('./src/routes/HomeController');
 
 var app = express();
 
@@ -67,11 +69,13 @@ app.delete('/api/*', function (req, res, next) {
 
 app.use('/api/user', user);
 app.use('/api/blog', blog);
+app.use('/api/simpleBlog', simpleBlog);
 app.use('/api/userBlogInfo', userBlogInfo);
 app.use('/api/comment', comment);
 app.use('/api/relationship', relationship);
 app.use('/api/album', album);
 app.use('/api/photo', photo);
+app.use('/api/home', home);
 
 // nodejs提供restful的api接口
 app.get('/api/about', function (request, response) {
