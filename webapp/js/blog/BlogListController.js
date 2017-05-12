@@ -27,8 +27,8 @@ blogListModule.controller('BlogListController', ['$scope', '$location', 'HttpSer
         };
 
         $scope.removeBlog = function (id) {
-            HttpService.post({
-                url: 'api/blog/delete/' + id,
+            HttpService.delete({
+                url: 'api/blog/' + id,
                 success: function (data) {
                     $location.path('/blog');
                 }

@@ -54,8 +54,8 @@ blogDetailModule.controller('BlogDetailController', ['$scope', '$sce', 'HttpServ
         };
 
         $scope.removeBlog = function () {
-            HttpService.post({
-                url: 'api/blog/delete/' + $scope.blogInfo._id,
+            HttpService.delete({
+                url: 'api/blog/' + $scope.blogInfo._id,
                 success: function (data) {
                     $location.path('/blog');
                 }

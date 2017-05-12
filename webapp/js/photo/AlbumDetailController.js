@@ -248,7 +248,6 @@ albumDetailModule.controller('AlbumDetailController', ['$scope', '$compile', '$l
         $('body').bind('click', hideMoreInfo);
 
         function hideMoreInfo(event) {
-            console.log(111);
             $timeout(() => {
                 $scope.showMoreInfoFlag = false;
             }, 0);

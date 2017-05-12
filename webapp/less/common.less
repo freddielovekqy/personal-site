@@ -214,7 +214,7 @@ body {
         .popover-footer {
             background-color: #f7f7f7;
             border-top: 1px solid #ebebeb;
-            border-radius: 0px 0px 5px 5px;
+            border-radius: 0 0 5px 5px;
             position: absolute;
             bottom: 0;
             height: 40px;
@@ -222,6 +222,30 @@ body {
             text-align: right;
             line-height: 40px;
             padding-right: 10px;
+        }
+    }
+
+    .message-popover {
+        width: 300px;
+        height: 135px;
+        background: #ffffff;
+        z-index: 100;
+        .popover-content {
+            .message-popover-icon {
+                font-size: 2em;
+                color: #53b0da;
+                display: inline-block;
+            }
+            .message-content {
+                display: inline-block;
+                line-height: 30px;
+                vertical-align: top;
+            }
+        }
+        .popover-footer {
+            button {
+                margin-left: 10px;
+            }
         }
     }
 

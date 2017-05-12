@@ -1,5 +1,14 @@
 <div class="dynamic-item">
-    <div class="icon-angle-down icon-large"></div>
+    <div class="fa fa-angle-down show-content-operations" ng-click="showOperations()"></div>
+    <div class="dynamic-item-operations" ng-show="showOperationsFlag">
+        <div class="operation-item" ng-show="content.userId === currentUser._id" ng-click="deleteContent()">删除</div>
+        <div class="operation-item" ng-show="content.userId === currentUser._id && content.jurisdiction !== 1">转换为所有人可见</div>
+        <div class="operation-item" ng-show="content.userId === currentUser._id && content.jurisdiction !== 2">转换为好友可见</div>
+        <div class="operation-item" ng-show="content.userId === currentUser._id && content.jurisdiction !== 3">转换为自己可见</div>
+        <div class="operation-item" ng-show="content.userId !== currentUser._id">屏蔽这条内容</div>
+        <div class="operation-item" ng-show="content.userId !== currentUser._id">屏蔽{{content.userInfo.username}}</div>
+        <div class="operation-item" ng-show="content.userId !== currentUser._id">取消关注{{content.userInfo.username}}</div>
+    </div>
     <div class="personal-dynamic-info">
         <div class="user-image">
             <img src="{{content.userInfo.headImgPath}}" alt=""/>

@@ -83,7 +83,7 @@ router.post('/update', function (request, response, next) {
     });
 });
 
-router.post('/delete/:blogId', function (request, response, next) {
+router.delete('/:blogId', function (request, response, next) {
     var blogId = request.params.blogId;
     var promise = blogService.deleteBlog(blogId);
     promise.then(function (data) {

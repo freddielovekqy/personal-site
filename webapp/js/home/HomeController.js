@@ -54,6 +54,26 @@ homeModule.controller('HomeController', ['$scope', '$timeout', 'HttpService', 'C
             });
         }
 
+        $('body').bind('click', hideOperations);
+
+        function hideOperations(event) {
+            if (!$(event.target).hasClass('show-content-operations')) {
+                postal.publish({
+                    channel: 'homePage',
+                    topic: 'hideAllOperations',
+                    data: {}
+                });
+            }
+        }
+
+        var refreshContentSub = postal.subscribe({
+            channel: 'homePage',
+            topic: 'refreshHomeContent',
+            callback: (data) => {
+                getHomePageContent();
+            }
+        });
+
         for (var i = 0; i < 8; i++) {
             $scope.hotTopics.push({
                 id: '',
@@ -61,6 +81,11 @@ homeModule.controller('HomeController', ['$scope', '$timeout', 'HttpService', 'C
                 topicIndex: 1999
             });
         }
+
+        $scope.$on('$destroy', function () {
+            $('body').unbind('click', hideOperations);
+            refreshContentSub && refreshContentSub.unsubscribe();
+        });
 
     }
 ]);

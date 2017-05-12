@@ -46,8 +46,8 @@ blogArticleModule.controller('BlogArticleManagerController', ['$scope', '$locati
         };
 
         $scope.deleteBlog = function (id) {
-            HttpService.post({
-                url: 'api/blog/delete/' + id,
+            HttpService.delete({
+                url: 'api/blog/' + id,
                 success: function (data) {
                     getBlogList($scope.currentUser._id);
                 }
