@@ -1,0 +1,13 @@
+<div class="message-popover my-popover">
+    <div class="popover-title">{{option.type === 'confirm' ? '确认' : ''}}</div>
+    <div class="popover-content">
+        <div class="message-popover-icon" ng-class="{'fa fa-question-circle-o':option.type === 'confirm'}"></div>
+        <div class="message-content">{{option.message}}</div>
+    </div>
+    <div class="popover-footer">
+        <button type="button" class="btn btn-sm"
+                ng-class="{'btn-default':button.id === 'cancel', 'btn-info':button.id === 'ok'}"
+                ng-repeat="button in option.buttons"
+                ng-click="button.callback()">{{button.label}}</button>
+    </div>
+</div>

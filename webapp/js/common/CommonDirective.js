@@ -138,6 +138,29 @@ app.directive('popoverMovable', function () {
     };
 });
 
+app.directive('messagePopover', function () {
+    return {
+        restrict: 'E' ,
+        templateUrl: 'views/tlps/common/message_popover.html',
+        controller: function ($scope) {
+            $scope.option.buttons && $scope.option.buttons.forEach(button => {
+                if (button.id === 'cancel' || button.id === 'ok') {
+                    var callback = button.callback;
+                    button.callback = function () {
+                        callback && callback();
+                        $scope.$destroy();
+                    };
+                }
+            });
+        },
+        link: function(scope, element, attrs, ngModel) {
+            scope.$on('$destroy', function () {
+                element.remove();
+            });
+        }
+    };
+});
+
 app.directive('customerCheckbox', function () {
     return {
         restrict: 'E',

@@ -160,6 +160,20 @@ app.service('StorageUtils', [function () {
     }
 }]);
 
+app.service('MessagePopoverUtil', ['$compile', function ($compile) {
+    function createMessagePopover(scope, option) {
+        var baseEle = $('.popover-container');
+        var newScope = scope.$new();
+        newScope.option = option;
+        var ele = $compile('<message-popover></message-popover>')(newScope);
+        baseEle.append(ele);
+    }
+
+    return {
+        createMessagePopover: createMessagePopover
+    };
+}]);
+
 app.service('RadioBroadcast', ['$rootScope', function ($rootScope) {
     function broadcast(broadcastType, data) {
         $rootScope.$broadcast(broadcastType, data);
