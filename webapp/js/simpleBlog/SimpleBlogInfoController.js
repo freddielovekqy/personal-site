@@ -109,6 +109,10 @@ simpleBlogInfoModule.controller('SimpleBlogInfoController', ['$scope', '$timeout
             });
         };
 
+        $scope.replySimpleBlog = function () {
+
+        };
+
         $scope.showCommentFlag = false;
         $scope.showComments = function () {
             $scope.showCommentFlag = !$scope.showCommentFlag;

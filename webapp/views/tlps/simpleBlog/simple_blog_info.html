@@ -45,7 +45,7 @@
             <span class="operation-text" ng-show="content.isHaveCollected"><span class="fa fa-star"></span>已收藏</span>
         </div>
         <div class="forward">
-            <span class="operation-text"><span class="fa fa-reply"></span>{{content.replyNum > 0 ? content.replyNum : '转发'}}</span>
+            <span class="operation-text" ng-click="replySimpleBlog()"><span class="fa fa-reply"></span>{{content.replyNum > 0 ? content.replyNum : '转发'}}</span>
         </div>
         <div class="comment">
             <span class="operation-text" ng-click="showComments()"><span class="fa fa-commenting-o"></span>{{content.commentNum > 0 ? content.commentNum : '评论'}}</span>
@@ -58,4 +58,5 @@
     <div class="comment-div" ng-if="showCommentFlag">
         <comment-directive current-user="currentUser" user-info="content.userInfo" object-info="content"></comment-directive>
     </div>
+    <reply-simple-blog></reply-simple-blog>
 </div>

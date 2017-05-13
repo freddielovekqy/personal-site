@@ -1,0 +1,42 @@
+.reply-simple-blog-popover {
+  width: 600px;
+  height: 200px;
+  background: #ffffff;
+  .popover-content {
+    .item {
+      .item-input {
+        width: 100% !important;
+      }
+    }
+  }
+  .popover-footer {
+    position: relative;
+    .simple-blog-privilege-level-set {
+      margin-right: 20px;
+      cursor: pointer;
+      display: inline-block;
+      &:hover {
+        color: #2ba7ff;
+      }
+    }
+    .simple-blog-privilege-levels {
+      padding: 2px;
+      background: #ffffff;
+      width: 100px;
+      position: absolute;
+      right: 82px;
+      top: 32px;
+      z-index: 100;
+      box-shadow: 0 0 3px 1px #ccc;
+      .jurisdiction-item {
+        padding: 0 10px;
+        line-height: 30px;
+        cursor: pointer;
+        &:hover {
+          background-color: #f2f2f5;
+          color: #2ba7ff;
+        }
+      }
+    }
+  }
+}

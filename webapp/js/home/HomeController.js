@@ -79,6 +79,11 @@ homeModule.controller('HomeController', ['$scope', '$timeout', 'HttpService', 'C
                 $timeout(() => {
                     $scope.showJurisdictionsFlag = false;
                 }, 0);
+                postal.publish({
+                    channel: 'homePage',
+                    topic: 'hideAllJurisdictionOptions',
+                    data: {}
+                });
             }
         }
 
