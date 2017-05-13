@@ -105,18 +105,22 @@ commentModule.directive('commentDirective', function () {
                 });
             };
 
+            $scope.cancelAddComment = function () {
+                $scope.replyComment = {
+                    replyCommentId: '',
+                    replyUserId: '',
+                    replyUserName: '',
+                    content: '',
+                    type: 'simpleBlog'
+                };
+                $scope.addReplyCommentForReplyComment = '';
+            };
+
             $scope.addReplyComment = function (comment, userInfo, replyCommentId) {
                 if (($scope.replyComment.replyCommentId === comment._id && !$scope.addReplyCommentForReplyComment && !replyCommentId) ||
                     (replyCommentId && $scope.addReplyCommentForReplyComment === replyCommentId)) {
 
-                    $scope.replyComment = {
-                        replyCommentId: '',
-                        replyUserId: '',
-                        replyUserName: '',
-                        content: '',
-                        type: 'simpleBlog'
-                    };
-                    $scope.addReplyCommentForReplyComment = '';
+                    $scope.cancelAddComment();
                 } else {
                     $scope.replyComment = {
                         replyCommentId: comment._id,

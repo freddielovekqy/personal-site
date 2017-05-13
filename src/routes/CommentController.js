@@ -59,6 +59,6 @@ router.get('/simpleBlog/:simpleBlogId', (request, response, next) => {
         }).catch(data => {
             response.send(JSON.stringify(data));
         });
-})
+});
 
 module.exports = router;

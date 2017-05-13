@@ -137,6 +137,11 @@ simpleBlogInfoModule.controller('SimpleBlogInfoController', ['$scope', '$timeout
             });
         };
 
+        $scope.showCommentFlag = false;
+        $scope.showComments = function () {
+            $scope.showCommentFlag = !$scope.showCommentFlag;
+        };
+
         function removeAttention() {
             HttpService.delete({
                 url: `api/relationship/attention/${$scope.content.userId}`,

@@ -42,6 +42,7 @@
                     <span class="fa fa-smile-o" style="color: #ffa405;"></span>
                     <customer-checkbox option="replyCommentOption" class="reply-at-once"></customer-checkbox>
                     <button type="button" class="btn btn-primary btn-sm submit-button" ng-click="addComment(replyComment)">评论</button>
+                    <button type="button" class="btn btn-default btn-sm" ng-click="cancelAddComment()">取消</button>
                 </div>
             </div>
             <div class="reply-comments" ng-show="comment.replyedComments.length > 0">
@@ -71,6 +72,7 @@
                             <span class="fa fa-smile-o" style="color: #ffa405;"></span>
                             <customer-checkbox option="replyCommentOption" class="reply-at-once"></customer-checkbox>
                             <button type="button" class="btn btn-primary btn-sm submit-button" ng-click="addComment(replyComment)">评论</button>
+                            <button type="button" class="btn btn-default btn-sm" ng-click="cancelAddComment()">取消</button>
                         </div>
                     </div>
                 </div>

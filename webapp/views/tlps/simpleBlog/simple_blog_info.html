@@ -48,12 +48,14 @@
             <span class="operation-text"><span class="fa fa-reply"></span>{{content.replyNum > 0 ? content.replyNum : '转发'}}</span>
         </div>
         <div class="comment">
-            <span class="operation-text"><span class="fa fa-commenting-o"></span>{{content.commentsNum > 0 ? content.commentsNum : '评论'}}</span>
+            <span class="operation-text" ng-click="showComments()"><span class="fa fa-commenting-o"></span>{{content.commentNum > 0 ? content.commentNum : '评论'}}</span>
         </div>
         <div class="good">
             <span class="operation-text"><span class="fa fa-thumbs-o-up" ng-class="{'operated': content.gooders.length > 0}"></span>
                 {{content.gooders.length > 0 ? content.gooders.length : '赞'}}</span>
         </div>
     </div>
-    <comment-directive current-user="currentUser" user-info="content.userInfo" object-info="content"></comment-directive>
+    <div class="comment-div" ng-if="showCommentFlag">
+        <comment-directive current-user="currentUser" user-info="content.userInfo" object-info="content"></comment-directive>
+    </div>
 </div>

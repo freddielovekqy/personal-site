@@ -37,6 +37,10 @@ function findCommentsByBlog(blogId, paginationParams) {
     }
 }
 
+function countCommentsByObjectId(objectId) {
+    return Comment.count({objectId: objectId, status: 1}).exec();
+}
+
 function findCommentsByObjectId(objectId) {
     return Comment.find({objectId: objectId, status: 1, replyCommentId: {$exists: false}}).sort({createDate: -1}).lean().exec();
 }
@@ -51,3 +55,4 @@ module.exports.findCommentsByUser = findCommentsByUser;
 module.exports.findCommentsByBlog = findCommentsByBlog;
 module.exports.findCommentsByObjectId = findCommentsByObjectId;
 module.exports.findReplyCommentsByObjectId = findReplyCommentsByObjectId;
+module.exports.countCommentsByObjectId = countCommentsByObjectId;

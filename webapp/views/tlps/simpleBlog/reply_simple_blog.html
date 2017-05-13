@@ -1,0 +1,16 @@
+<div class="reply-simple-blog-popover my-popover">
+    <div class="popover-title">转发微博</div>
+    <div class="popover-content">
+        <div class="item" ng-show="!photo._id">
+            <div class="item-label">上传到</div>
+            <div class="item-input">
+                <select ng-model="selectedAlbum" ng-options="album.name for album in albums" class="form-control"></select>
+            </div>
+        </div>
+    </div>
+    <div class="popover-footer">
+        <button type="button" class="btn btn-info btn-sm" ng-hide="photo._id" ng-click="upload()">开始上传</button>
+        <button type="button" class="btn btn-info btn-sm" ng-show="photo._id" ng-click="update()">更新</button>
+        <button type="button" class="btn btn-default btn-sm" ng-click="cancel()">取消</button>
+    </div>
+</div>
