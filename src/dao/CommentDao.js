@@ -8,6 +8,8 @@ function addComment(commentInfo) {
         floor: commentInfo.floor,
         replyFloor: commentInfo.replyFloor,
         replyUserId: commentInfo.replyUserId,
+        replyUserName: commentInfo.replyUserName,
+        replyCommentId: commentInfo.replyCommentId,
         objectId: commentInfo.objectId,
         type: commentInfo.type
     });
@@ -35,7 +37,17 @@ function findCommentsByBlog(blogId, paginationParams) {
     }
 }
 
+function findCommentsByObjectId(objectId) {
+    return Comment.find({objectId: objectId, status: 1, replyCommentId: {$exists: false}}).sort({createDate: -1}).lean().exec();
+}
+
+function findReplyCommentsByObjectId(objectId) {
+    return Comment.find({objectId: objectId, status: 1, replyCommentId: {$exists: true}}).sort({createDate: -1}).lean().exec();
+}
+
 module.exports.addComment = addComment;
 module.exports.deleteComment = deleteComment;
 module.exports.findCommentsByUser = findCommentsByUser;
 module.exports.findCommentsByBlog = findCommentsByBlog;
+module.exports.findCommentsByObjectId = findCommentsByObjectId;
+module.exports.findReplyCommentsByObjectId = findReplyCommentsByObjectId;

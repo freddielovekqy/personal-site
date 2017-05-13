@@ -26,7 +26,12 @@ function findSimpleBlogsByUser(userId, status = 1) {
     return SimpleBlog.find({userId: userId, status: status}).lean().exec();
 }
 
+function findById(id) {
+    return SimpleBlog.findById(id).lean().exec();
+}
+
 module.exports.save = save;
 module.exports.updateAttrs = updateAttrs;
 module.exports.deleteSimpleBlog = deleteSimpleBlog;
+module.exports.findById = findById;
 module.exports.findSimpleBlogsByUser = findSimpleBlogsByUser;

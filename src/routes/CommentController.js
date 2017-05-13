@@ -49,4 +49,16 @@ router.get('/blog/:blogId', (request, response, next) => {
     });
 });
 
+router.get('/simpleBlog/:simpleBlogId', (request, response, next) => {
+    var simpleBlogId = request.params.simpleBlogId;
+    commentService.findAllCommentsBySimpleBlog(simpleBlogId)
+        .then(data => {
+            response.send(JSON.stringify(data));
+        }, data => {
+            response.send(JSON.stringify(data));
+        }).catch(data => {
+            response.send(JSON.stringify(data));
+        });
+})
+
 module.exports = router;
