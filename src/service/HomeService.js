@@ -38,14 +38,14 @@ function findHomeContent(userId) {
                         countCommentNumPromises.push(commentDao.countCommentsByObjectId(content._id));
                     });
                 });
-                allHomeContent.sort((pre, next) => {
-                    return next.createDate.getTime() - pre.createDate.getTime();
-                });
                 return Promise.all(countCommentNumPromises);
             })
             .then(counts => {
                 allHomeContent.forEach((content, index) => {
                     content.commentNum = counts[index];
+                });
+                allHomeContent.sort((pre, next) => {
+                    return next.createDate.getTime() - pre.createDate.getTime();
                 });
                 resolve(allHomeContent);
             })
