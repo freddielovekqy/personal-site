@@ -1,7 +1,7 @@
 /**
  * Created by freddie on 2017/5/13.
  */
-simpleBlogModule.directive('', function () {
+simpleBlogModule.directive('replySimpleBlog', function () {
     return {
         restrict: 'E',
         require : '?ngModel',

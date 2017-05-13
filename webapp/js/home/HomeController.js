@@ -9,8 +9,10 @@ homeModule.controller('HomeController', ['$scope', '$timeout', 'HttpService', 'C
         $scope.hotTopics = [];
         $scope.simpleBlog = {
             content: '',
-            source: '网页'
+            source: '网页',
+            jurisdiction: 1
         };
+        $scope.showJurisdictionsFlag = false;
 
         (function () {
             var result = CommonUserUtils.getCurrentUserBlogInfo();
@@ -25,6 +27,14 @@ homeModule.controller('HomeController', ['$scope', '$timeout', 'HttpService', 'C
             }
             getHomePageContent();
         })();
+
+        $scope.showJurisdictionOptions = function () {
+            $scope.showJurisdictionsFlag = !$scope.showJurisdictionsFlag;
+        };
+
+        $scope.changeJurisdiction = function (jurisdiction) {
+            $scope.simpleBlog.jurisdiction = jurisdiction;
+        };
 
         $scope.saveSimpleBlog = function () {
             HttpService.post({
@@ -64,6 +74,11 @@ homeModule.controller('HomeController', ['$scope', '$timeout', 'HttpService', 'C
                     topic: 'hideAllOperations',
                     data: {}
                 });
+            }
+            if (!($(event.target).hasClass('simple-blog-privilege-level-set') || $(event.target).parent().hasClass('simple-blog-privilege-level-set'))) {
+                $timeout(() => {
+                    $scope.showJurisdictionsFlag = false;
+                }, 0);
             }
         }
 

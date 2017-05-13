@@ -31,9 +31,14 @@
                     <a href="/blog/create">发表博客</a>
                 </div>
                 <button type="button" class="btn btn-primary" ng-click="saveSimpleBlog()">发布</button>
-                <div class="simple-blog-privilege-level-set simple-blog-option-item">
-                    <span>公开</span>
-                    <span class="icon-chevron-down"></span>
+                <div class="simple-blog-privilege-level-set simple-blog-option-item" ng-click="showJurisdictionOptions()">
+                    <span>{{simpleBlog.jurisdiction === 1 ? '公开' : simpleBlog.jurisdiction === 2 ? '仅好友可见' : '仅自己可见'}}</span>
+                    <span class="fa fa-chevron-down"></span>
+                </div>
+                <div class="simple-blog-privilege-levels" ng-show="showJurisdictionsFlag">
+                    <div class="jurisdiction-item" ng-click="changeJurisdiction(1)">公开</div>
+                    <div class="jurisdiction-item" ng-click="changeJurisdiction(2)">仅好友可见</div>
+                    <div class="jurisdiction-item" ng-click="changeJurisdiction(3)">仅自己可见</div>
                 </div>
             </div>
         </div>

@@ -50,10 +50,13 @@
     }
     .submit-simple-blog {
       .home-container-div();
+      overflow: visible;
+      position: relative;
       .content-above-input {
         line-height: 30px;
       }
       .simple-blog-option {
+        position: relative;
         .simple-blog-option-item {
           display: inline-block;
           line-height: 35px;
@@ -83,6 +86,24 @@
           margin-right: 20px;
           &:hover {
             color: #2ba7ff;
+          }
+        }
+        .simple-blog-privilege-levels {
+          padding: 2px;
+          background: #ffffff;
+          width: 100px;
+          position: absolute;
+          right: 130px;
+          z-index: 100;
+          box-shadow: 0 0 3px 1px #ccc;
+          .jurisdiction-item {
+            padding: 0 10px;
+            line-height: 30px;
+            cursor: pointer;
+            &:hover {
+              background-color: #f2f2f5;
+              color: #2ba7ff;
+            }
           }
         }
 
