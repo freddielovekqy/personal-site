@@ -22,8 +22,8 @@ function deleteSimpleBlog(id) {
     return SimpleBlog.update({_id: id}, {$set: {status: 0}});
 }
 
-function findSimpleBlogsByUser(userId, status = 1) {
-    return SimpleBlog.find({userId: userId, status: status}).lean().exec();
+function findSimpleBlogsByUser(userId, jurisdiction = {$exists: true},  status = 1) {
+    return SimpleBlog.find({userId: userId, jurisdiction: jurisdiction, status: status}).lean().exec();
 }
 
 function findById(id) {

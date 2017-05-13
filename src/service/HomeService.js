@@ -24,7 +24,12 @@ function findHomeContent(userId) {
             .then(users => {
                 var findUserContentPromises = [];
                 users.forEach(user => {
-                    findUserContentPromises.push(simpleBlogDao.findSimpleBlogsByUser(user._id));
+                    user = user.toObject();
+                    if (userId === user._id.toString()) {
+                        findUserContentPromises.push(simpleBlogDao.findSimpleBlogsByUser(user._id));
+                    } else {
+                        findUserContentPromises.push(simpleBlogDao.findSimpleBlogsByUser(user._id, {$ne: 3}));
+                    }
                 });
                 userMap = _.keyBy(users, '_id');
                 return Promise.all(findUserContentPromises);
