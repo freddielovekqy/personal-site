@@ -37,6 +37,7 @@ homeModule.controller('HomeController', ['$scope', '$timeout', 'HttpService', 'C
                         content: '',
                         source: '网页'
                     };
+                    getHomePageContent();
                     CommonUtils.showAlertMessage({
                         type: 'success',
                         message: '发表微博成功'
@@ -66,6 +67,26 @@ homeModule.controller('HomeController', ['$scope', '$timeout', 'HttpService', 'C
             }
         }
 
+        var shieldContentSub = postal.subscribe({
+            channel: 'homePage',
+            topic: 'shieldContent',
+            callback: data => {
+                $scope.contents = $scope.contents.filter(content => {
+                    return content._id !== data.contentId;
+                });
+            }
+        });
+
+        var shieldUserSub = postal.subscribe({
+            channel: 'homePage',
+            topic: 'shieldUser',
+            callback: data => {
+                $scope.contents = $scope.contents.filter(content => {
+                    return content.userId !== data.userId;
+                });
+            }
+        });
+
         var refreshContentSub = postal.subscribe({
             channel: 'homePage',
             topic: 'refreshHomeContent',
@@ -85,6 +106,8 @@ homeModule.controller('HomeController', ['$scope', '$timeout', 'HttpService', 'C
         $scope.$on('$destroy', function () {
             $('body').unbind('click', hideOperations);
             refreshContentSub && refreshContentSub.unsubscribe();
+            shieldContentSub && shieldContentSub.unsubscribe();
+            shieldUserSub && shieldUserSub.unsubscribe();
         });
 
     }

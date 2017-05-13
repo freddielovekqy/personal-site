@@ -14,6 +14,21 @@ function saveSimpleBlog(userId, simpleBlog) {
     });
 }
 
+function updateSimpleBlogJurisdiction(simpleBlogId, jurisdiction) {
+    return new Promise((resolve, reject) => {
+        var updateAttrs = {
+            jurisdiction: jurisdiction
+        };
+        simpleBlogDao.updateAttrs(simpleBlogId, updateAttrs)
+            .then(data => {
+                resolve(data);
+            })
+            .catch(error => {
+                reject(error);
+            });
+    });
+}
+
 function deleteSimpleBlog(simpleBlogId) {
     return new Promise((resolve, reject) => {
         simpleBlogDao.deleteSimpleBlog(simpleBlogId)
@@ -39,5 +54,6 @@ function findSimpleBlogsByUser(userId) {
 }
 
 module.exports.saveSimpleBlog = saveSimpleBlog;
+module.exports.updateSimpleBlogJurisdiction = updateSimpleBlogJurisdiction;
 module.exports.deleteSimpleBlog = deleteSimpleBlog;
 module.exports.findSimpleBlogsByUser = findSimpleBlogsByUser;

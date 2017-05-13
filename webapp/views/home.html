@@ -49,11 +49,13 @@
                 <span class="glyphicon glyphicon-search"></span>
             </div>
         </div>
-        <div class="blog-infos">
+        <div class="content-information">
             <div ng-repeat="content in contents">
                 <simple-blog-info content="content" current-user="currentUserBlogInfo.userInfo"></simple-blog-info>
             </div>
-
+            <div class="no-content" ng-show="contents.length === 0">
+                没有内容，去关注更多的人吧。
+            </div>
         </div>
     </div>
     <div class="right-div">

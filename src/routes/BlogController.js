@@ -56,8 +56,7 @@ router.post('/save', function (request, response, next) {
         type: request.body.type,
         status: request.body.status,
         categories: request.body.categories,
-        // TODO userId以后全部使用session中的数据request.session.currentUser.id
-        userId: request.body.userId,
+        userId: request.session.currentUser._id,
         comment: request.body.comment || [],
         reader: request.body.reader || []
     };
@@ -118,7 +117,7 @@ router.post('/commentAble', function (request, response, next) {
 router.post('/createBlogCategory', function (request, response, next) {
     var blogCategoryDTO = {
         name: request.body.name,
-        userId: request.session.currentUser.id
+        userId: request.session.currentUser._id
     };
     var promise = blogCategoryService.save(blogCategoryDTO);
     promise.then(function (data) {
@@ -150,7 +149,7 @@ router.post('/deleteBlogCategory/:id', function (request, response, next) {
 });
 
 router.get('/getBlogCategory', function (request, response, next) {
-    var promise = blogCategoryService.getBlogCategorys(request.session.currentUser.id);
+    var promise = blogCategoryService.getBlogCategorys(request.session.currentUser._id);
     promise.then(function (data) {
         response.send(JSON.stringify(data));
     }).catch(function (data) {

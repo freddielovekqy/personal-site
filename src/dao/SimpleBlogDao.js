@@ -14,6 +14,10 @@ function save(simpleBlogDTO) {
     return simpleBlog.save();
 }
 
+function updateAttrs(simpleBlogId, updateAttrs) {
+    return SimpleBlog.update({_id: simpleBlogId}, {$set: updateAttrs});
+}
+
 function deleteSimpleBlog(id) {
     return SimpleBlog.update({_id: id}, {$set: {status: 0}});
 }
@@ -23,5 +27,6 @@ function findSimpleBlogsByUser(userId, status = 1) {
 }
 
 module.exports.save = save;
+module.exports.updateAttrs = updateAttrs;
 module.exports.deleteSimpleBlog = deleteSimpleBlog;
 module.exports.findSimpleBlogsByUser = findSimpleBlogsByUser;

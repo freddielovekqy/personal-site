@@ -6,7 +6,7 @@ var commentService = require('../service/CommentService');
 router.post('/', (request, response, next) => {
     var objectId = request.body.objectId;
     var comment = request.body.comment;
-    var userId = request.session.currentUser.id;
+    var userId = request.session.currentUser._id;
     commentService.addComment(objectId, userId, comment).then(data => {
         response.send(JSON.stringify(data));
     }, data => {

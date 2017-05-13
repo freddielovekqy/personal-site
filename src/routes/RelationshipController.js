@@ -4,7 +4,7 @@ var logger = require('../common/log/log4js').logger;
 var relationshipService = require('../service/RelationshipService');
 
 router.post('/', (request, response, next) => {
-    var userId = request.session.currentUser.id;
+    var userId = request.session.currentUser._id;
     var targetUserId = request.body.targetUserId;
     var attentionType = request.body.attentionType;
     var promise = relationshipService.addAttentionUser(userId, targetUserId, attentionType);
@@ -18,7 +18,7 @@ router.post('/', (request, response, next) => {
 });
 
 router.delete('/attention/:targetUserId', (request, response, next) => {
-    var userId = request.session.currentUser.id;
+    var userId = request.session.currentUser._id;
     var targetUserId = request.params.targetUserId;
     var promise = relationshipService.deleteAttention(userId, targetUserId);
     promise.then(data => {

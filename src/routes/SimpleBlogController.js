@@ -13,6 +13,17 @@ router.post('/', (request, response, next) => {
         });
 });
 
+router.put('/jurisdiction', (request, response, next) => {
+    var simpleBlogId = request.body.simpleBlogId;
+    var jurisdiction = request.body.jurisdiction;
+    simpleBlogService.updateSimpleBlogJurisdiction(simpleBlogId, jurisdiction)
+        .then(function (data) {
+            response.send(JSON.stringify(data));
+        }).catch(function (data) {
+            response.send(JSON.stringify(data));
+        });
+});
+
 router.delete('/:id', (request, response, next) => {
     var id = request.params.id;
     simpleBlogService.deleteSimpleBlog(id)
