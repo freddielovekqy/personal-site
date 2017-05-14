@@ -3,15 +3,19 @@
 
 ### 依赖的npm包
 - **express** ： 项目主体框架
+- **mongoose**：nodeJS操作mongoDB
+- **socket.io**：聊天系统以及系统消息通知功能必须的依赖
+- **formidable**：文件上传需要的依赖
 - **less** ： 支持less
 - **less-middleware** ： less于nodejs集成的中间件，编译less文件等
-- **grunt**：nodejs项目管理工具
-- **mongoose**：nodeJS操作mongoDB
 - **body-parser**：express推荐使用的解析客户端请求中间件https://github.com/expressjs/body-parser
-- **log4js**：nodejs的日志
 - **express-session**：用于管理nodeJS后台的session
 - **lodash**：工具类
+- **log4js**：nodejs的日志
+- **grunt**：nodejs项目管理工具
 ```
+// 下载新代码后需在根目录执行下面的命令
+npm install --save-dev
 // 全局安装grunt管理工具
 npm install -g grunt-cli
 ```
@@ -22,9 +26,9 @@ npm install -g grunt-cli
 - **iCheck**：单选框与多选框美化
 - **lodash**：js工具插件
 - **wangeditor**：富文本编辑器
-- **postaljs**：前台事物发布订阅器
+- **postaljs**：前台事务发布订阅器
 
-> 网站所有静态文件全部交由nginx进行管理
+> 除去socket.io生成的客户端文件，网站其他所有静态文件全部交由nginx进行管理
 
 **nginx配置文件**
 ```
