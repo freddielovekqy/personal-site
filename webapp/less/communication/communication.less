@@ -1,0 +1,117 @@
+.communication-div {
+  .communication-folding {
+    height: 40px;
+    line-height: 40px;
+    width: 250px;
+    background: #fff;
+    padding: 0 20px;
+    box-shadow: 0 0 2px 1px #ccc;
+    cursor: pointer;
+    .glyphicon-envelope {
+      color: #eb7350;
+      font-size: 20px;
+      position: relative;
+      top: 5px;
+    }
+    span {
+      margin-right: 10px;
+      display: inline-block;
+    }
+  }
+  .communication-open {
+    width: 500px;
+    height: 340px;
+    background: #fff;
+    box-shadow: 0 0 2px 1px #ccc;
+    .communication-objects {
+      width: 150px;
+      float: left;
+      height: 100%;
+      border-right: 1px solid #ccc;
+      padding: 2px 0;
+      .search-communicator {
+        padding: 5px;
+        position: relative;
+        border-bottom: 1px solid #ccc;
+        height: 39px;
+        input {
+          height: 27px;
+        }
+        .fa-search {
+          position: absolute;
+          top: 12px;
+          right: 15px;
+          color: #b5b8bd;
+        }
+      }
+      .communication-object {
+        height: 40px;
+        line-height: 40px;
+        padding: 5px;
+        .user-image {
+          width: 30px;
+          height: 30px;
+          background: #000;
+          display: inline-block;
+        }
+        .user-name {
+          display: inline-block;
+          vertical-align: top;
+          line-height: 30px;
+        }
+        .delete-communication-object {
+          float: right;
+          position: relative;
+          right: 5px;
+          top: 8px;
+          cursor: pointer;
+          &:hover {
+            color: #2ba7ff;
+          }
+        }
+        &.select {
+          background: #f2f2f5;
+        }
+      }
+    }
+    .communication-content {
+      float: left;
+      .communication-header {
+        line-height: 40px;
+        padding: 0 15px;
+        width: 350px;
+        border-bottom: 1px solid #ccc;
+        .object-name {
+          font-weight: bold;
+          display: inline-block;
+        }
+        .communication-operations {
+          float: right;
+          .folding-communication-div {
+            color: #6a6f79;
+            cursor: pointer;
+            &:hover {
+              color: #2ba7ff;
+            }
+          }
+        }
+      }
+      .content {
+        width: 100%;
+        background: #f2f2f5;
+        height: 256px;
+      }
+      .new-content {
+        padding: 5px;
+        input {
+          width: 290px;
+          display: inline-block;
+        }
+        button {
+          position: relative;
+          top: -2px;
+        }
+      }
+    }
+  }
+}

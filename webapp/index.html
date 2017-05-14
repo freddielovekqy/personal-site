@@ -48,7 +48,7 @@
                             <span class="username">{{currentUser.username || currentUser.email}}</span>
                         </a>
                         <a href="" class="header-user-notice">
-                            <span class="glyphicon glyphicon-envelope"></span>
+                            <span class="fa fa-envelope-o"></span>
                             <div class="have-notice">2</div>
                         </a>
                         <a href="/account-setting" class="header-user-setting">
@@ -64,11 +64,16 @@
             <div ng-view class="web-container">
 
             </div>
+            <div class="communication" ng-if="currentUser">
+                <communication-div></communication-div>
+            </div>
         </div>
         <div class="popover-container"></div>
     </body>
     <script src="framework/jquery-2.1.4.min.js"></script>
     <script src="framework/wangEditor-2.1.22/dist/js/wangEditor.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
     <!--<script src="framework/underscore/underscore.js"></script>-->
     <script src="framework/lodash/lodash.js"></script>
     <script src="framework/bootstrap/js/bootstrap.min.js"></script>
@@ -121,5 +126,7 @@
     <script src="js/user/RegisterController.js"></script>
     <script src="js/accountSetting/AccountProfileController.js"></script>
     <script src="js/accountSetting/AccountSetting.js"></script>
+
+    <script src="js/communication/CommunicationController.js"></script>
 
 </html>

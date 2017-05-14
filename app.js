@@ -1,10 +1,14 @@
 var express = require('express');
+var app = express();
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
 var session = require('express-session');
 var lessMiddleware = require('less-middleware');
 var path = require('path');
 var bodyParser = require('body-parser');
 var log4js = require('./src/common/log/log4js');
 _ = require('lodash');
+var serverName = process.env.NAME || 'Unknown';
 
 var routes = require('./src/routes/index');
 var user = require('./src/routes/UserController');
@@ -16,9 +20,6 @@ var relationship = require('./src/routes/RelationshipController');
 var photo = require('./src/routes/PhotoController');
 var album = require('./src/routes/AlbumController');
 var home = require('./src/routes/HomeController');
-
-var app = express();
-
 
 // view engine setup
 log4js.use(app);
@@ -44,7 +45,11 @@ app.use(session({
   cookie: { maxAge: 6000 * 1000 }
 }));
 
-// 前端资源文件全部交由nginx服务器进行管理
+server.listen(8080, function () {
+  console.log('Server listening at port 8080');
+});
+
+// // 前端资源文件全部交由nginx服务器进行管理
 app.use(express.static(path.join(__dirname, 'webapp')));
 
 app.get('/api/*', function (req, res, next) {
@@ -82,40 +87,82 @@ app.get('/api/about', function (request, response) {
     response.send('Hello World!');
 });
 
-// catch 404 and forward to error handler
-// app.use(function(req, res, next) {
-//   var err = new Error('Not Found');
-//   err.status = 404;
-//   next(err);
-// });
+var numUsers = 0;
+var userSocketMap = {};
 
-// error handlers
+io.on('connection', function (socket) {
 
-// development error handler
-// will print stacktrace
-// if (app.get('env') === 'development') {
-//   app.use(function(err, req, res, next) {
-//     res.status(err.status || 500);
-//     res.render('error', {
-//       message: err.message,
-//       error: err
-//     });
-//   });
-// }
+    socket.on('init', data => {
+        console.log('init socket, userInfo', data._id);
+        userSocketMap[data._id] = socket;
+        io.emit('someBodyOn', data);
+    });
 
-// production error handler
-// no stacktraces leaked to user
-// app.use(function(err, req, res, next) {
-//   res.status(err.status || 500);
-//   res.render('error', {
-//     message: err.message,
-//     error: {}
-//   });
-// });
+    socket.on('privateChat', data => {
+        console.log('private chat', data);
+        var toSocket = userSocketMap[data.toUserId];
+        if (toSocket) {
+            toSocket.emit('privateChat', {
+              message: '123123123'
+            });
+        }
+    });
 
-app.listen(8080, function () {
-    console.log('Server start, listen 8080 port...');
+  socket.emit('my-name-is', serverName);
+
+  var addedUser = false;
+
+  // when the client emits 'new message', this listens and executes
+  socket.on('new message', function (data) {
+    // we tell the client to execute 'new message'
+    socket.broadcast.emit('new message', {
+      username: socket.username,
+      message: data
+    });
+  });
+
+  // when the client emits 'add user', this listens and executes
+  socket.on('add user', function (username) {
+    if (addedUser) return;
+
+    // we store the username in the socket session for this client
+    socket.username = username;
+    ++numUsers;
+    addedUser = true;
+    socket.emit('login', {
+      numUsers: numUsers
+    });
+    // echo globally (all clients) that a person has connected
+    socket.broadcast.emit('user joined', {
+      username: socket.username,
+      numUsers: numUsers
+    });
+  });
+
+  // when the client emits 'typing', we broadcast it to others
+  socket.on('typing', function () {
+    socket.broadcast.emit('typing', {
+      username: socket.username
+    });
+  });
+
+  // when the client emits 'stop typing', we broadcast it to others
+  socket.on('stop typing', function () {
+    socket.broadcast.emit('stop typing', {
+      username: socket.username
+    });
+  });
+
+  // when the user disconnects.. perform this
+  socket.on('disconnect', function () {
+    if (addedUser) {
+      --numUsers;
+
+      // echo globally that this client has left
+      socket.broadcast.emit('user left', {
+        username: socket.username,
+        numUsers: numUsers
+      });
+    }
+  });
 });
-
-
-module.exports = app;

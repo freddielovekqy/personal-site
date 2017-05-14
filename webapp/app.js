@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('app', ['ngRoute', 'ngAnimate', 'ui.grid', 'home', 'about', 'blog', 'simpleBlog', 'comment', 'profile',
+var app = angular.module('app', ['ngRoute', 'ngAnimate', 'ui.grid', 'home', 'communication', 'about', 'blog', 'simpleBlog', 'comment', 'profile',
     'photo', 'loginOut', 'register', 'account-info', 'account-setting']);
 
 Date.prototype.format = function(format) {

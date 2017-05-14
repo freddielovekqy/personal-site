@@ -1,0 +1,38 @@
+<div class="communication-div">
+    <div class="communication-folding" ng-click="changeStatus('open')" ng-show="status === 'folding'">
+        <span class="glyphicon glyphicon-envelope"></span>
+        <span>私信聊天</span>
+    </div>
+    <div class="communication-open" ng-show="status === 'open'">
+        <div class="communication-objects">
+            <div class="search-communicator">
+                <input type="text" class="form-control" placeholder="查找联系人"/>
+                <span class="fa fa-search"></span>
+            </div>
+            <div class="communication-object select">
+                <div class="user-image">
+                    <img src="" alt=""/>
+                </div>
+                <div class="user-name">
+                    微博小秘书
+                </div>
+                <div class="delete-communication-object fa fa-times"></div>
+            </div>
+        </div>
+        <div class="communication-content">
+            <div class="communication-header">
+                <div class="object-name">微博小秘书</div>
+                <div class="communication-operations">
+                    <div class="folding-communication-div fa fa-times" ng-click="changeStatus('folding')"></div>
+                </div>
+            </div>
+            <div class="content">
+
+            </div>
+            <div class="new-content">
+                <input type="text" class="form-control" placeholder="按回车发送私信" ng-model="communicationMessage"/>
+                <button type="button" class="btn btn-info btn-sm" ng-click="sendMessage()">发送</button>
+            </div>
+        </div>
+    </div>
+</div>
