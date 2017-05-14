@@ -133,6 +133,26 @@ simpleBlogInfoModule.controller('SimpleBlogInfoController', ['$scope', '$timeout
             baseEle.append(ele);
         };
 
+        $scope.showOrHideUserInfoPopover = function (showOrHide, event) {
+            if (showOrHide) {
+                var baseEle = $('.popover-container');
+                var newScope = $scope.$new();
+                newScope.position = {
+                    x: event.clientX,
+                    y: event.clientY
+                };
+                newScope.targetOffset = $(event.target).offset();
+                var ele = $compile('<user-info-popover></user-info-popover>')(newScope);
+                baseEle.append(ele);
+            } else {
+                postal.publish({
+                    channel: 'userInfoPopover',
+                    topic: 'closePopover',
+                    data: {}
+                });
+            }
+        };
+
         $scope.showCommentFlag = false;
         $scope.showComments = function () {
             $scope.showCommentFlag = !$scope.showCommentFlag;

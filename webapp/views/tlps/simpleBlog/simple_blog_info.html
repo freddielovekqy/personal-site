@@ -13,7 +13,9 @@
         <div class="user-image">
             <img src="{{content.userInfo.headImgPath}}" alt=""/>
         </div>
-        <div class="username">{{content.userInfo.username}}</div>
+        <div class="username">
+            <span ng-mouseover="showOrHideUserInfoPopover(true, $event)" ng-mouseleave="showOrHideUserInfoPopover(false)">{{content.userInfo.username}}</span>
+        </div>
         <div class="dynamic-other-info">{{content.createDate}} 来自 {{content.source}}</div>
         <div class="personal-dynamic-info-detail">{{content.content}}</div>
     </div>
