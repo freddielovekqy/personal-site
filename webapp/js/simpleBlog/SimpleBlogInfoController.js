@@ -3,8 +3,8 @@
  */
 var simpleBlogInfoModule = angular.module('simpleBlogInfo', []);
 
-simpleBlogInfoModule.controller('SimpleBlogInfoController', ['$scope', '$timeout', 'HttpService', 'CommonUtils', 'MessagePopoverUtil',
-    function ($scope, $timeout, HttpService, CommonUtils, MessagePopoverUtil) {
+simpleBlogInfoModule.controller('SimpleBlogInfoController', ['$scope', '$timeout', '$compile', 'HttpService', 'CommonUtils', 'MessagePopoverUtil',
+    function ($scope, $timeout, $compile, HttpService, CommonUtils, MessagePopoverUtil) {
         $scope.showOperationsFlag = false;
         $scope.content.createDate = new Date($scope.content.createDate).format('yyyy-MM-dd hh:mm');
 
@@ -109,8 +109,28 @@ simpleBlogInfoModule.controller('SimpleBlogInfoController', ['$scope', '$timeout
             });
         };
 
-        $scope.replySimpleBlog = function () {
-
+        $scope.forwardSimpleBlog = function (simpleBlog) {
+            var baseEle = $('.forward-simple-blog-div');
+            var newScope = $scope.$new();
+            if (simpleBlog.originSimpleBlog) {
+                newScope.originSimpleBlog = simpleBlog.originSimpleBlog;
+                newScope.simpleBlog = {
+                    content: `//@${simpleBlog.userInfo.username}: ${simpleBlog.content}`,
+                    source: '网页',
+                    jurisdiction: 1,
+                    originSimpleBlogId: newScope.originSimpleBlog._id
+                };
+            } else {
+                newScope.originSimpleBlog = simpleBlog;
+                newScope.simpleBlog = {
+                    content: '',
+                    source: '网页',
+                    jurisdiction: 1,
+                    originSimpleBlogId: newScope.originSimpleBlog._id
+                };
+            }
+            var ele = $compile('<forward-simple-blog></forward-simple-blog>')(newScope);
+            baseEle.append(ele);
         };
 
         $scope.showCommentFlag = false;

@@ -1,16 +1,40 @@
 .reply-simple-blog-popover {
   width: 600px;
-  height: 200px;
   background: #ffffff;
-  .popover-content {
-    .item {
-      .item-input {
-        width: 100% !important;
+  .popover-title {
+    .fa-times {
+      font-size: 1.5em;
+      float: right;
+      cursor: pointer;
+      &:hover {
+        color: #2ba7ff;
       }
     }
   }
-  .popover-footer {
+  .popover-content {
+    padding-bottom: 10px !important;
+    .origin-simple-blog-content {
+      margin: 0 0 10px;
+      padding: 5px 10px;
+      line-height: 20px;
+      background-color: #f2f2f5;
+      .username {
+        color: #333;
+        cursor: pointer;
+        &:hover {
+          color: #2ba7ff;
+        }
+      }
+    }
+  }
+  .forward-simple-blog-operations {
     position: relative;
+    text-align: right;
+    padding: 0 15px 15px;
+    .add-comment-to-origin-simple-blog {
+      display: inline-block;
+      float: left;
+    }
     .simple-blog-privilege-level-set {
       margin-right: 20px;
       cursor: pointer;

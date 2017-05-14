@@ -1,4 +1,5 @@
 var simpleBlogDao = require('../dao/SimpleBlogDao');
+var userDao = require('../dao/UserDao');
 var logger = require('../common/log/log4js').logger;
 
 function saveSimpleBlog(userId, simpleBlog) {
@@ -53,7 +54,26 @@ function findSimpleBlogsByUser(userId) {
     });
 }
 
+function findSimpleBlogWithUserInfo(id) {
+    return new Promise((resolve, reject) => {
+        var result = {};
+        simpleBlogDao.findById(id)
+            .then(simpleBlog => {
+                result = simpleBlog;
+                return userDao.getBasicUserInfo(simpleBlog.userId);
+            })
+            .then(userInfo => {
+                result.userInfo = userInfo;
+                resolve(result);
+            })
+            .catch(error => {
+                reject(error);
+            });
+    });
+}
+
 module.exports.saveSimpleBlog = saveSimpleBlog;
 module.exports.updateSimpleBlogJurisdiction = updateSimpleBlogJurisdiction;
 module.exports.deleteSimpleBlog = deleteSimpleBlog;
 module.exports.findSimpleBlogsByUser = findSimpleBlogsByUser;
+module.exports.findSimpleBlogWithUserInfo = findSimpleBlogWithUserInfo;

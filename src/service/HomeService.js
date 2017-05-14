@@ -2,6 +2,8 @@ var simpleBlogDao = require('../dao/SimpleBlogDao');
 var relationshipDao = require('../dao/RelationshipDao');
 var commentDao = require('../dao/CommentDao');
 var userDao = require('../dao/UserDao');
+
+var simpleBlogService = require('../service/SimpleBlogService')
 var logger = require('../common/log/log4js').logger;
 var _ = require('lodash');
 
@@ -36,6 +38,7 @@ function findHomeContent(userId) {
             })
             .then(allResults => {
                 var countCommentNumPromises = [];
+                
                 allResults.forEach(contents => {
                     contents.forEach(content => {
                         content.userInfo = userMap[content.userId];
@@ -46,8 +49,23 @@ function findHomeContent(userId) {
                 return Promise.all(countCommentNumPromises);
             })
             .then(counts => {
+                var findOriginSimpleBlogPromises = [];
+
                 allHomeContent.forEach((content, index) => {
                     content.commentNum = counts[index];
+                    if (content.originSimpleBlogId) {
+                        findOriginSimpleBlogPromises.push(simpleBlogService.findSimpleBlogWithUserInfo(content.originSimpleBlogId));
+                    }
+                });
+                return Promise.all(findOriginSimpleBlogPromises);
+            })
+            .then(originSimpleBlogs => {
+                allHomeContent.forEach((content, index) => {
+                    originSimpleBlogs.forEach(originSimpleBlog => {
+                        if (content.originSimpleBlogId === originSimpleBlog._id.toString()) {
+                            content.originSimpleBlog = originSimpleBlog;
+                        }
+                    });
                 });
                 allHomeContent.sort((pre, next) => {
                     return next.createDate.getTime() - pre.createDate.getTime();

@@ -17,21 +17,21 @@
         <div class="dynamic-other-info">{{content.createDate}} 来自 {{content.source}}</div>
         <div class="personal-dynamic-info-detail">{{content.content}}</div>
     </div>
-    <div class="original-dynamic-info" ng-if="content.originBlogInfo">
-        <div class="username">{{content.originBlogInfo.userName}}</div>
-        <div class="dynamic-info-detail">{{content.originBlogInfo.content}}</div>
+    <div class="original-dynamic-info" ng-if="content.originSimpleBlog">
+        <div class="username">@{{content.originSimpleBlog.userInfo.username}}</div>
+        <div class="dynamic-info-detail">{{content.originSimpleBlog.content}}</div>
         <div class="dynamic-foot-div">
-            <div class="dynamic-other-info">{{content.originBlogInfo.createDate}} 来自 {{content.originBlogInfo.source}}</div>
+            <div class="dynamic-other-info">{{content.originSimpleBlog.createDate}} 来自 {{content.originSimpleBlog.source}}</div>
             <div class="dynamic-foot-operation">
                 <div class="forward">
-                    <span class="operation-text"><span class="fa fa-reply"></span>{{content.originBlogInfo.replyNum > 0 ? content.originBlogInfo.replyNum : '转发'}}</span>
+                    <span class="operation-text" ng-click="forwardSimpleBlog(content.originSimpleBlog)"><span class="fa fa-reply"></span>{{content.originSimpleBlog.replyNum > 0 ? content.originSimpleBlog.replyNum : '转发'}}</span>
                 </div>
                 <div class="comment">
-                    <span class="operation-text"><span class="fa fa-commenting-o"></span>{{content.originBlogInfo.commentsNum > 0 ? content.originBlogInfo.commentsNum : '评论'}}</span>
+                    <span class="operation-text"><span class="fa fa-commenting-o"></span>{{content.originSimpleBlog.commentsNum > 0 ? content.originSimpleBlog.commentsNum : '评论'}}</span>
                 </div>
                 <div class="good">
-            <span class="operation-text"><span class="fa fa-thumbs-o-up" ng-class="{'operated':content.originBlogInfo.isHaveFavor}"></span>
-                {{content.originBlogInfo.goodNum > 0 ? content.originBlogInfo.goodNum : '赞'}}</span>
+            <span class="operation-text"><span class="fa fa-thumbs-o-up" ng-class="{'operated':content.originSimpleBlog.isHaveFavor}"></span>
+                {{content.originSimpleBlog.goodNum > 0 ? content.originSimpleBlog.goodNum : '赞'}}</span>
                 </div>
             </div>
         </div>
@@ -45,7 +45,7 @@
             <span class="operation-text" ng-show="content.isHaveCollected"><span class="fa fa-star"></span>已收藏</span>
         </div>
         <div class="forward">
-            <span class="operation-text" ng-click="replySimpleBlog()"><span class="fa fa-reply"></span>{{content.replyNum > 0 ? content.replyNum : '转发'}}</span>
+            <span class="operation-text" ng-click="forwardSimpleBlog(content)"><span class="fa fa-reply"></span>{{content.replyNum > 0 ? content.replyNum : '转发'}}</span>
         </div>
         <div class="comment">
             <span class="operation-text" ng-click="showComments()"><span class="fa fa-commenting-o"></span>{{content.commentNum > 0 ? content.commentNum : '评论'}}</span>
@@ -58,5 +58,6 @@
     <div class="comment-div" ng-if="showCommentFlag">
         <comment-directive current-user="currentUser" user-info="content.userInfo" object-info="content"></comment-directive>
     </div>
-    <reply-simple-blog></reply-simple-blog>
+    <div class="forward-simple-blog-div">
+    </div>
 </div>
