@@ -102,9 +102,7 @@ io.on('connection', function (socket) {
         console.log('private chat', data);
         var toSocket = userSocketMap[data.toUserId];
         if (toSocket) {
-            toSocket.emit('privateChat', {
-              message: '123123123'
-            });
+            toSocket.emit('privateChat', data);
         }
     });
 

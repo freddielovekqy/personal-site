@@ -244,8 +244,8 @@
                 <div>{{education.schoolName}}({{education.inYear}})</div>
                 <div style="margin-right: 40px;">{{education.department || education.className}}</div>
                 <div class="operation">
-                    <span class="icon-pencil" ng-click="editEducation(education)"></span>
-                    <span class="icon-remove" ng-click="deleteEducation(education)"></span>
+                    <span class="fa fa-pencil" ng-click="editEducation(education)"></span>
+                    <span class="fa fa-times" ng-click="deleteEducation(education)"></span>
                 </div>
             </div>
         </div>
@@ -289,8 +289,8 @@
                 <div>({{work.startYear}} - {{work.endYear}})</div>
                 <div style="margin: 0 40px 0 20px;">职位：{{work.department}}</div>
                 <div class="operation">
-                    <span class="icon-pencil" ng-click="editWork(work)"></span>
-                    <span class="icon-remove" ng-click="deleteWork(work)"></span>
+                    <span class="fa fa-pencil" ng-click="editWork(work)"></span>
+                    <span class="fa fa-times" ng-click="deleteWork(work)"></span>
                 </div>
                 <div class="location">地区：{{work.location}}</div>
             </div>

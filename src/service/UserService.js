@@ -25,7 +25,7 @@ function login(email, password) {
         var promise = userDao.findByEmail(email);
         promise.then(data => {
             if (!data || data.length === 0) {
-                reject({ errorMessage: '用户名不存在' });
+                reject({ errorMessage: '邮箱不存在' });
             } else {
                 var user = data[0];
 
@@ -73,9 +73,14 @@ function update(userInfo) {
     });
 }
 
-function getUserInfo(userId) {
+function getUserInfo(userId, currentUserId) {
     return new Promise((resolve, reject) => {
-        var promise = userDao.getById(userId);
+        var promise;
+        if (currentUserId === userId) {
+            promise = userDao.getById(userId);
+        } else {
+            promise = userDao.getBasicUserInfo(userId);
+        }
         promise.then(user => {
             resolve(user);
         });

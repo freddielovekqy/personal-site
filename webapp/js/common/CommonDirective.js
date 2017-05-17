@@ -71,7 +71,7 @@ app.directive('wangEditor', function() {
                 }
             });
 
-            scope.$on('destroy', () => {
+            scope.$on('$destroy', () => {
                 console.log('wangEditor destroy');
                 emptyContentSub.unsubscribe();
                 initContentSub.unsubscribe();

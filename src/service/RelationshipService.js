@@ -58,22 +58,41 @@ function findFansByUser(userId) {
     });
 }
 
-function findUserAttentions(userId) {
+function findUserAttentions(userId, username) {
     return new Promise((resolve, reject) => {
-        relationshipDao.findUserAttentions(userId).then(data => {
-            var findAllUserPromise = [];
-            data.attentions.forEach(attention => {
-                findAllUserPromise.push(new Promise((getUserInfoResolve, getUserInfoReject) => {
-                    userDao.getBasicUserInfo(attention.userId).then(user => {
-                        attention = Object.assign(attention, user.toObject());
-                        getUserInfoResolve();
+        relationshipDao.findUserAttentions(userId)
+            .then(data => {
+                var findAllUserPromise = [];
+                data.attentions.forEach(attention => {
+                    findAllUserPromise.push(assignUserInfoToAttention(attention));
+                });
+                return Promise.all(findAllUserPromise);
+            })
+            .then(userInfos => {
+                if (username) {
+                    userInfos = userInfos.filter(userInfo => {
+                        return userInfo.username.indexOf(username) > -1;
                     });
-                }));
+                }
+                resolve(userInfos);
             });
-            Promise.all(findAllUserPromise).then(userInfos => {
-                resolve(data);
+    });
+}
+
+/**
+ * 补全attention中的用户信息
+ * @param attention
+ */
+function assignUserInfoToAttention(attention) {
+    return new Promise((resolve, reject) => {
+        userDao.getBasicUserInfo(attention.userId)
+            .then(user => {
+                attention = Object.assign(attention, user.toObject());
+                resolve(attention);
+            })
+            .catch(error => {
+                reject(error);
             });
-        });
     });
 }
 

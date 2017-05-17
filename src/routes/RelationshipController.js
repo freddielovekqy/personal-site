@@ -51,6 +51,19 @@ router.get('/:userId/attentions', (request, response, next) => {
     });
 });
 
+router.get('/:userId/username/:username', (request, response, next) => {
+    var userId = request.params.userId;
+    var targetUserName = request.params.username;
+    relationshipService.findUserAttentions(userId, targetUserName)
+        .then(data => {
+            response.send(JSON.stringify(data));
+        }, data => {
+            response.send(JSON.stringify(data));
+        }).catch(data => {
+            response.send(JSON.stringify(data));
+        });
+})
+
 router.get('/types', (request, response, next) => {
     var userId = request.session.currentUser._id;
     var promise = relationshipService.findAllUserAttentionTypes(userId);

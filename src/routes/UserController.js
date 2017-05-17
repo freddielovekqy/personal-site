@@ -48,7 +48,7 @@ router.get('/currentUser', (request, response, next) => {
 
 router.get('/:userId', (request, response, next) => {
     var userId = request.params.userId;
-    userService.getUserInfo(userId).then(data => {
+    userService.getUserInfo(userId, request.session.currentUser._id).then(data => {
         response.send(JSON.stringify(data));
     }).catch(function (data) {
         response.send(JSON.stringify(data));

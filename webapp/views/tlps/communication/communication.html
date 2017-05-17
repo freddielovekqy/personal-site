@@ -6,31 +6,47 @@
     <div class="communication-open" ng-show="status === 'open'">
         <div class="communication-objects">
             <div class="search-communicator">
-                <input type="text" class="form-control" placeholder="查找联系人"/>
+                <input type="text" class="form-control" placeholder="查找联系人" ng-model="searchUserInfo.username" ng-change="searchUser()"/>
                 <span class="fa fa-search"></span>
             </div>
-            <div class="communication-object select">
+            <div class="search-results" ng-show="searchUserInfo.username">
+                <div class="communicator-label" ng-hide="searchResults.length === 0">联系人</div>
+                <div class="search-result-user" ng-repeat="user in searchResults" ng-click="communicate(user)">
+                    <div class="user-image">
+                        <img src="{{user.headImgPath}}" alt=""/>
+                    </div>
+                    <div class="user-name">{{user.username}}</div>
+                </div>
+                <div class="no-result-user" ng-show="searchResults.length === 0">没有符合条件的结果</div>
+            </div>
+
+            <div class="communication-object"
+                 ng-hide="searchUserInfo.username"
+                 ng-repeat="communicator in communicators"
+                 ng-class="{'select':currentCommunicator._id === communicator._id}">
                 <div class="user-image">
-                    <img src="" alt=""/>
+                    <img src="{{communicator.headImgPath}}" alt=""/>
                 </div>
-                <div class="user-name">
-                    微博小秘书
-                </div>
-                <div class="delete-communication-object fa fa-times"></div>
+                <div class="user-name">{{communicator.username}}</div>
+                <div class="delete-communication-object fa fa-times" ng-click="removeCommunicator(communicator)"></div>
             </div>
         </div>
         <div class="communication-content">
             <div class="communication-header">
-                <div class="object-name">微博小秘书</div>
+                <div class="object-name">{{currentCommunicator.username}}</div>
                 <div class="communication-operations">
                     <div class="folding-communication-div fa fa-times" ng-click="changeStatus('folding')"></div>
                 </div>
             </div>
-            <div class="content">
-
+            <div class="content" id="messageContentDiv">
+                <div class="message" ng-repeat="message in messages">
+                    <div class="message-user" ng-class="{'current-user':message.isCurrentUser}">{{message.username}}</div>
+                    <div class="send-time" ng-class="{'current-user':message.isCurrentUser}">{{message.sendTime}}</div>
+                    <div class="message-content" ng-class="{'current-user':message.isCurrentUser}">{{message.message}}</div>
+                </div>
             </div>
             <div class="new-content">
-                <input type="text" class="form-control" placeholder="按回车发送私信" ng-model="communicationMessage"/>
+                <input type="text" class="form-control" placeholder="按回车发送私信" ng-model="communicationMessage" ng-keypress="sendMessageKeyPress($event)"/>
                 <button type="button" class="btn btn-info btn-sm" ng-click="sendMessage()">发送</button>
             </div>
         </div>

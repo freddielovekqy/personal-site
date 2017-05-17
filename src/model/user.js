@@ -11,11 +11,11 @@ var HobbySchema = new Schema({
 });
 
 var EducationInfoSchema = new Schema({
-    schoolType: { type: String },
+    schoolType: { type: String }, // 学校类型，主要内容为：小学、中学、大学
     schoolName: { type: String },
-    inYear: { type: Number },
-    className: { type: String },
-    department: { type: String }
+    inYear: { type: Number }, // 入学时间
+    className: { type: String }, // 班级名称
+    department: { type: String } // 学院名称
 });
 
 var WorkInfoSchema = new Schema({
@@ -36,9 +36,9 @@ var UserSchema = new Schema({
     birthday: { type: Date },
     birthPlace: { type: String },
     sex: { type: String },
-    industry: { type: String },
-    occupation: { type: String },
-    briefIntroduction: { type: String },
+    industry: { type: String }, // 行业
+    occupation: { type: String }, // 职业
+    briefIntroduction: { type: String }, //简介
     createDate: { type: Date },
 
     /**

@@ -14,7 +14,7 @@ var SimpleBlogSchema = new Schema({
     userId: { type: String },
     createDate: { type: Date, default: Date.now },
     source: { type: String }, // 微博的发表来源
-    originSimpleBlogId: { type: String }, // 转发的微博的微博ID
+    originSimpleBlogId: { type: String }, // 转发的微博的微博ID，空值时表示微博为原创微博
     gooders: [SimpleBlogGooderSchema],
 });
 
