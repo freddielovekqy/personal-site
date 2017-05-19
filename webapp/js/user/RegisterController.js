@@ -32,11 +32,39 @@ registerModule.controller('RegisterController', ['$scope', '$http', 'HttpService
     $scope.register = function () {
         if (!registerValid()) {
             HttpService.post({
-                url: '/api/user/register',
-                method: 'POST',
-                data: $scope.user,
+                url: '/api/user',
+                params: {
+                    user: $scope.user
+                },
                 success: function (data) {
                     console.log(data);
+                    postal.publish({
+                        channel: 'showAlertMessage',
+                        topic: 'showAlertMessage',
+                        data: {
+                            type: 'success',
+                            message: '注册成功'
+                        }
+                    });
+                    if ($scope.option) {
+                        HttpService.post({
+                            url: 'api/user/login',
+                            params: {
+                                email: $scope.email,
+                                password: $scope.password
+                            },
+                            success: data => {
+                                postal.publish({
+                                    channel: 'user',
+                                    topic: 'loginSuccess',
+                                    data: {}
+                                });
+                                $location.url('/login');
+                            }
+                        });
+                    } else {
+                        $location.url('/');
+                    }
                 }
             });
             //$http({

@@ -1,4 +1,5 @@
 var userDao = require('../dao/UserDao');
+var relationshipService = require('../service/RelationshipService');
 var logger = require('../common/log/log4js').logger;
 
 function register(userDTO) {
@@ -6,16 +7,22 @@ function register(userDTO) {
         if (userDTO.password !== userDTO.rePassword) {
             reject({ message: '两次输入的密码不一致' });
         }
-        var promise = userDao.findByEmail(userDTO.email);
-        promise.then(data => {
-            // 根据邮件名查看是否已经有账号
-            if (data.length === 0) {
-                userDao.save(userDTO);
-                resolve(userDTO);
-            } else {
-                reject({ errorMessage: '该邮箱已经被注册' });
-            }
-        });
+        userDao.findByEmail(userDTO.email)
+            .then(user => {
+                // 根据邮件名查看是否已经有账号
+                if (!user) {
+                    return userDao.save(userDTO);
+                } else {
+                    reject({ errorMessage: '该邮箱已经被注册' });
+                }
+            })
+            .then(data => {
+                relationshipService.initUserRelationship(data._id.toString());
+                resolve(data);
+            })
+            .catch(error => {
+                reject(error);
+            })
     });
 
 }
@@ -23,12 +30,10 @@ function register(userDTO) {
 function login(email, password) {
     return new Promise((resolve, reject) => {
         var promise = userDao.findByEmail(email);
-        promise.then(data => {
-            if (!data || data.length === 0) {
+        promise.then(user => {
+            if (!user) {
                 reject({ errorMessage: '邮箱不存在' });
             } else {
-                var user = data[0];
-
                 if (user.email === email && user.password === password) {
                     resolve(user);
                 } else {

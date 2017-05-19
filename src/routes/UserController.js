@@ -3,12 +3,8 @@ var router = express.Router();
 var logger = require('../common/log/log4js').logger;
 var userService = require('../service/UserService');
 
-router.post('/register', function (request, response, next) {
-    var userDTO = {
-        email: request.body.email,
-        password: request.body.password,
-        rePassword: request.body.rePassword
-    };
+router.post('/', function (request, response, next) {
+    var userDTO = request.body.user;
     logger.info('register', userDTO);
     
     var promise = userService.register(userDTO);

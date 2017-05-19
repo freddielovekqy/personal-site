@@ -21,6 +21,8 @@ var photo = require('./src/routes/PhotoController');
 var album = require('./src/routes/AlbumController');
 var home = require('./src/routes/HomeController');
 
+var chatLogService = require('./src/service/ChatLogService')
+
 // view engine setup
 log4js.use(app);
 // app.use(log4js('dev'));
@@ -101,9 +103,17 @@ io.on('connection', function (socket) {
     socket.on('privateChat', data => {
         console.log('private chat', data);
         var toSocket = userSocketMap[data.toUserId];
+        
         if (toSocket) {
             toSocket.emit('privateChat', data);
-        }
+        } 
+
+        chatLogService.save({
+            fromUserId: data.fromUserId,
+            toUserId: data.toUserId,
+            content: data.message,
+            status: !!toSocket ? 1 : 2
+        });
     });
 
   socket.emit('my-name-is', serverName);

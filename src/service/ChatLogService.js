@@ -6,9 +6,8 @@ const UNREAD_CHAT_LOG_STATUS = 2;
 // 查询聊天记录时，默认每次加载20个记录
 const DEFAULT_HISTORY_LOG_PAGE_SIZE = 20;
 
-function save(chatLog, isReceiverOnline) {
+function save(chatLog) {
     return new Promise((resolve, reject) => {
-        !isReceiverOnline && (chatLog.status = UNREAD_CHAT_LOG_STATUS);
         chatLogDao.save(chatLog)
             .then(data => {
                 resolve(data);

@@ -12,7 +12,7 @@ function save(userDTO) {
 }
 
 function findByEmail(email) {
-    return User.find({ email: email }).exec();
+    return User.findOne({ email: email }).exec();
 }
 
 function update(userDTO) {
