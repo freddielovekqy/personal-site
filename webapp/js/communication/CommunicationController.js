@@ -195,31 +195,21 @@ communicationModule.directive('communicationDiv', function () {
                 });
             }
 
-            function setCommunicator(fromUserId) {
-                var userIndex = _.findIndex($scope.communicators, {_id: fromUserId});
-                return new Promise((resolve, reject) => {
-                    if (userIndex === -1) {
-                        HttpService.get({
-                            url: `api/user/${fromUserId}`,
-                            success: user => {
-                                var communicator = angular.copy(user);
-                                communicator.messages = [];
-                                communicator.chatLogs = [];
-                                $scope.communicators.unshift(communicator);
-                                userIndex = 0;
-                                resolve({
-                                    userIndex: userIndex
-                                });
-                            }
-                        });
+            var chatToOtherSub = postal.subscribe({
+                channel: 'communication',
+                topic: 'chatToOther',
+                callback: data => {
+                    var index = _.findIndex($scope.communicators, {_id: data._id});
+                    if (index > -1) {
+                        $scope.currentCommunicator = $scope.communicators[index];
                     } else {
-                        resolve({
-                            userIndex: userIndex
-                        });
+                        var communicator = Object.assign({chatLogs: [], messages: []}, data);
+                        $scope.communicators.unshift(communicator);
+                        $scope.currentCommunicator = $scope.communicators[0];
                     }
-                });
-            }
-
+                    $scope.changeStatus('open');
+                }
+            });
 
             /* -----------------------------聊天模块代码----------------------------- */
             socket.emit('init', $scope.userInfo);
@@ -256,6 +246,36 @@ communicationModule.directive('communicationDiv', function () {
             socket.on('disconnect', function(){});
             socket.on('my-name-is', function(data){
                 console.log(data);
+            });
+
+            function setCommunicator(fromUserId) {
+                var userIndex = _.findIndex($scope.communicators, {_id: fromUserId});
+                return new Promise((resolve, reject) => {
+                    if (userIndex === -1) {
+                        HttpService.get({
+                            url: `api/user/${fromUserId}`,
+                            success: user => {
+                                var communicator = angular.copy(user);
+                                communicator.messages = [];
+                                communicator.chatLogs = [];
+                                $scope.communicators.unshift(communicator);
+                                userIndex = 0;
+                                resolve({
+                                    userIndex: userIndex
+                                });
+                            }
+                        });
+                    } else {
+                        resolve({
+                            userIndex: userIndex
+                        });
+                    }
+                });
+            }
+
+
+            $scope.$on('$destroy', () => {
+                chatToOtherSub && chatToOtherSub.unsubscribe();
             });
         }],
         link: function(scope, element, attrs, ngModel) {

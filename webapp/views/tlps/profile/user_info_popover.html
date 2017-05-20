@@ -1,3 +1,37 @@
 <div class="user-info-popover my-popover" ng-style="positionStype" ng-mouseover="showOrHide(true)" ng-mouseleave="showOrHide(false)">
+    <div class="background-image">
+        <div class="user-image">
+            <img src="{{userInfo.headImgPath}}" alt="">
+        </div>
+        <div class="username">{{userInfo.username}}</div>
+        <div class="brief-introduction">{{userInfo.briefIntroduction}}</div>
+    </div>
+    <div class="other-info">
+        <div class="attention">
+            <span>关注</span>
+            <span>222</span>
+        </div>
+        <div class="fans">
+            <span>粉丝</span>
+            <span>234</span>
+        </div>
+        <div class="simple-blog">
+            <span>微博</span>
+            <span>222</span>
+        </div>
+        <div class="blog">
+            <span>博客</span>
+            <span>333</span>
+        </div>
+    </div>
+    <div class="operations">
+        <button type="button" class="btn btn-default btn-sm" ng-show="!userInfo.attentionInfo" ng-click="addAttention()">关注</button>
+        <div ng-show="userInfo.attentionInfo" class="followed">
+            <button type="button" class="btn btn-default btn-sm" ng-click="deleteAttentions()">取消关注</button>
+            <!-- 功能暂不开放 -->
+            <button type="button" class="btn btn-default btn-sm" style="display: none;">切换分组</button>
+        </div>
 
+        <button type="button" class="btn btn-default btn-sm private-chat" ng-click="privateChat()">私聊</button>
+    </div>
 </div>

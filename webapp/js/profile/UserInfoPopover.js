@@ -6,15 +6,64 @@ profileModule.directive('userInfoPopover', function () {
         restrict : 'E',
         replace : true,
         templateUrl: 'views/tlps/profile/user_info_popover.html',
-        controller: ['$scope', function ($scope) {
+        controller: ['$scope', 'HomeService', 'HttpService', 'CommonUtils', function ($scope, HomeService, HttpService, CommonUtils) {
             var showOrHideFlag = true;
             var leaveTarget = false;
+            $scope.attentionUsers = HomeService.getAttentionUsers();
+
+            var index = _.findIndex($scope.attentionUsers, {_id: $scope.userInfo._id});
+            if (index > -1) {
+                var attention = $scope.attentionUsers[index];
+                $scope.userInfo.attentionInfo = {
+                    type: attention.typeName
+                };
+            }
+
             $scope.showOrHide = function (showOrHide) {
                 showOrHideFlag = showOrHide;
 
                 if (leaveTarget && !showOrHideFlag) {
                     $scope.$destroy();
                 }
+            };
+
+            $scope.privateChat = function () {
+                postal.publish({
+                    channel: 'communication',
+                    topic: 'chatToOther',
+                    data: $scope.userInfo
+                });
+                $scope.$destroy();
+            };
+
+            $scope.addAttention = function () {
+                HttpService.post({
+                    url: 'api/relationship',
+                    params: {
+                        targetUserId: $scope.userInfo._id,
+                        attentionType: '好友圈' // TODO 关注分组功能暂未开放
+                    },
+                    success: data => {
+                        CommonUtils.showAlertMessage({
+                            type: 'success',
+                            message: '关注成功'
+                        });
+                        $scope.$destroy();
+                    }
+                });
+            };
+
+            $scope.deleteAttentions = function () {
+                HttpService.delete({
+                    url: `api/relationship/attention/${$scope.userInfo._id}`,
+                    success: data => {
+                        CommonUtils.showAlertMessage({
+                            type: 'success',
+                            message: '取消关注成功'
+                        });
+                        $scope.$destroy();
+                    }
+                });
             };
 
             var closePopoverSub = postal.subscribe({
