@@ -18,7 +18,19 @@ function save(chatLog) {
     });
 }
 
-function findUnreadLog(userId) {
+function readUnReadMessage(userId, fromUserId) {
+    return new Promise((resolve, reject) => {
+        chatLogDao.readUnReadMessage(userId, fromUserId)
+            .then(data => {
+                resolve(data);
+            })
+            .catch(error => {
+                reject(error);
+            });
+    });
+}
+
+function findUnreadMessage(userId) {
     return new Promise((resolve, reject) => {
         var condition = {
             toUserId: userId,
@@ -26,7 +38,18 @@ function findUnreadLog(userId) {
         };
         chatLogDao.findByCondition(condition)
             .then(chatLogs => {
-                var unreadLogMap = _.keyBy(chatLogs, 'fromUserId');
+                var unreadLogMap = [];
+                chatLogs.forEach(chatLog => {
+                    var index = _.findIndex(unreadLogMap, {fromUserId: chatLog.fromUserId});
+                    if (index > -1) {
+                        unreadLogMap[index].messages.push(chatLog);
+                    } else {
+                        unreadLogMap.push({
+                            fromUserId: chatLog.fromUserId,
+                            messages: [chatLog]
+                        });
+                    }
+                });
                 resolve(unreadLogMap);
             })
             .catch(error => {
@@ -41,10 +64,10 @@ function findHistoryLog(userId, comunicatorId, startIndex) {
             startIndex: startIndex,
             pageSize: DEFAULT_HISTORY_LOG_PAGE_SIZE,
         };
-        var sortObj = { createDate: 1 };
+        var sortObj = { createDate: -1 };
         chatLogDao.findHistoryLog(userId, comunicatorId, paginationParams, sortObj)
             .then(chatLogs => {
-                resolve(chatLogs);
+                resolve(chatLogs.reverse());
             })
             .catch(error => {
                 reject(error);
@@ -53,5 +76,6 @@ function findHistoryLog(userId, comunicatorId, startIndex) {
 }
 
 module.exports.save = save;
-module.exports.findUnreadLog = findUnreadLog;
+module.exports.readUnReadMessage = readUnReadMessage;
+module.exports.findUnreadMessage = findUnreadMessage;
 module.exports.findHistoryLog = findHistoryLog;

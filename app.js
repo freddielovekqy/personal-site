@@ -20,6 +20,7 @@ var relationship = require('./src/routes/RelationshipController');
 var photo = require('./src/routes/PhotoController');
 var album = require('./src/routes/AlbumController');
 var home = require('./src/routes/HomeController');
+var chatLog = require('./src/routes/ChatLogController');
 
 var chatLogService = require('./src/service/ChatLogService')
 
@@ -83,6 +84,7 @@ app.use('/api/relationship', relationship);
 app.use('/api/album', album);
 app.use('/api/photo', photo);
 app.use('/api/home', home);
+app.use('/api/chatLog', chatLog);
 
 // nodejs提供restful的api接口
 app.get('/api/about', function (request, response) {
@@ -112,7 +114,8 @@ io.on('connection', function (socket) {
             fromUserId: data.fromUserId,
             toUserId: data.toUserId,
             content: data.message,
-            status: !!toSocket ? 1 : 2
+            status: !!toSocket ? 1 : 2,
+            createDate: new Date().getTime()
         });
     });
 

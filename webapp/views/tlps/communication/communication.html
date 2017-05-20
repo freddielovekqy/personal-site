@@ -23,7 +23,8 @@
             <div class="communication-object"
                  ng-hide="searchUserInfo.username"
                  ng-repeat="communicator in communicators"
-                 ng-class="{'select':currentCommunicator._id === communicator._id}">
+                 ng-class="{'select':currentCommunicator._id === communicator._id}"
+                 ng-click="changeCommunicator(communicator)">
                 <div class="user-image">
                     <img src="{{communicator.headImgPath}}" alt=""/>
                 </div>
@@ -39,7 +40,19 @@
                 </div>
             </div>
             <div class="content" id="messageContentDiv">
-                <div class="message" ng-repeat="message in messages">
+                <div class="show-chat-log" ng-show="!noMoreChatLog && currentCommunicator._id" ng-click="showMoreChatLog()">显示更多聊天记录</div>
+                <div class="no-more-chat-log" ng-show="noMoreChatLog && currentCommunicator._id">没有更多聊天记录</div>
+                <div class="message" ng-repeat="chatLog in currentCommunicator.chatLogs">
+                    <div class="message-user" ng-class="{'current-user':chatLog.isCurrentUser}">{{chatLog.username}}</div>
+                    <div class="send-time" ng-class="{'current-user':chatLog.isCurrentUser}">{{chatLog.sendTime}}</div>
+                    <div class="message-content" ng-class="{'current-user':chatLog.isCurrentUser}">{{chatLog.message}}</div>
+                </div>
+                <div class="parting-line" ng-show="chatLogs.length > 0">
+                    <div></div>
+                    <span>以上是聊天历史信息</span>
+                    <div></div>
+                </div>
+                <div class="message" ng-repeat="message in currentCommunicator.messages">
                     <div class="message-user" ng-class="{'current-user':message.isCurrentUser}">{{message.username}}</div>
                     <div class="send-time" ng-class="{'current-user':message.isCurrentUser}">{{message.sendTime}}</div>
                     <div class="message-content" ng-class="{'current-user':message.isCurrentUser}">{{message.message}}</div>
