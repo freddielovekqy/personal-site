@@ -12,8 +12,8 @@ accountInfoModule.config(['$routeProvider', '$locationProvider', function ($rout
         .otherwise({ redirectTo: '/account-info' });
 }]);
 
-accountInfoModule.controller('AccountInfoController', ['$scope', '$location', '$routeParams', '$compile', '$timeout', 'HttpService', 'StorageUtils', 'CommonUserUtils',
-    function ($scope, $location, $routeParams, $compile, $timeout, HttpService, StorageUtils, CommonUserUtils) {
+accountInfoModule.controller('AccountInfoController', ['$scope', '$http', '$location', '$routeParams', '$compile', '$timeout', 'HttpService', 'StorageUtils', 'CommonUserUtils',
+    function ($scope, $http, $location, $routeParams, $compile, $timeout, HttpService, StorageUtils, CommonUserUtils) {
         (function () {
             var result = CommonUserUtils.getCurrentUserBlogInfo();
             if (result instanceof Promise) {
@@ -26,6 +26,21 @@ accountInfoModule.controller('AccountInfoController', ['$scope', '$location', '$
                 showAccountInfo(result);
             }
         })();
+
+        $scope.fileSelected = function () {
+            var formData = new FormData();
+            var file = document.querySelector('input[type=file]').files[0];
+            formData.append('file', file);
+
+            $http({
+                method: 'PUT',
+                url: 'api/user/userImage',
+                data: formData,
+                headers: {'Content-Type': undefined}
+            }).then(function (data) {
+                location.reload();
+            });
+        };
 
         $scope.showAccountInfoPage = function (pageType) {
             $location.path('/account-info/' + pageType);

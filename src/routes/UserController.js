@@ -1,4 +1,5 @@
 var express = require('express');
+var formidable = require('formidable');
 var router = express.Router();
 var logger = require('../common/log/log4js').logger;
 var userService = require('../service/UserService');
@@ -24,6 +25,31 @@ router.post('/login', (request, response, next) => {
         response.send(JSON.stringify(data));
     }).catch(data => {
         response.send(JSON.stringify(data));
+    });
+});
+
+router.put('/userImage', (request, response, next) => {
+    var form = new formidable.IncomingForm({
+        encoding: 'utf-8',
+        uploadDir: 'webapp/image/users',  //文件上传地址
+        keepExtensions: true,  //保留后缀
+        maxFieldsSize: 2 * 1024 * 1024 //设置单文件大小限制
+    });
+
+    form.parse(request, function (err, fields, files) {
+        if (!err) {
+            var file = files.file;
+            var fileName = file.path.split('\\')[file.path.split('\\').length - 1];
+            var path = `image/users/${fileName}`;
+            userService.setUserImage(request.session.currentUser._id, path)
+                .then(data => {
+                    response.send(JSON.stringify(data));
+                }).catch(function (data) {
+                    response.send(JSON.stringify(data));
+                });
+        } else {
+            response.send(JSON.stringify(err));
+        }
     });
 });
 

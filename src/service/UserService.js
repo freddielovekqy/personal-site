@@ -64,7 +64,18 @@ function updatePassword(userId, oldPassword, newPassword) {
                 reject(error);
             });
     });
-}   
+}
+function setUserImage(userId, path) {
+    return new Promise((resolve, reject) => {
+        userDao.updateUserAttr(userId, {headImgPath: path})
+            .then(data => {
+                resolve(data);
+            })
+            .catch(error => {
+                reject(error);
+            });
+    });
+}
 
 function update(userInfo) {
     return new Promise((resolve, reject) => {
@@ -149,6 +160,7 @@ module.exports.login = login;
 module.exports.getUserInfo = getUserInfo;
 module.exports.update = update;
 module.exports.updatePassword = updatePassword;
+module.exports.setUserImage = setUserImage;
 module.exports.saveOrUpdateEducation = saveOrUpdateEducation;
 module.exports.deleteEducation = deleteEducation;
 module.exports.saveOrUpdateWork = saveOrUpdateWork;

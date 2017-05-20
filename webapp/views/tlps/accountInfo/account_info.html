@@ -1,7 +1,11 @@
 <div class="account-info-page container">
     <div class="account-info-div">
-        <div class="user-img-relationship">
-            <img src="{{user.headImgPath}}" alt=""/>
+        <div class="user-img-relationship" ng-click="selectImage()">
+            <input type="file" id="uploadUserImage" onchange="angular.element(this).scope().fileSelected()" accept=".jpg,.png" style="display: none;"/>
+            <label for="uploadUserImage">
+                <img src="{{user.headImgPath}}" alt=""/>
+            </label>
+            <span class="image-help-text">点击图片更换头像</span>
         </div>
         <div class="user-basic-info">
             <div class="username">{{user.username}}</div>
