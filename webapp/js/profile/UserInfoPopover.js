@@ -9,11 +9,11 @@ profileModule.directive('userInfoPopover', function () {
         controller: ['$scope', 'HttpService', 'CommonUtils', 'CommonUserUtils', function ($scope, HttpService, CommonUtils, CommonUserUtils) {
             var showOrHideFlag = true;
             var leaveTarget = false;
-            var currentUserInfo = {};
+            $scope.currentUserInfo = {};
 
             (function () {
-                currentUserInfo = CommonUserUtils.getCurrentUserInfo();
-                getAttentions(currentUserInfo._id);
+                $scope.currentUserInfo = CommonUserUtils.getCurrentUserInfo();
+                getAttentions($scope.currentUserInfo._id);
             })();
             $scope.showOrHide = function (showOrHide) {
                 showOrHideFlag = showOrHide;

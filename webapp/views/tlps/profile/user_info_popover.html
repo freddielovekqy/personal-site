@@ -25,13 +25,14 @@
         </div>
     </div>
     <div class="operations">
-        <button type="button" class="btn btn-default btn-sm" ng-show="!userInfo.attentionInfo.type" ng-click="addAttention()">关注</button>
-        <div ng-show="userInfo.attentionInfo.type" class="followed">
+        <button type="button" class="btn btn-default btn-sm" ng-show="!userInfo.attentionInfo.type && currentUserInfo._id !== userInfo._id" ng-click="addAttention()">关注</button>
+        <div ng-show="userInfo.attentionInfo.type && currentUserInfo._id !== userInfo._id" class="followed">
             <button type="button" class="btn btn-default btn-sm" ng-click="deleteAttentions()">取消关注</button>
             <!-- 功能暂不开放 -->
             <button type="button" class="btn btn-default btn-sm" style="display: none;">切换分组</button>
         </div>
 
-        <button type="button" class="btn btn-default btn-sm private-chat" ng-click="privateChat()">私聊</button>
+        <button type="button" class="btn btn-default btn-sm private-chat" ng-show="currentUserInfo._id !== userInfo._id" ng-click="privateChat()">私聊</button>
+        <a href="blog/list/{{userInfo._id}}">ta的博文</a>
     </div>
 </div>
