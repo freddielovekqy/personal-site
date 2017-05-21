@@ -11,6 +11,7 @@ function register(userDTO) {
             .then(user => {
                 // 根据邮件名查看是否已经有账号
                 if (!user) {
+                    userDTO.username = userDTO.email;
                     return userDao.save(userDTO);
                 } else {
                     reject({ errorMessage: '该邮箱已经被注册' });

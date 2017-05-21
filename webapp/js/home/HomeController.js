@@ -2,22 +2,8 @@
 
 var homeModule = angular.module('home', []);
 
-homeModule.service('HomeService', function () {
-    var attentionUsers = [];
-    function setAttentionUsers(users) {
-        attentionUsers = users;
-    }
-    function getAttentionUsers() {
-        return attentionUsers;
-    }
-    return {
-        setAttentionUsers: setAttentionUsers,
-        getAttentionUsers: getAttentionUsers
-    };
-});
-
-homeModule.controller('HomeController', ['$scope', '$timeout', 'HttpService', 'CommonUtils', 'CommonUserUtils', 'HomeService',
-    function ($scope, $timeout, HttpService, CommonUtils, CommonUserUtils, HomeService) {
+homeModule.controller('HomeController', ['$scope', '$timeout', 'HttpService', 'CommonUtils', 'CommonUserUtils',
+    function ($scope, $timeout, HttpService, CommonUtils, CommonUserUtils) {
         console.log('home page init');
 
         $scope.hotTopics = [];
@@ -27,6 +13,7 @@ homeModule.controller('HomeController', ['$scope', '$timeout', 'HttpService', 'C
             jurisdiction: 1
         };
         $scope.showJurisdictionsFlag = false;
+        $scope.shownPage = 'home';
 
         (function () {
             var result = CommonUserUtils.getCurrentUserBlogInfo();
@@ -34,15 +21,26 @@ homeModule.controller('HomeController', ['$scope', '$timeout', 'HttpService', 'C
                 result.then( (data) => {
                     $timeout(() => {
                         $scope.currentUserBlogInfo = data;
-                        getAttentions($scope.currentUserBlogInfo.userInfo._id);
                     }, 0);
                 });
             } else {
                 $scope.currentUserBlogInfo = result;
-                getAttentions($scope.currentUserBlogInfo.userInfo._id);
             }
             getHomePageContent();
         })();
+
+        $scope.changeShowPage = function (page) {
+            $scope.shownPage = page;
+
+            if ($scope.shownPage === 'hotSimpleBlog') {
+                HttpService.get({
+                    url: 'api/simpleBlog/recent',
+                    success: contents => {
+                        $scope.contents = contents;
+                    }
+                });
+            }
+        };
 
         $scope.showJurisdictionOptions = function () {
             $scope.showJurisdictionsFlag = !$scope.showJurisdictionsFlag;
@@ -77,15 +75,6 @@ homeModule.controller('HomeController', ['$scope', '$timeout', 'HttpService', 'C
                 url: 'api/home/content',
                 success: contents => {
                     $scope.contents = contents;
-                }
-            });
-        }
-
-        function getAttentions(userId) {
-            HttpService.get({
-                url: `api/relationship/${userId}/attentions`,
-                success: users => {
-                    HomeService.setAttentionUsers(users);
                 }
             });
         }

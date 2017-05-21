@@ -31,7 +31,7 @@ function findRecentSimpleBlogs(startIndex = 0, pageSize = 30) {
         .find({})
         .skip(startIndex)
         .limit(pageSize)
-        .sort({ createDate: 1 })
+        .sort({ createDate: -1 })
         .lean()
         .exec();
 }

@@ -25,8 +25,8 @@
         </div>
     </div>
     <div class="operations">
-        <button type="button" class="btn btn-default btn-sm" ng-show="!userInfo.attentionInfo" ng-click="addAttention()">关注</button>
-        <div ng-show="userInfo.attentionInfo" class="followed">
+        <button type="button" class="btn btn-default btn-sm" ng-show="!userInfo.attentionInfo.type" ng-click="addAttention()">关注</button>
+        <div ng-show="userInfo.attentionInfo.type" class="followed">
             <button type="button" class="btn btn-default btn-sm" ng-click="deleteAttentions()">取消关注</button>
             <!-- 功能暂不开放 -->
             <button type="button" class="btn btn-default btn-sm" style="display: none;">切换分组</button>

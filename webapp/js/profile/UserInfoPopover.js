@@ -6,19 +6,15 @@ profileModule.directive('userInfoPopover', function () {
         restrict : 'E',
         replace : true,
         templateUrl: 'views/tlps/profile/user_info_popover.html',
-        controller: ['$scope', 'HomeService', 'HttpService', 'CommonUtils', function ($scope, HomeService, HttpService, CommonUtils) {
+        controller: ['$scope', 'HttpService', 'CommonUtils', 'CommonUserUtils', function ($scope, HttpService, CommonUtils, CommonUserUtils) {
             var showOrHideFlag = true;
             var leaveTarget = false;
-            $scope.attentionUsers = HomeService.getAttentionUsers();
+            var currentUserInfo = {};
 
-            var index = _.findIndex($scope.attentionUsers, {_id: $scope.userInfo._id});
-            if (index > -1) {
-                var attention = $scope.attentionUsers[index];
-                $scope.userInfo.attentionInfo = {
-                    type: attention.typeName
-                };
-            }
-
+            (function () {
+                currentUserInfo = CommonUserUtils.getCurrentUserInfo();
+                getAttentions(currentUserInfo._id);
+            })();
             $scope.showOrHide = function (showOrHide) {
                 showOrHideFlag = showOrHide;
 
@@ -41,7 +37,7 @@ profileModule.directive('userInfoPopover', function () {
                     url: 'api/relationship',
                     params: {
                         targetUserId: $scope.userInfo._id,
-                        attentionType: '好友圈' // TODO 关注分组功能暂未开放
+                        attentionType: '朋友圈' // TODO 关注分组功能暂未开放
                     },
                     success: data => {
                         CommonUtils.showAlertMessage({
@@ -65,6 +61,24 @@ profileModule.directive('userInfoPopover', function () {
                     }
                 });
             };
+
+            function getAttentions(userId) {
+                HttpService.get({
+                    url: `api/relationship/${userId}/attentions`,
+                    success: users => {
+                        $scope.attentionUsers = users;
+                        var index = _.findIndex($scope.attentionUsers, {_id: $scope.userInfo._id});
+                        if (index > -1) {
+                            var attention = $scope.attentionUsers[index];
+                            $scope.userInfo.attentionInfo = {
+                                type: attention.typeName
+                            };
+                        } else {
+                            $scope.userInfo.attentionInfo = {};
+                        }
+                    }
+                });
+            }
 
             var closePopoverSub = postal.subscribe({
                 channel: 'userInfoPopover',

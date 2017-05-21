@@ -1,14 +1,14 @@
 <div class="home-page container">
     <div class="home-bar">
-        <div class="home-bar-item main-item select">首页</div>
-        <div class="home-bar-item main-item">我的收藏</div>
-        <div class="home-bar-item main-item">我的赞</div>
+        <div class="home-bar-item main-item" ng-class="{'select': shownPage === 'home'}" ng-click="changeShowPage('home')">首页</div>
+        <div class="home-bar-item main-item" style="display: none;">我的收藏</div>
+        <div class="home-bar-item main-item" style="display: none;">我的赞</div>
         <fieldset></fieldset>
-        <div class="home-bar-item">热门微博</div>
-        <div class="home-bar-item">热门博客</div>
+        <div class="home-bar-item" ng-class="{'select': shownPage === 'hotSimpleBlog'}" ng-click="changeShowPage('hotSimpleBlog')">热门微博</div>
+        <div class="home-bar-item" ng-class="{'select': shownPage === 'hotBlog'}" ng-click="changeShowPage('hotBlog')">热门博客</div>
     </div>
     <div class="home-main-container">
-        <div class="submit-simple-blog">
+        <div class="submit-simple-blog" ng-show="shownPage === 'home'">
             <div class="content-above-input">
                 <span>有什么新鲜事想告诉大家</span>
             </div>
@@ -42,7 +42,7 @@
                 </div>
             </div>
         </div>
-        <div class="home-content-type-and-search">
+        <div class="home-content-type-and-search" ng-show="shownPage === 'home'">
             <div class="home-content-blog-type">
                 <div class="home-content-blog-type-item select">全部</div>
                 <div class="home-content-blog-type-item">原创</div>
