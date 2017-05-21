@@ -39,7 +39,15 @@ function updateBlogAttr(id, key, value) {
 function findByUser(candition, paginationParams) {
     // sort = {'logindate':-1}
     console.log('candition', candition);
-    return Blog.find(candition).skip(paginationParams.startIndex).limit(paginationParams.pageSize).sort(paginationParams.sort).exec();
+    if (paginationParams) {
+        return Blog.find(candition).skip(paginationParams.startIndex).limit(paginationParams.pageSize).sort(paginationParams.sort).exec();
+    } else {
+        return Blog.find(candition).lean().exec();
+    }
+}
+
+function findAllByUser(userId) {
+
 }
 
 function findById(blogId) {

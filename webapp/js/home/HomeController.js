@@ -14,6 +14,7 @@ homeModule.controller('HomeController', ['$scope', '$timeout', 'HttpService', 'C
         };
         $scope.showJurisdictionsFlag = false;
         $scope.shownPage = 'home';
+        $scope.currentShowContentType = 'simpleBlog';
 
         (function () {
             var result = CommonUserUtils.getCurrentUserBlogInfo();
@@ -29,16 +30,23 @@ homeModule.controller('HomeController', ['$scope', '$timeout', 'HttpService', 'C
             getHomePageContent();
         })();
 
+        $scope.changeContentType = function (contentType) {
+            $scope.currentShowContentType = contentType;
+
+            if ($scope.currentShowContentType === 'simpleBlog') {
+                getHomeSimpleBlog();
+            } else if ($scope.currentShowContentType === 'blog') {
+                getHomeBlog();
+            }
+        };
+
         $scope.changeShowPage = function (page) {
             $scope.shownPage = page;
 
             if ($scope.shownPage === 'hotSimpleBlog') {
-                HttpService.get({
-                    url: 'api/simpleBlog/recent',
-                    success: contents => {
-                        $scope.contents = contents;
-                    }
-                });
+                getAllSimpleBlog();
+            } else if ($scope.shownPage === 'home') {
+                getHomeSimpleBlog();
             }
         };
 
@@ -69,6 +77,33 @@ homeModule.controller('HomeController', ['$scope', '$timeout', 'HttpService', 'C
                 }
             });
         };
+
+        function getHomeSimpleBlog() {
+            HttpService.get({
+                url: 'api/home/content',
+                success: contents => {
+                    $scope.contents = contents;
+                }
+            });
+        }
+
+        function getHomeBlog() {
+            HttpService.get({
+                url: 'api/blog/home',
+                success: blogs => {
+                    $scope.contents = blogs;
+                }
+            });
+        }
+
+        function getAllSimpleBlog() {
+            HttpService.get({
+                url: 'api/simpleBlog/recent',
+                success: contents => {
+                    $scope.contents = contents;
+                }
+            });
+        }
 
         function getHomePageContent() {
             HttpService.get({

@@ -4,8 +4,8 @@
         <div class="home-bar-item main-item" style="display: none;">我的收藏</div>
         <div class="home-bar-item main-item" style="display: none;">我的赞</div>
         <fieldset></fieldset>
-        <div class="home-bar-item" ng-class="{'select': shownPage === 'hotSimpleBlog'}" ng-click="changeShowPage('hotSimpleBlog')">热门微博</div>
-        <div class="home-bar-item" ng-class="{'select': shownPage === 'hotBlog'}" ng-click="changeShowPage('hotBlog')">热门博客</div>
+        <div class="home-bar-item" ng-class="{'select': shownPage === 'hotSimpleBlog'}" ng-click="changeShowPage('hotSimpleBlog')">全部微博</div>
+        <div class="home-bar-item" ng-class="{'select': shownPage === 'hotBlog'}" ng-click="changeShowPage('hotBlog')">全部博客</div>
     </div>
     <div class="home-main-container">
         <div class="submit-simple-blog" ng-show="shownPage === 'home'">
@@ -44,10 +44,10 @@
         </div>
         <div class="home-content-type-and-search" ng-show="shownPage === 'home'">
             <div class="home-content-blog-type">
-                <div class="home-content-blog-type-item select">全部</div>
-                <div class="home-content-blog-type-item">原创</div>
-                <div class="home-content-blog-type-item">图片</div>
-                <div class="home-content-blog-type-item">博客</div>
+                <div class="home-content-blog-type-item" ng-class="{'select': currentShowContentType === 'simpleBlog'}" ng-click="changeContentType('simpleBlog')">微博</div>
+                <div class="home-content-blog-type-item" style="display: none;">原创</div>
+                <div class="home-content-blog-type-item" style="display: none;">图片</div>
+                <div class="home-content-blog-type-item" ng-class="{'select': currentShowContentType === 'blog'}" ng-click="changeContentType('blog')">博客</div>
             </div>
             <div class="search-div">
                 <input type="text" class="form-control" placeholder="搜索我的博客">
@@ -56,7 +56,8 @@
         </div>
         <div class="content-information">
             <div ng-repeat="content in contents">
-                <simple-blog-info content="content" current-user="currentUserBlogInfo.userInfo"></simple-blog-info>
+                <simple-blog-info content="content" current-user="currentUserBlogInfo.userInfo" ng-if="currentShowContentType === 'simpleBlog'"></simple-blog-info>
+                <blog-info-for-home content="content" current-user="currentUserBlogInfo.userInfo" ng-if="currentShowContentType === 'blog'"></blog-info-for-home>
             </div>
             <div class="no-content" ng-show="contents.length === 0">
                 没有内容，去关注更多的人吧。

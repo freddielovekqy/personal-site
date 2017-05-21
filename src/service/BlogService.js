@@ -1,4 +1,6 @@
 var BlogDao = require('../dao/BlogDao');
+var userDao = require('../dao/UserDao');
+var relationshipDao = require('../dao/RelationshipDao');
 var logger = require('../common/log/log4js').logger;
 
 
@@ -39,6 +41,59 @@ function getBlogsByUser(blogUserId, visitUserId, searchOptions, paginationParams
             }
             resolve(result);
         });
+    });
+}
+
+function findAttentionBlogsByUser(userId) {
+    return new Promise((resolve, reject) => {
+        var userMap = {};
+        var allBlogs = [];
+        relationshipDao.findUserAttentions(userId)
+            .then(userAttentions => {
+                var getUsersInfoPromise = [];
+                var attentionUserIds = [userId];
+                userAttentions && userAttentions.attentions && userAttentions.attentions.forEach(attention => {
+                    attentionUserIds.push(attention.userId);
+                });
+                attentionUserIds.forEach(userId => {
+                    getUsersInfoPromise.push(userDao.getBasicUserInfo(userId));
+                });
+                return Promise.all(getUsersInfoPromise);
+            })
+            .then(users => {
+                var findBlogsPromises = [];
+                users.forEach(user => {
+                    user = user.toObject();
+                    var condition = {
+                        userId: user._id.toString(),
+                        status: 1
+                    };
+                    if (userId === user._id.toString()) {
+                        condition = {
+                            userId: userId,
+                            $or: [
+                                { status: '1' },
+                                { status: '2' }
+                            ]
+                        };
+                    }
+                    findBlogsPromises.push(BlogDao.findByUser(condition));
+                });
+                userMap = _.keyBy(users, '_id');
+                return Promise.all(findBlogsPromises);
+            })
+            .then(results => {
+                results.forEach(blogs => {
+                    blogs.forEach(blog => {
+                        blog.userInfo = userMap[blog.userId];
+                        allBlogs.push(blog);
+                    });
+                });
+                resolve(allBlogs);
+            })
+            .catch(error => {
+                reject(error);
+            });
     });
 }
 
@@ -100,6 +155,7 @@ function updateBlogAttr(id, attrName, attrValue) {
 
 module.exports.getBlogsByUser = getBlogsByUser;
 module.exports.getBlogById = getBlogById;
+module.exports.findAttentionBlogsByUser = findAttentionBlogsByUser;
 module.exports.saveBlog = saveBlog;
 module.exports.updateBlog = updateBlog;
 module.exports.deleteBlog = deleteBlog;

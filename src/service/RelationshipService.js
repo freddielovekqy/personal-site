@@ -3,7 +3,7 @@ var userDao = require('../dao/UserDao');
 var logger = require('../common/log/log4js').logger;
 var _ = require('lodash');
 
-const DEFAULT_ATTENTION_TYPES = ['好友圈', '特别关注'];
+const DEFAULT_ATTENTION_TYPES = ['朋友圈', '特别关注'];
 
 // 注册用户时添加用户的基本关系分组等信息
 function initUserRelationship(userId) {
