@@ -44,6 +44,34 @@ function getBlogsByUser(blogUserId, visitUserId, searchOptions, paginationParams
     });
 }
 
+/**
+ * 用于首页获取所有用户的博客
+ */
+function findRecentBlogs() {
+    return new Promise((resolve, reject) => {
+        var results = [];
+        BlogDao.findRecentBlogs()
+            .then(blogs => {
+                var findUserPromises = [];
+                results = blogs;
+                blogs.forEach(blog => {
+                    findUserPromises.push(userDao.getBasicUserInfo(blog.userId));
+                });
+                return Promise.all(findUserPromises);
+            })
+            .then(users => {
+                results = results.map((blog, index) => {
+                    blog.userInfo = users[index];
+                    return blog;
+                });
+                resolve(results);
+            })
+            .catch(error => {
+                reject(error);
+            });
+    });
+}
+
 function findAttentionBlogsByUser(userId) {
     return new Promise((resolve, reject) => {
         var userMap = {};
@@ -156,6 +184,7 @@ function updateBlogAttr(id, attrName, attrValue) {
 module.exports.getBlogsByUser = getBlogsByUser;
 module.exports.getBlogById = getBlogById;
 module.exports.findAttentionBlogsByUser = findAttentionBlogsByUser;
+module.exports.findRecentBlogs = findRecentBlogs;
 module.exports.saveBlog = saveBlog;
 module.exports.updateBlog = updateBlog;
 module.exports.deleteBlog = deleteBlog;

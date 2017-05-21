@@ -43,10 +43,15 @@ homeModule.controller('HomeController', ['$scope', '$timeout', 'HttpService', 'C
         $scope.changeShowPage = function (page) {
             $scope.shownPage = page;
 
-            if ($scope.shownPage === 'hotSimpleBlog') {
-                getAllSimpleBlog();
+            if ($scope.shownPage === 'recentSimpleBlog') {
+                $scope.currentShowContentType = 'simpleBlog';
+                getRecentSimpleBlog();
             } else if ($scope.shownPage === 'home') {
                 getHomeSimpleBlog();
+                $scope.currentShowContentType = 'simpleBlog';
+            } else if ($scope.shownPage === 'recentBlog') {
+                getRecentBlog();
+                $scope.currentShowContentType = 'blog';
             }
         };
 
@@ -96,9 +101,18 @@ homeModule.controller('HomeController', ['$scope', '$timeout', 'HttpService', 'C
             });
         }
 
-        function getAllSimpleBlog() {
+        function getRecentSimpleBlog() {
             HttpService.get({
                 url: 'api/simpleBlog/recent',
+                success: contents => {
+                    $scope.contents = contents;
+                }
+            });
+        }
+
+        function getRecentBlog() {
+            HttpService.get({
+                url: 'api/blog/recent',
                 success: contents => {
                     $scope.contents = contents;
                 }

@@ -49,6 +49,17 @@ router.get('/home', (request, response, next) => {
         });
 });
 
+router.get('/recent', (request, response, next) => {
+    blogService.findRecentBlogs()
+        .then(data => {
+            response.send(JSON.stringify(data));
+        }, data => {
+            response.send(JSON.stringify(data));
+        }).catch(data => {
+            response.send(JSON.stringify(data));
+        });
+});
+
 router.get('/getBlog/:blogId', function (request, response, next) {
     var blogId = request.params.blogId;
     var promise = blogService.getBlogById(blogId);

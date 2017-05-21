@@ -46,8 +46,14 @@ function findByUser(candition, paginationParams) {
     }
 }
 
-function findAllByUser(userId) {
-
+function findRecentBlogs(startIndex = 0, pageSize = 30) {
+    return Blog
+        .find({})
+        .skip(startIndex)
+        .limit(pageSize)
+        .sort({ createDate: -1 })
+        .lean()
+        .exec();
 }
 
 function findById(blogId) {
@@ -72,5 +78,6 @@ module.exports.save = save;
 module.exports.update = update;
 module.exports.updateBlogAttr = updateBlogAttr;
 module.exports.findByUser = findByUser;
+module.exports.findRecentBlogs = findRecentBlogs;
 module.exports.findById = findById;
 module.exports.getBlogCountByCondition = getBlogCountByCondition;
