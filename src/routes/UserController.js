@@ -28,6 +28,11 @@ router.post('/login', (request, response, next) => {
     });
 });
 
+router.post('/logout', (request, response, next) => {
+    delete request.session.currentUser;
+    response.send(JSON.stringify({result: 'success'}));
+});
+
 router.put('/userImage', (request, response, next) => {
     var form = new formidable.IncomingForm({
         encoding: 'utf-8',

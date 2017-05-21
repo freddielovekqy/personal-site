@@ -15,7 +15,7 @@
         <div ng-controller="initController">
             <div class="header-div" ng-show="showHeader">
                 <div class="container">
-                    <div class="logo">W&KBlog</div>
+                    <div class="logo">K&WBlog</div>
                     <div class="nav-list-div-for-mbp" media-query="0-767">
                         <span class="glyphicon glyphicon-th-list"></span>
                     </div>
@@ -47,13 +47,20 @@
                             <span class="glyphicon glyphicon-user"></span>
                             <span class="username">{{currentUser.username || currentUser.email}}</span>
                         </a>
-                        <a href="" class="header-user-notice">
-                            <span class="fa fa-envelope-o"></span>
-                            <div class="have-notice">2</div>
-                        </a>
-                        <a href="/account-setting" class="header-user-setting">
+                        <!-- TODO 未来要实现的功能 -->
+                        <!--<a href="" class="header-user-notice">-->
+                            <!--<span class="fa fa-envelope-o"></span>-->
+                            <!--<div class="have-notice">2</div>-->
+                        <!--</a>-->
+                        <!--<a href="/account-setting" class="header-user-setting">-->
+                            <!--<span class="glyphicon glyphicon-cog"></span>-->
+                        <!--</a>-->
+                        <span class="header-user-setting" ng-click="showSettings()">
                             <span class="glyphicon glyphicon-cog"></span>
-                        </a>
+                        </span>
+                        <div class="setting-items" ng-show="showAccountSetting">
+                            <div class="setting-item" ng-click="logout()">注销</div>
+                        </div>
                     </div>
                 </div>
             </div>

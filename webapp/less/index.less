@@ -129,6 +129,7 @@ body {
             margin-left: 15px;
             font-size: 14px;
             font-weight: bold;
+            position: relative;
             .header-user-info, .header-user-notice, .header-user-setting {
                 color: #FFF;
                 margin-left: 15px;
@@ -138,6 +139,25 @@ body {
                 }
                 .username {
                     margin-left: 5px;
+                }
+            }
+            .header-user-setting {
+                cursor: pointer;
+            }
+            .setting-items {
+                position: absolute;
+                right: 0;
+                background: #fff;
+                padding: 2px 0;
+                border-radius: 3px;
+                .setting-item {
+                    line-height: 30px;
+                    padding: 0 20px;
+                    cursor: pointer;
+                    &:hover {
+                        background-color: #f2f2f5;
+                        color: #2ba7ff;
+                    }
                 }
             }
             .header-user-notice {

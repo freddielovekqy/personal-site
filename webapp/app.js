@@ -106,7 +106,39 @@ app.controller('initController', ['$rootScope', '$scope', '$location', '$timeout
             }
         });
 
+        $scope.logout = function () {
+            HttpService.post({
+                url: 'api/user/logout',
+                success: data => {
+                    location.reload();
+                }
+            });
+        };
+
+        $scope.showAccountSetting = false;
+        $scope.showSettings = function () {
+            $scope.showAccountSetting = true;
+        };
+
+        $('body').bind('click', clickBody);
+
+        function clickBody(event) {
+            postal.publish({
+                channel: 'elementEvent',
+                topic: 'clickBody',
+                data: {
+                    event: event
+                }
+            });
+            if (!$(event.target).hasClass('glyphicon-cog')) {
+                $timeout(() => {
+                    $scope.showAccountSetting = false;
+                }, 0);
+            }
+        }
+
         $scope.$on('destroy', data => {
+            $('body').unbind('click', clickBody);
             updateUserInfoSub.unsubscribe();
             showAlertMessageSubs.unsubscribe();
         });
