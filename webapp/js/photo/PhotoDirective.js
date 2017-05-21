@@ -189,6 +189,7 @@ photoModule.directive('showPhotoPopover', function () {
             };
             scope.$on('$destroy', function () {
                 element.remove();
+                $('.photo-popover-mark').remove();
             });
         }
     };

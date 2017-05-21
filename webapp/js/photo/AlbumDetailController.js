@@ -143,6 +143,7 @@ albumDetailModule.controller('AlbumDetailController', ['$scope', '$compile', '$l
             newScope.currentUser = $scope.currentUser;
             var ele = $compile('<show-photo-popover></show-photo-popover>')(newScope);
             baseEle.append(ele);
+            baseEle.append('<div class="photo-popover-mark"></div>');
         };
 
         /**
