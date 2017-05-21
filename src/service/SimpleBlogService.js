@@ -54,6 +54,30 @@ function findSimpleBlogsByUser(userId) {
     });
 }
 
+function findRecentSimpleBlogs() {
+    return new Promise((resolve, reject) => {
+        var results = [];
+        simpleBlogDao.findRecentSimpleBlogs()
+            .then(simpleBlogs => {
+                results = simpleBlogs;
+                var getUserInfoPromises = [];
+                simpleBlogs.forEach(simpleBlog => {
+                    getUserInfoPromises.push(userDao.getBasicUserInfo(simpleBlog.userId));
+                });
+                return Promise.all(getUserInfoPromises);
+            })
+            .then(userInfos => {
+                results.forEach((simpleBlog, index) => {
+                    simpleBlog.userInfo = userInfos[index];
+                });
+                resolve(results);
+            })
+            .catch(error => {
+                reject(error);
+            });
+    });
+}
+
 function findSimpleBlogWithUserInfo(id) {
     return new Promise((resolve, reject) => {
         var result = {};
@@ -76,4 +100,5 @@ module.exports.saveSimpleBlog = saveSimpleBlog;
 module.exports.updateSimpleBlogJurisdiction = updateSimpleBlogJurisdiction;
 module.exports.deleteSimpleBlog = deleteSimpleBlog;
 module.exports.findSimpleBlogsByUser = findSimpleBlogsByUser;
+module.exports.findRecentSimpleBlogs = findRecentSimpleBlogs;
 module.exports.findSimpleBlogWithUserInfo = findSimpleBlogWithUserInfo;

@@ -44,4 +44,13 @@ router.get('/user/:userId', (request, response, next) => {
         });
 });
 
+router.get('/recent', (request, response, next) => {
+    simpleBlogService.findRecentSimpleBlogs()
+        .then(function (data) {
+            response.send(JSON.stringify(data));
+        }).catch(function (data) {
+            response.send(JSON.stringify(data));
+        });
+})
+
 module.exports = router;
