@@ -1,6 +1,6 @@
 var registerModule = angular.module('register', []);
 
-registerModule.controller('RegisterController', ['$scope', '$http', 'HttpService', function ($scope, $http, HttpService) {
+registerModule.controller('RegisterController', ['$scope', '$http', '$location', 'HttpService', function ($scope, $http, $location, HttpService) {
     $scope.option = {
         id: 'rememberCheckbox',
         name: 'rememberCheckbox',
@@ -37,21 +37,12 @@ registerModule.controller('RegisterController', ['$scope', '$http', 'HttpService
                     user: $scope.user
                 },
                 success: function (data) {
-                    console.log(data);
-                    postal.publish({
-                        channel: 'showAlertMessage',
-                        topic: 'showAlertMessage',
-                        data: {
-                            type: 'success',
-                            message: '注册成功'
-                        }
-                    });
                     if ($scope.option) {
                         HttpService.post({
                             url: 'api/user/login',
                             params: {
-                                email: $scope.email,
-                                password: $scope.password
+                                email: $scope.user.email,
+                                password: $scope.user.password
                             },
                             success: data => {
                                 postal.publish({
@@ -59,10 +50,18 @@ registerModule.controller('RegisterController', ['$scope', '$http', 'HttpService
                                     topic: 'loginSuccess',
                                     data: {}
                                 });
-                                $location.url('/login');
+                                $location.url('/');
                             }
                         });
                     } else {
+                        postal.publish({
+                            channel: 'showAlertMessage',
+                            topic: 'showAlertMessage',
+                            data: {
+                                type: 'success',
+                                message: '注册成功'
+                            }
+                        });
                         $location.url('/');
                     }
                 }
