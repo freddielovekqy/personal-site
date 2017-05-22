@@ -22,7 +22,7 @@ blogDetailModule.controller('BlogDetailController', ['$scope', '$sce', 'HttpServ
         };
 
         $scope.addComment = function () {
-            $scope.newComment.floor = $scope.comments.length + 1;
+            $scope.newComment.floor = _.maxBy($scope.comments, 'floor') + 1;
             HttpService.post({
                 url: 'api/comment',
                 params: {

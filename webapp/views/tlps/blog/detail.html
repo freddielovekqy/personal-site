@@ -43,12 +43,15 @@
                     <span>{{comment.createDate}}</span>
                     <span>{{comment.userInfo.username}}</span>
                     <div class="comment-operations">
-                        <span class="icon-comments"></span>
-                        <span class="icon-remove" ng-click="deleteComment(comment._id)"></span>
+                        <span class="fa fa-comments-o"></span>
+                        <span class="fa fa-times" ng-click="deleteComment(comment._id)"></span>
                     </div>
                 </div>
                 <div class="comment-item-content">
-                    <div class="comment-user-img"></div>
+                    <div class="comment-user-img" ng-class="{'class-for-no-image':!comment.userInfo.headImgPath}">
+                        <img src="{{comment.userInfo.headImgPath}}" alt="" ng-show="comment.userInfo.headImgPath"/>
+                        <span class="fa fa-user-o replace-for-user-image" ng-hide="comment.userInfo.headImgPath"></span>
+                    </div>
                     <div class="comment-content" ng-bind-html="comment.content"></div>
 
                     <div class="reply-comments" ng-repeat="replyComment in comment.replyComments">
