@@ -6,6 +6,7 @@ var Work = UserSchemaModule.Work;
 function save(userDTO) {
     var user = new User({
         email: userDTO.email,
+        username: userDTO.username,
         password: userDTO.password
     });
     return user.save();

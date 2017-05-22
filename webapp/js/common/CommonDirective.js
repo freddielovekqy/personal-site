@@ -244,8 +244,7 @@ app.directive('customValidator', function () {
         link: function (scope, elements, attrs, ngModel) {
             elements.on('keyup focus', function () {
                 var result = scope.customValidator();
-                console.log(result);
-                if (!result.isValid) {
+                if (!result.valid) {
                     $(this).next().show();
                     $(this).addClass('input-has-error');
                 } else {
@@ -256,7 +255,7 @@ app.directive('customValidator', function () {
 
             elements.on('mouseover', function () {
                 var result = scope.customValidator();
-                if (!result.isValid) {
+                if (!result.valid) {
                     $(this).next().show();
                 } else {
                     $(this).next().hide();
