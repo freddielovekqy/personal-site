@@ -142,7 +142,7 @@ simpleBlogInfoModule.controller('SimpleBlogInfoController', ['$scope', '$timeout
                     y: event.clientY
                 };
                 newScope.targetOffset = $(event.target).offset();
-                newScope.userInfo = $scope.content.userInfo;
+                newScope.userId = $scope.content.userInfo._id;
                 var ele = $compile('<user-info-popover></user-info-popover>')(newScope);
                 baseEle.append(ele);
             } else {

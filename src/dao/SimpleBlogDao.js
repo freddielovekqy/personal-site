@@ -22,6 +22,10 @@ function deleteSimpleBlog(id) {
     return SimpleBlog.update({ _id: id }, { $set: { status: 0 } });
 }
 
+function countUserSimpleBlogs(userId) {
+    return SimpleBlog.count({userId: userId, status: 1}).exec();
+}
+
 function findSimpleBlogsByUser(userId, jurisdiction = { $exists: true }, status = 1) {
     return SimpleBlog.find({ userId: userId, jurisdiction: jurisdiction, status: status }).lean().exec();
 }
@@ -44,5 +48,6 @@ module.exports.save = save;
 module.exports.updateAttrs = updateAttrs;
 module.exports.deleteSimpleBlog = deleteSimpleBlog;
 module.exports.findById = findById;
+module.exports.countUserSimpleBlogs = countUserSimpleBlogs;
 module.exports.findSimpleBlogsByUser = findSimpleBlogsByUser;
 module.exports.findRecentSimpleBlogs = findRecentSimpleBlogs;

@@ -1,4 +1,6 @@
 var userDao = require('../dao/UserDao');
+var blogDao = require('../dao/BlogDao');
+var simpleBlogDao = require('../dao/SimpleBlogDao');
 var relationshipService = require('../service/RelationshipService');
 var logger = require('../common/log/log4js').logger;
 
@@ -30,18 +32,24 @@ function register(userDTO) {
 
 function login(email, password) {
     return new Promise((resolve, reject) => {
-        var promise = userDao.findByEmail(email);
-        promise.then(user => {
-            if (!user) {
-                reject({ errorMessage: '邮箱不存在' });
-            } else {
-                if (user.email === email && user.password === password) {
-                    resolve(user);
+        userDao.findByEmail(email)
+            .then(user => {
+                if (!user) {
+                    reject({ errorMessage: '邮箱不存在' });
                 } else {
-                    reject({ errorMessage: '用户名或密码错误' });
+                    if (user.email === email && user.password === password) {
+                        return getUserInfo(user._id);
+                    } else {
+                        reject({ errorMessage: '用户名或密码错误' });
+                    }
                 }
-            }
-        });
+            })
+            .then(user => {
+                resolve(user);
+            })
+            .catch(error => {
+                reject(error);
+            });
     });
 }
 
@@ -98,9 +106,23 @@ function getUserInfo(userId, currentUserId) {
         } else {
             promise = userDao.getBasicUserInfo(userId);
         }
-        promise.then(user => {
-            resolve(user);
-        });
+        var blogCountPromise = blogDao.countUserBlogs(userId);
+        var simpleBlogCountPromise = simpleBlogDao.countUserSimpleBlogs(userId);
+        var fansCountPromise = relationshipService.countUserFans(userId);
+        var attentionCountPromise = relationshipService.countUserAttentions(userId);
+
+        Promise.all([promise, blogCountPromise, simpleBlogCountPromise, fansCountPromise, attentionCountPromise])
+            .then(data => {
+                var userInfo = data[0].toObject();
+                userInfo.blogCount = data[1];
+                userInfo.simpleBlogCount = data[2];
+                userInfo.fanCount = data[3];
+                userInfo.attentionCount = data[4];
+                resolve(userInfo);
+            })
+            .catch(error => {
+                reject(error);
+            });
     });
 }
 

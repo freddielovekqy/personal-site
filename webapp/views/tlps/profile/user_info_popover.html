@@ -9,24 +9,24 @@
     <div class="other-info">
         <div class="attention">
             <span>关注</span>
-            <span>222</span>
+            <span>{{userInfo.attentionCount || 0}}</span>
         </div>
         <div class="fans">
             <span>粉丝</span>
-            <span>234</span>
+            <span>{{userInfo.fanCount || 0}}</span>
         </div>
         <div class="simple-blog">
             <span>微博</span>
-            <span>222</span>
+            <span>{{userInfo.simpleBlogCount || 0}}</span>
         </div>
         <div class="blog">
             <span>博客</span>
-            <span>333</span>
+            <span>{{userInfo.blogCount || 0}}</span>
         </div>
     </div>
     <div class="operations">
-        <button type="button" class="btn btn-default btn-sm" ng-show="!userInfo.attentionInfo.type && currentUserInfo._id !== userInfo._id" ng-click="addAttention()">关注</button>
-        <div ng-show="userInfo.attentionInfo.type && currentUserInfo._id !== userInfo._id" class="followed">
+        <button type="button" class="btn btn-default btn-sm" ng-show="!attentionInfo.type && currentUserInfo._id !== userInfo._id" ng-click="addAttention()">关注</button>
+        <div ng-show="attentionInfo.type && currentUserInfo._id !== userInfo._id" class="followed">
             <button type="button" class="btn btn-default btn-sm" ng-click="deleteAttentions()">取消关注</button>
             <!-- 功能暂不开放 -->
             <button type="button" class="btn btn-default btn-sm" style="display: none;">切换分组</button>

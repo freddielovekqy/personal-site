@@ -17,15 +17,15 @@ homeModule.controller('HomeController', ['$scope', '$timeout', 'HttpService', 'C
         $scope.currentShowContentType = 'simpleBlog';
 
         (function () {
-            var result = CommonUserUtils.getCurrentUserBlogInfo();
+            var result = CommonUserUtils.getCurrentUserInfo();
             if (result instanceof Promise) {
                 result.then( (data) => {
                     $timeout(() => {
-                        $scope.currentUserBlogInfo = data;
+                        $scope.currentUserInfo = data;
                     }, 0);
                 });
             } else {
-                $scope.currentUserBlogInfo = result;
+                $scope.currentUserInfo = result;
             }
             getHomePageContent();
         })();

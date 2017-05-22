@@ -44,6 +44,18 @@ function deleteAttention(userId, targetUserId) {
     });
 }
 
+function countUserFans(userId) {
+    return new Promise((resolve, reject) => {
+        relationshipDao.findFansByUser(userId)
+            .then(users => {
+                resolve(users.length);
+            })
+            .catch(error => {
+                reject(error);
+            });
+    });
+}
+
 function findFansByUser(userId) {
     return new Promise((resolve, reject) => {
         relationshipDao.findFansByUser(userId).then(users => {
@@ -55,6 +67,18 @@ function findFansByUser(userId) {
                 resolve(userInfos);
             });
         });
+    });
+}
+
+function countUserAttentions(userId) {
+    return new Promise((resolve, reject) => {
+        relationshipDao.findUserAttentions(userId)
+            .then(data => {
+                resolve(data.attentions.length);
+            })
+            .catch(error => {
+                reject(error);
+            });
     });
 }
 
@@ -156,6 +180,8 @@ module.exports.initUserRelationship = initUserRelationship;
 module.exports.addAttentionUser = addAttentionUser;
 module.exports.deleteAttention = deleteAttention;
 module.exports.findFansByUser = findFansByUser;
+module.exports.countUserFans = countUserFans;
+module.exports.countUserAttentions = countUserAttentions;
 module.exports.findUserAttentions = findUserAttentions;
 module.exports.findAllUserAttentionTypes = findAllUserAttentionTypes;
 module.exports.countAttentionsGroupByType = countAttentionsGroupByType;

@@ -20,12 +20,14 @@ router.post('/login', (request, response, next) => {
     var email = request.body.email;
     var password = request.body.password;
     logger.info('login', email);
-    userService.login(email, password).then(data => {
-        request.session.currentUser = data;
-        response.send(JSON.stringify(data));
-    }).catch(data => {
-        response.send(JSON.stringify(data));
-    });
+
+    userService.login(email, password)
+        .then(data => {
+            request.session.currentUser = data;
+            response.send(JSON.stringify(data));
+        }).catch(data => {
+            response.send(JSON.stringify(data));
+        });
 });
 
 router.post('/logout', (request, response, next) => {
@@ -69,8 +71,7 @@ router.put('/', (request, response, next) => {
 });
 
 router.get('/currentUser', (request, response, next) => {
-    var currentUser = request.session.currentUser;
-    response.send(JSON.stringify(currentUser));
+    response.send(JSON.stringify(request.session.currentUser));
 });
 
 router.get('/:userId', (request, response, next) => {

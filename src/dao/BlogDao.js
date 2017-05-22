@@ -36,6 +36,10 @@ function updateBlogAttr(id, key, value) {
     return Blog.update({ '_id': id }, { '$set': updateObj });
 }
 
+function countUserBlogs(userId) {
+    return Blog.count({userId: userId, status: 1}).exec();
+}
+
 function findByUser(candition, paginationParams) {
     // sort = {'logindate':-1}
     console.log('candition', candition);
@@ -80,4 +84,5 @@ module.exports.updateBlogAttr = updateBlogAttr;
 module.exports.findByUser = findByUser;
 module.exports.findRecentBlogs = findRecentBlogs;
 module.exports.findById = findById;
+module.exports.countUserBlogs = countUserBlogs;
 module.exports.getBlogCountByCondition = getBlogCountByCondition;

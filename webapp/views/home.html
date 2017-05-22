@@ -56,8 +56,8 @@
         </div>
         <div class="content-information">
             <div ng-repeat="content in contents">
-                <simple-blog-info content="content" current-user="currentUserBlogInfo.userInfo" ng-if="currentShowContentType === 'simpleBlog'"></simple-blog-info>
-                <blog-info-for-home content="content" current-user="currentUserBlogInfo.userInfo" ng-if="currentShowContentType === 'blog'"></blog-info-for-home>
+                <simple-blog-info content="content" current-user="currentUserInfo" ng-if="currentShowContentType === 'simpleBlog'"></simple-blog-info>
+                <blog-info-for-home content="content" current-user="currentUserInfo" ng-if="currentShowContentType === 'blog'"></blog-info-for-home>
             </div>
             <div class="no-content" ng-show="contents.length === 0">
                 没有内容，去关注更多的人吧。
@@ -68,27 +68,27 @@
         <div class="current-user-info">
             <div class="user-background-img"></div>
             <div class="user-image">
-                <img src="{{currentUserBlogInfo.userInfo.headImgPath}}" alt=""/>
+                <img src="{{currentUserInfo.headImgPath}}" alt=""/>
             </div>
             <div class="username">
-                <span class="username-label">{{currentUserBlogInfo.userInfo.username}}</span>
-                <span class="level">Lv.{{currentUserBlogInfo.userBlogInfo.level}}</span>
+                <span class="username-label">{{currentUserInfo.username}}</span>
+                <!--<span class="level">Lv.{{currentUserInfo.level}}</span>-->
             </div>
             <div class="user-brief-info">
                 <div class="follow">
-                    <div class="user-brief-info-count">6</div>
+                    <div class="user-brief-info-count">{{currentUserInfo.attentionCount || 0}}</div>
                     <div class="user-brief-info-label">关注</div>
                 </div>
                 <div class="fan">
-                    <div class="user-brief-info-count">0</div>
+                    <div class="user-brief-info-count">{{currentUserInfo.fanCount || 0}}</div>
                     <div class="user-brief-info-label">粉丝</div>
                 </div>
                 <div class="blog">
-                    <div class="user-brief-info-count">8</div>
+                    <div class="user-brief-info-count">{{currentUserInfo.blogCount || 0}}</div>
                     <div class="user-brief-info-label">博客</div>
                 </div>
                 <div class="simple-blog">
-                    <div class="user-brief-info-count">8</div>
+                    <div class="user-brief-info-count">{{currentUserInfo.simpleBlogCount || 0}}</div>
                     <div class="user-brief-info-label">微博</div>
                 </div>
             </div>

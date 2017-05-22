@@ -10,9 +10,11 @@ profileModule.directive('userInfoPopover', function () {
             var showOrHideFlag = true;
             var leaveTarget = false;
             $scope.currentUserInfo = {};
+            $scope.attentionInfo = {};
 
             (function () {
                 $scope.currentUserInfo = CommonUserUtils.getCurrentUserInfo();
+                getUserInfo($scope.userId);
                 getAttentions($scope.currentUserInfo._id);
             })();
             $scope.showOrHide = function (showOrHide) {
@@ -62,6 +64,15 @@ profileModule.directive('userInfoPopover', function () {
                 });
             };
 
+            function getUserInfo(userId) {
+                HttpService.get({
+                    url: `api/user/${userId}`,
+                    success: userInfo => {
+                        $scope.userInfo = userInfo;
+                    }
+                });
+            }
+
             function getAttentions(userId) {
                 HttpService.get({
                     url: `api/relationship/${userId}/attentions`,
@@ -70,11 +81,9 @@ profileModule.directive('userInfoPopover', function () {
                         var index = _.findIndex($scope.attentionUsers, {_id: $scope.userInfo._id});
                         if (index > -1) {
                             var attention = $scope.attentionUsers[index];
-                            $scope.userInfo.attentionInfo = {
+                            $scope.attentionInfo = {
                                 type: attention.typeName
                             };
-                        } else {
-                            $scope.userInfo.attentionInfo = {};
                         }
                     }
                 });
