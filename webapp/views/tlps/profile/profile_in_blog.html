@@ -3,7 +3,8 @@
         <div class="title">个人资料</div>
         <div class="profile-info">
             <div class="profile-img">
-                <img src="{{user.headImgPath}}" alt=""/>
+                <img src="{{user.headImgPath}}" alt="" ng-show="user.headImgPath"/>
+                <span class="fa fa-user-o replace-for-user-image" ng-hide="user.headImgPath"></span>
             </div>
             <div class="username">{{user.username}}</div>
         </div>

@@ -3,7 +3,8 @@
         <div class="user-img-relationship" ng-click="selectImage()">
             <input type="file" id="uploadUserImage" onchange="angular.element(this).scope().fileSelected()" accept=".jpg,.png" style="display: none;"/>
             <label for="uploadUserImage">
-                <img src="{{user.headImgPath}}" alt=""/>
+                <img src="{{user.headImgPath}}" alt="" ng-show="user.headImgPath"/>
+                <span class="fa fa-user-o replace-for-user-image" ng-hide="user.headImgPath"></span>
             </label>
             <span class="image-help-text">点击图片更换头像</span>
         </div>

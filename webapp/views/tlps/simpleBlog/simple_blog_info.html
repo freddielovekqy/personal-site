@@ -10,11 +10,12 @@
         <div class="operation-item" ng-show="content.userId !== currentUser._id" ng-click="removeAttention()">取消关注{{content.userInfo.username}}</div>
     </div>
     <div class="personal-dynamic-info">
-        <div class="user-image">
-            <img src="{{content.userInfo.headImgPath}}" alt=""/>
+        <div class="user-image" ng-class="{'class-for-no-image': !content.userInfo.headImgPath}">
+            <img src="{{content.userInfo.headImgPath}}" alt="" ng-show="content.userInfo.headImgPath"/>
+            <span class="fa fa-user-o replace-for-user-image" ng-hide="content.userInfo.headImgPath"></span>
         </div>
         <div class="username">
-            <span ng-mouseover="showOrHideUserInfoPopover(true, $event)" ng-mouseleave="showOrHideUserInfoPopover(false)">{{content.userInfo.username}}</span>
+            <span ng-mouseover="showOrHideUserInfoPopover(true, $event)" ng-mouseleave="showOrHideUserInfoPopover(false)">{{content.userInfo.username || content.userInfo.email}}</span>
         </div>
         <div class="dynamic-other-info">{{content.createDate}} 来自 {{content.source}}</div>
         <div class="personal-dynamic-info-detail">{{content.content}}</div>

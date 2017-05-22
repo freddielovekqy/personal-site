@@ -68,7 +68,10 @@
         <div class="current-user-info">
             <div class="user-background-img"></div>
             <div class="user-image">
-                <img src="{{currentUserInfo.headImgPath}}" alt=""/>
+                <img src="{{currentUserInfo.headImgPath}}" alt="" ng-show="currentUserInfo.headImgPath"/>
+                <div class="class-for-no-image" ng-hide="currentUserInfo.headImgPath">
+                    <span class="fa fa-user-o replace-for-user-image"></span>
+                </div>
             </div>
             <div class="username">
                 <span class="username-label">{{currentUserInfo.username}}</span>

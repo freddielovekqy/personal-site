@@ -1,7 +1,8 @@
 <div class="user-info-popover my-popover" ng-style="positionStype" ng-mouseover="showOrHide(true)" ng-mouseleave="showOrHide(false)">
     <div class="background-image">
-        <div class="user-image">
-            <img src="{{userInfo.headImgPath}}" alt="">
+        <div class="user-image" ng-class="{'class-for-no-image': !userInfo.headImgPath}">
+            <img src="{{userInfo.headImgPath}}" alt="" ng-show="userInfo.headImgPath">
+            <span class="fa fa-user-o replace-for-user-image" ng-hide="userInfo.headImgPath"></span>
         </div>
         <div class="username">{{userInfo.username}}</div>
         <div class="brief-introduction">{{userInfo.briefIntroduction}}</div>
