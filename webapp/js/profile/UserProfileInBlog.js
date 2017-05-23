@@ -27,18 +27,30 @@ profileModule.controller('ProfileInBlogController', ['$scope', 'HttpService', 'S
         }, function (newVal) {
             if (newVal && $scope.userId) {
                 getUserInfo($scope.userId);
+                getCountInfo($scope.userId);
             }
         });
 
-        function getUserInfo(userId) {
+        function getCountInfo(userId) {
             HttpService.get({
-                url: 'api/userBlogInfo/getInfo/' + userId,
+                url: 'api/blog/count/' + userId,
                 success: function (data) {
-                    $scope.userBlogInfo = data.userBlogInfo;
-                    $scope.user = data.userInfo;
+                    $scope.countInfo = data;
                 },
                 error: function (data) {
                     console.log('get blog list error');
+                }
+            });
+        }
+
+        function getUserInfo(userId) {
+            HttpService.get({
+                url: 'api/user/' + userId,
+                success: function (data) {
+                    $scope.user = data;
+                },
+                error: function (data) {
+                    console.log('get userInfo error');
                 }
             });
         }

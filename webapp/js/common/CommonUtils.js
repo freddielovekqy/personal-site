@@ -47,7 +47,7 @@ app.service('CommonUserUtils', ['$location', 'HttpService', function ($location,
                     HttpService.get({
                         url: 'api/user/currentUser',
                         success: function (data) {
-                            if (!data) {
+                            if (!data || !data._id) {
                                 // 跳转到登录页面
                                 $location.url('/login');
                             } else {

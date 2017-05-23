@@ -10,8 +10,8 @@ blogListModule.constant('blogConstants', {
     BLOG_TYPES_TRANSLATION: '译文',
     BLOG_TYPES_TRANSLATION_SHOW: '译'
 });
-blogListModule.controller('BlogListController', ['$scope', '$location', 'HttpService', 'StorageUtils', 'blogConstants', '$routeParams', 'CommonUserUtils', 
-    function ($scope, $location, HttpService, StorageUtils, blogConstants, $routeParams, CommonUserUtils) {
+blogListModule.controller('BlogListController', ['$scope', '$location', '$timeout', 'HttpService', 'StorageUtils', 'blogConstants', '$routeParams', 'CommonUserUtils',
+    function ($scope, $location, $timeout, HttpService, StorageUtils, blogConstants, $routeParams, CommonUserUtils) {
         init();
 
         $scope.createBlog = function () {

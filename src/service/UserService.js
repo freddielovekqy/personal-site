@@ -38,7 +38,7 @@ function login(email, password) {
                     reject({ errorMessage: '邮箱不存在' });
                 } else {
                     if (user.email === email && user.password === password) {
-                        return getUserInfo(user._id);
+                        return getUserInfo(user._id, user._id);
                     } else {
                         reject({ errorMessage: '用户名或密码错误' });
                     }

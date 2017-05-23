@@ -110,7 +110,9 @@ app.controller('initController', ['$rootScope', '$scope', '$location', '$timeout
             HttpService.post({
                 url: 'api/user/logout',
                 success: data => {
-                    location.reload();
+                    $timeout(() => {
+                        location.reload();
+                    }, 500);
                 }
             });
         };
@@ -139,6 +141,7 @@ app.controller('initController', ['$rootScope', '$scope', '$location', '$timeout
 
         $scope.$on('destroy', data => {
             $('body').unbind('click', clickBody);
+            loginSub && loginSub.unsubscribe();
             updateUserInfoSub.unsubscribe();
             showAlertMessageSubs.unsubscribe();
         });

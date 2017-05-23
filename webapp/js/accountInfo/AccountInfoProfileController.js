@@ -47,7 +47,9 @@ accountInfoProfileModule.controller('AccountInfoProfileController', ['$scope', '
             userInfoBack.realName = $scope.userInfo.realName;
             userInfoBack.sex = $scope.userInfo.sex;
             userInfoBack.birthday = $scope.userInfo.birthday;
-            userInfoBack.birthPlace = $scope.selectedProvince.label + '-' + $scope.selectedCity.label;
+            if ($scope.selectedProvince && $scope.selectedCity) {
+                userInfoBack.birthPlace = $scope.selectedProvince.label + '-' + $scope.selectedCity.label;
+            }
             userInfoBack.briefIntroduction = $scope.userInfo.briefIntroduction;
             updateUserInfo();
         };
@@ -134,8 +136,13 @@ accountInfoProfileModule.controller('AccountInfoProfileController', ['$scope', '
 
         $scope.editWork = function (work = {}) {
             $scope.editedWork = angular.copy(work);
-            $scope.editedWork.selectedProvince = $scope.chinaCities[_.findIndex($scope.chinaCities, {label: work.location.split('-')[0]})];
-            $scope.editedWork.selectedCity = $scope.editedWork.selectedProvince.cities[_.findIndex($scope.editedWork.selectedProvince.cities, {label: work.location.split('-')[1]})];
+            if (work.location) {
+                $scope.editedWork.selectedProvince = $scope.chinaCities[_.findIndex($scope.chinaCities, {label: work.location.split('-')[0]})];
+                $scope.editedWork.selectedCity = $scope.editedWork.selectedProvince.cities[_.findIndex($scope.editedWork.selectedProvince.cities, {label: work.location.split('-')[1]})];
+            } else {
+                $scope.editedWork.selectedProvince = $scope.chinaCities[0];
+                $scope.editedWork.selectedCity = $scope.editedWork.selectedProvince.cities[0];
+            }
             $scope.editWorkFlag = true;
         };
 
@@ -193,7 +200,9 @@ accountInfoProfileModule.controller('AccountInfoProfileController', ['$scope', '
             userInfoBack = angular.copy(data);
             $scope.userInfo = data;
             $scope.userInfo.createDate = new Date($scope.userInfo.createDate).format('yyyy-MM-dd');
-            $scope.userInfo.birthday = new Date($scope.userInfo.birthday);
+            if ($scope.userInfo.birthday) {
+                $scope.userInfo.birthday = new Date($scope.userInfo.birthday);
+            }
 
             $scope.educations = $scope.userInfo.educations;
 

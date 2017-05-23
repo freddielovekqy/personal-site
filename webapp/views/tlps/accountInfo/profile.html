@@ -48,7 +48,7 @@
             </div>
             <div class="account-info-item">
                 <div class="account-info-item-label">生日</div>
-                <div class="account-info-item-value" ng-show="!edit">{{userInfo.birthday.format('yyyy-MM-dd')}}</div>
+                <div class="account-info-item-value" ng-show="!edit && userInfo.birthday">{{userInfo.birthday.format('yyyy-MM-dd')}}</div>
                 <div class="account-info-item-edit" ng-show="edit">
                     <input class="form-control" type="date" ng-model="userInfo.birthday"/>
                 </div>

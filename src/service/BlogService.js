@@ -44,6 +44,32 @@ function getBlogsByUser(blogUserId, visitUserId, searchOptions, paginationParams
     });
 }
 
+function countBlogsByType(userId) {
+    return new Promise((resolve, reject) => {
+        var countMap = {
+            originCount: 0,
+            rePrintCount: 0,
+            translationCount: 0
+        };
+        BlogDao.findByUser({userId: userId, status: 1})
+            .then(blogs => {
+                blogs.forEach(blog => {
+                    if (blog.type === '原创') {
+                        countMap.originCount++;
+                    } else if (blog.type === '转载') {
+                        countMap.rePrintCount++;
+                    } else if (blog.type === '译文') {
+                        countMap.translationCount++;
+                    }
+                });
+                resolve(countMap);
+            })
+            .catch(error => {
+                reject(error);
+            });
+    });
+}
+
 /**
  * 用于首页获取所有用户的博客
  */
@@ -185,6 +211,7 @@ module.exports.getBlogsByUser = getBlogsByUser;
 module.exports.getBlogById = getBlogById;
 module.exports.findAttentionBlogsByUser = findAttentionBlogsByUser;
 module.exports.findRecentBlogs = findRecentBlogs;
+module.exports.countBlogsByType = countBlogsByType;
 module.exports.saveBlog = saveBlog;
 module.exports.updateBlog = updateBlog;
 module.exports.deleteBlog = deleteBlog;

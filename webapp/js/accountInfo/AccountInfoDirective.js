@@ -5,13 +5,73 @@ accountInfoModule.directive('accountInfoAttentionUser', function () {
     return {
         restrict: 'E',
         scope: {
-            attentionUser: '='
+            userInfo: '='
         },
         require: '?ngModel',
         replace: true,
         templateUrl: 'views/tlps/accountInfo/attention_user_item.html',
-        controller: ['$scope', function ($scope) {
-            console.log($scope.attentionUser);
+        controller: ['$scope', 'HttpService', function ($scope, HttpService) {
+            console.log($scope.userInfo);
+            $scope.deleteAttention = function () {
+                HttpService.delete({
+                    url: `api/relationship/attention/${$scope.userInfo._id}`,
+                    success: data => {
+                        postal.publish({
+                            channel: 'accountInfo',
+                            topic: 'updateAttentions',
+                            data: {}
+                        });
+                    }
+                });
+            };
+        }],
+        link: function (scope, elements, attrs, ngModel) {
+
+        }
+    };
+});
+
+accountInfoModule.directive('accountInfoFan', function () {
+    return {
+        restrict: 'E',
+        scope: {
+            userInfo: '='
+        },
+        require: '?ngModel',
+        replace: true,
+        templateUrl: 'views/tlps/accountInfo/fan_item.html',
+        controller: ['$scope', 'HttpService', 'RelationshipService', function ($scope, HttpService, RelationshipService) {
+            var currentUserAttentions = [];
+            $scope.fanBeAttention = false;
+
+            $scope.addAttention = function () {
+                HttpService.post({
+                    url: 'api/relationship',
+                    params: {
+                        targetUserId: $scope.userInfo._id,
+                        attentionType: '朋友圈' // TODO 关注分组功能暂未开放
+                    },
+                    success: data => {
+                        postal.publish({
+                            channel: 'accountInfo',
+                            topic: 'updateAttentions',
+                            data: {}
+                        });
+                    }
+                });
+            };
+
+            $scope.$watch(function () {
+                return RelationshipService.getCurrentUserAttentions();
+            }, function (newVal) {
+                currentUserAttentions = newVal;
+
+                if (_.findIndex(currentUserAttentions, {userId: $scope.userInfo._id}) > -1) {
+                    $scope.fanBeAttention = true;
+                } else {
+                    $scope.fanBeAttention = false;
+                }
+            });
         }],
         link: function (scope, elements, attrs, ngModel) {
 

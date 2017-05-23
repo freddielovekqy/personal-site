@@ -31,7 +31,7 @@ var UserSchema = new Schema({
     username: { type: String },
     realName: { type: String },
     password: { type: String },
-    headImgPath: { type: String },
+    headImgPath: { type: String, default: 'image/users/default_header-image.jpg' },
     country: { type: String },
     birthday: { type: Date },
     birthPlace: { type: String },
@@ -39,7 +39,7 @@ var UserSchema = new Schema({
     industry: { type: String }, // 行业
     occupation: { type: String }, // 职业
     briefIntroduction: { type: String }, //简介
-    createDate: { type: Date },
+    createDate: { type: Number, default: new Date().getTime() },
 
     /**
      * 个人详细信息

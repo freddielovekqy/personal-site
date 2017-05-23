@@ -71,7 +71,20 @@ router.put('/', (request, response, next) => {
 });
 
 router.get('/currentUser', (request, response, next) => {
-    response.send(JSON.stringify(request.session.currentUser));
+    if (!request.session.currentUser) {
+        response.send(JSON.stringify({}));
+    } else {
+        var userId = request.session.currentUser._id;
+        userService.getUserInfo(userId, userId)
+            .then(userInfo => {
+                request.session.currentUser = userInfo;
+                response.send(JSON.stringify(userInfo));
+            })
+            .catch(data => {
+                response.send(JSON.stringify(data));
+            });
+    }
+    
 });
 
 router.get('/:userId', (request, response, next) => {

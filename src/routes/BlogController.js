@@ -37,6 +37,18 @@ router.get('/', (request, response, next) => {
     });
 });
 
+router.get('/count/:userId', (request, response, next) => {
+    var userId = request.params.userId;
+    blogService.countBlogsByType(userId)
+        .then(data => {
+            response.send(JSON.stringify(data));
+        }, data => {
+            response.send(JSON.stringify(data));
+        }).catch(data => {
+            response.send(JSON.stringify(data));
+        });
+});
+
 router.get('/home', (request, response, next) => {
     var userId = request.session.currentUser._id;
     blogService.findAttentionBlogsByUser(userId)
