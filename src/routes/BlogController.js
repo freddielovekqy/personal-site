@@ -83,18 +83,7 @@ router.get('/getBlog/:blogId', function (request, response, next) {
 });
 
 router.post('/save', function (request, response, next) {
-    var blogDTO = {
-        title: request.body.title,
-        summary: request.body.summary,
-        keyword: request.body.keyword,
-        content: request.body.content,
-        type: request.body.type,
-        status: request.body.status,
-        categories: request.body.categories,
-        userId: request.session.currentUser._id,
-        comment: request.body.comment || [],
-        reader: request.body.reader || []
-    };
+    var blogDTO = request.body.blog;
     var blog = request.body.blog;
     console.log('blog', blog);
 

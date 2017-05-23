@@ -32,9 +32,6 @@ createBlogModule.controller('EditBlogController', ['$scope', '$rootScope', '$com
             }
         })();
 
-        $scope.$on('blogContentNormalText', function (name, data) {
-            $scope.blogNormalText = data.text;
-        });
         $scope.$on('createBlogCategorySuccess', function (name, data) {
             $scope.blogCategoryList.push({
                 id: 'blogTypeId_' + $scope.blogCategoryList.length,
@@ -138,6 +135,16 @@ createBlogModule.controller('EditBlogController', ['$scope', '$rootScope', '$com
         function checkBlogParams() {
             return $scope.blogInfo.title.trim() && $scope.blogInfo.content.trim();
         }
+
+        var normalContentText = postal.subscribe({
+            channel: 'wangEditor',
+            topic: 'normalText',
+            callback: data => {
+                if (data.id === 'createBlogContent') {
+                    $scope.blogNormalText = data.text;
+                }
+            }
+        });
     }
 ]);
 

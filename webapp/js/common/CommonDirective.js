@@ -36,7 +36,14 @@ app.directive('wangEditor', function() {
                     var html = editor.$txt.html();
                     ngModel.$setViewValue(html);
                     // 讲纯文本传递出去
-                    scope.$broadcast(attrs.id + 'blogContentNormalText', {text: editor.$txt.text()});
+                    postal.publish({
+                        channel: 'wangEditor',
+                        topic: 'normalText',
+                        data: {
+                            id: attrs.id,
+                            text: editor.$txt.text()
+                        }
+                    });
                 });
             };
             editor.create();

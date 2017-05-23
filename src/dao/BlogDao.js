@@ -18,12 +18,7 @@ function save(blogDTO) {
         comment: blogDTO.comment,
         reader: blogDTO.reader
     });
-    var promise = blog.save();
-    promise.then(function (data) {
-        return data;
-    }).catch(function (error) {
-        return error;
-    });
+    return blog.save();
 }
 
 function update(id, blog) {
