@@ -120,6 +120,13 @@ photoModule.controller('PhotoController', ['$scope', '$compile', '$timeout', '$l
             });
         }
 
+        var uploadSuccessSub = postal.subscribe({
+            channel: 'upload',
+            topic: 'uploadPhotoSuccess',
+            callback: function (data) {
+                findAlbumsByUser($scope.currentUser._id);
+            }
+        });
 
         var updateAlbumListSub = postal.subscribe({
             channel: 'photo',
@@ -130,6 +137,7 @@ photoModule.controller('PhotoController', ['$scope', '$compile', '$timeout', '$l
         });
 
         $scope.$on('$destroy', function () {
+            uploadSuccessSub && uploadSuccessSub.unsubscribe();
             updateAlbumListSub && updateAlbumListSub.unsubscribe();
         });
     }

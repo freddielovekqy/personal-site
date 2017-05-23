@@ -82,8 +82,8 @@ photoModule.directive('uploadPhotoPopover', function () {
                 $scope.selectedAlbum = $scope.albums[0];
             }
 
-            $scope.fileSelected = function () {
-                var file = document.querySelector('input[type=file]').files[0];
+            $scope.photoSelected = function () {
+                var file = document.querySelector('#uploadPhoto').files[0];
                 $timeout(function () {
                     $scope.selectedFile.name = file.name;
                 }, 0);
