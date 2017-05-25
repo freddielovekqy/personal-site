@@ -7,15 +7,20 @@ var router = express.Router();
 var logger = require('../common/log/log4js').logger;
 var photoService = require('../service/PhotoService');
 
+/**
+ * URL：/api/photo/upload
+ * 图片上传，使用了nodejs的formidable进行文件上传
+ */
 router.post('/upload', (request, response, next) => {
     var form = new formidable.IncomingForm({
-        encoding: 'utf-8',
+        encoding: 'utf-8', // 编码格式
         uploadDir: 'webapp/image/photos',  //文件上传地址
         keepExtensions: true,  //保留后缀
         maxFieldsSize: 2 * 1024 * 1024 //设置单文件大小限制
     });
 
     form.parse(request, function (err, fields, files) {
+        // 文件上传完成后执行
         if (!err) {
             var file = files.file;
             var fileName = file.path.split('\\')[file.path.split('\\').length - 1];
@@ -25,6 +30,7 @@ router.post('/upload', (request, response, next) => {
                 description: fields.description,
                 path: 'image/photos/' + fileName
             };
+            // 调用service将图片信息保存入库
             photoService.addPhoto(albumId, photo)
                 .then(data => {
                     response.send(JSON.stringify(data));
@@ -32,6 +38,7 @@ router.post('/upload', (request, response, next) => {
                     response.send(JSON.stringify(data));
                 });
         } else {
+            // 文件上传失败，返回错误信息
             response.send(JSON.stringify(err));
         }
     });

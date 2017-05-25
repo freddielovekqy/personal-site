@@ -42,39 +42,51 @@ app.use(lessMiddleware('/less', {
     debug: false
 }));
 
-
+/**
+ * 设置session
+ */
 app.use(session({
   secret: 'sessiontest', // 建议使用 128 个字符的随机字符串
   cookie: { maxAge: 6000 * 1000 }
 }));
 
+/**
+ * 启动NodeJS服务器，端口号为8080
+ */
 server.listen(8080, function () {
   console.log('Server listening at port 8080');
 });
 
-// // 前端资源文件全部交由nginx服务器进行管理
+// 前端资源文件全部交由nginx服务器进行管理
 app.use(express.static(path.join(__dirname, 'webapp')));
 
+// 处理get请求
 app.get('/api/*', function (req, res, next) {
     log4js.logger.info('currentUser', req.session.currentUser);
     next();
 });
 
+// 处理post请求
 app.post('/api/*', function (req, res, next) {
     log4js.logger.info('currentUser', req.session.currentUser);
     next();
 });
 
+// 处理put请求
 app.put('/api/*', function (req, res, next) {
     log4js.logger.info('currentUser', req.session.currentUser);
     next();
 });
 
+// 处理delete请求
 app.delete('/api/*', function (req, res, next) {
     log4js.logger.info('currentUser', req.session.currentUser);
     next();
 });
 
+/**
+ * 将不同url的请求分发到不同的文件处理
+ */
 app.use('/api/user', user);
 app.use('/api/blog', blog);
 app.use('/api/simpleBlog', simpleBlog);
@@ -91,6 +103,7 @@ app.get('/api/about', function (request, response) {
     response.send('Hello World!');
 });
 
+/****************私聊功能模块代码******************/
 var numUsers = 0;
 var userSocketMap = {};
 
