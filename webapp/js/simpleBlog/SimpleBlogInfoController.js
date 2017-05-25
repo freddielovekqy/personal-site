@@ -8,6 +8,10 @@ simpleBlogInfoModule.controller('SimpleBlogInfoController', ['$scope', '$timeout
         $scope.showOperationsFlag = false;
         $scope.content.createDate = new Date($scope.content.createDate).format('yyyy-MM-dd hh:mm');
 
+        if ($scope.content.originSimpleBlog && $scope.content.originSimpleBlog.createDate) {
+            $scope.content.originSimpleBlog.createDate = new Date($scope.content.originSimpleBlog.createDate).format('yyyy-MM-dd hh:mm');
+        }
+
         $scope.showOperations = function () {
             $scope.showOperationsFlag = true;
         };

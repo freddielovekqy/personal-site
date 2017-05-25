@@ -137,7 +137,10 @@ commentModule.directive('commentDirective', function () {
                 HttpService.get({
                     url: `api/comment/simpleBlog/${$scope.objectInfo._id}`,
                     success: comments => {
-                        $scope.comments = comments;
+                        $scope.comments = comments.map(comment => {
+                            comment.createDate = new Date(comment.createDate).format('MM-dd hh:ss');
+                            return comment;
+                        });
                     }
                 });
             }
