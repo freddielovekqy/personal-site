@@ -41,7 +41,6 @@ function findAttentionsByType(userId, type) {
 }
 
 function findFansByUser(userId) {
-    // TODO 后续需要添加分页方法
     return Relationship.find({attentions: {$elemMatch: {userId: userId}}}, 'userId').lean().exec();
 }
 
