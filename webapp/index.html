@@ -5,9 +5,9 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         <link rel="stylesheet" href="/framework/bootstrap/css/bootstrap.css">
-        <link rel="stylesheet" href="/framework/font-awesome/css/font-awesome.css">
-        <link rel="stylesheet" href="/framework/iCheck/flat/blue.css" >
+        <link rel="stylesheet" href="/framework/font-awesome/4.7.0/css/font-awesome.css">
         <link rel="stylesheet" href="/framework/wangEditor-2.1.22/dist/css/wangEditor.min.css" >
+        <link rel="stylesheet" href="/framework/angular-ui-grid/ui-grid.css" >
         <link rel="stylesheet" href="/css/app.css">
         <base href="/">
     </header>
@@ -15,7 +15,7 @@
         <div ng-controller="initController">
             <div class="header-div" ng-show="showHeader">
                 <div class="container">
-                    <div class="logo">W&KBlog</div>
+                    <div class="logo">K&WBlog</div>
                     <div class="nav-list-div-for-mbp" media-query="0-767">
                         <span class="glyphicon glyphicon-th-list"></span>
                     </div>
@@ -23,69 +23,119 @@
                         <div class="nav-menu">
                             <a class="nav-menu-item" href="/" ng-click="changePath('/')" ng-class="{'current-page': currentPath === '/'}">首页</a>
                             <a class="nav-menu-item" href="/blog" ng-click="changePath('/blog')" ng-class="{'current-page': currentPath === '/blog'}">博客</a>
-                            <a class="nav-menu-item">图片</a>
-                            <div class="nav-menu-item dropdown">
-                                <a id="dropdownMenu1" data-toggle="dropdown">广场</a>
-                                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">热门微博</a></li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">热门博文</a></li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">风云榜</a></li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">游戏</a></li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">新闻</a></li>
-                                </ul>
-                            </div>
-                            <a class="nav-menu-item">GIT</a>
+                            <a class="nav-menu-item" href="/photo" ng-click="changePath('/photo')" ng-class="{'current-page': currentPath === '/photo'}">图片</a>
+                            <!-- TODO -->
+                            <!--<div class="nav-menu-item dropdown">-->
+                                <!--<a id="dropdownMenu1" data-toggle="dropdown">广场</a>-->
+                                <!--<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">-->
+                                    <!--<li role="presentation"><a role="menuitem" tabindex="-1" href="#">热门微博</a></li>-->
+                                    <!--<li role="presentation"><a role="menuitem" tabindex="-1" href="#">热门博文</a></li>-->
+                                    <!--<li role="presentation"><a role="menuitem" tabindex="-1" href="#">风云榜</a></li>-->
+                                    <!--<li role="presentation"><a role="menuitem" tabindex="-1" href="#">游戏</a></li>-->
+                                    <!--<li role="presentation"><a role="menuitem" tabindex="-1" href="#">新闻</a></li>-->
+                                <!--</ul>-->
+                            <!--</div>-->
+                            <!--<a class="nav-menu-item">GIT</a>-->
                             <a class="nav-menu-item" href="/about" ng-click="changePath('/about')" ng-class="{'current-page': currentPath === '/about'}">关于</a>
                         </div>
                     </div>
-                    <div class="login-out-div" ng-show="!showLoginBtn && !currentUser">
+                    <div class="login-register-div" ng-show="!showLoginBtn && !currentUser">
                         <a class="login" href="/login">登录</a>
                         <a class="sign-up" href="/register">注册</a>
                     </div>
-                    <a class="username-in-header" href="/account-setting" ng-show="currentUser">
-                        <span class="glyphicon glyphicon-user"></span>
-                        <span class="username">{{currentUser.username || currentUser.email}}</span>
-                    </a>
+                    <div class="header-user-info-and-setting" ng-show="currentUser">
+                        <a href="/account-info/profile" class="header-user-info">
+                            <span class="glyphicon glyphicon-user"></span>
+                            <span class="username">{{currentUser.username || currentUser.email}}</span>
+                        </a>
+                        <!-- TODO 未来要实现的功能 -->
+                        <!--<a href="" class="header-user-notice">-->
+                            <!--<span class="fa fa-envelope-o"></span>-->
+                            <!--<div class="have-notice">2</div>-->
+                        <!--</a>-->
+                        <!--<a href="/account-setting" class="header-user-setting">-->
+                            <!--<span class="glyphicon glyphicon-cog"></span>-->
+                        <!--</a>-->
+                        <span class="header-user-setting" ng-click="showSettings()">
+                            <span class="glyphicon glyphicon-cog"></span>
+                        </span>
+                        <div class="setting-items" ng-show="showAccountSetting">
+                            <div class="setting-item" ng-click="logout()">注销</div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="container alert-message">
                 <div ng-show="alertObj" class="alert alert-{{alertObj.type}}" role="alert">{{alertObj.message}}</div>
             </div>
-            </div>
+            
             <div ng-view class="web-container">
 
             </div>
+            <div class="communication" ng-if="currentUser">
+                <communication-div></communication-div>
+            </div>
         </div>
-
-
+        <div class="popover-container"></div>
     </body>
     <script src="framework/jquery-2.1.4.min.js"></script>
     <script src="framework/wangEditor-2.1.22/dist/js/wangEditor.js"></script>
-    <script src="framework/underscore/underscore.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
+    <!--<script src="framework/underscore/underscore.js"></script>-->
+    <script src="framework/lodash/lodash.js"></script>
     <script src="framework/bootstrap/js/bootstrap.min.js"></script>
     <script src="framework/angular-1.5.8/angular.js"></script>
     <script src="framework/angular-1.5.8/angular-animate.min.js"></script>
     <script src="framework/angular-1.5.8/angular-route.min.js"></script>
-    <script src="framework/iCheck/icheck.js"></script>
+    <script src="framework/angular-ui-grid/ui-grid.min.js"></script>
+    <script src="framework/postal.js-master/lib/postal.js"></script>
 
     <script src="app.js"></script>
+    <script src="js/common/CommonDirective.js"></script>
+    <script src="js/common/CommonUtils.js"></script>
+	<script src="js/common/CommonConstants.js"></script>
+    <script src="js/common/HttpService.js"></script>
     <script src="js/home/HomeController.js"></script>
     <script src="js/about/AboutController.js"></script>
+
     <script src="js/blog/BlogController.js"></script>
     <script src="js/blog/BlogManagerController.js"></script>
     <script src="js/blog/BlogListController.js"></script>
     <script src="js/blog/BlogDetailController.js"></script>
-    <script src="js/blog/CreateBlogController.js"></script>
+    <script src="js/blog/EditBlogController.js"></script>
+    <script src="js/blog/BlogCategoryManagerController.js"></script>
+    <script src="js/blog/BlogArticleManagerController.js"></script>
+    <script src="js/blog/BlogInfoForHome.js"></script>
+
+    <script src="js/simpleBlog/SimpleBlogController.js"></script>
+    <script src="js/simpleBlog/SimpleBlogInfoController.js"></script>
+    <script src="js/simpleBlog/ForwardSimpleBlogDirective.js"></script>
+
+    <script src="js/comment/CommentController.js"></script>
+    <script src="js/comment/CommentDirective.js"></script>
+
     <script src="js/profile/ProfileController.js"></script>
     <script src="js/profile/UserProfileInBlog.js"></script>
-    <script src="js/common/CommonDirective.js"></script>
-    <script src="js/common/CommonUtils.js"></script>
-    <script src="js/common/HttpServive.js"></script>
+    <script src="js/profile/UserInfoPopover.js"></script>
 
+    <script src="js/photo/PhotoController.js"></script>
+    <script src="js/photo/PhotoDirective.js"></script>
+    <script src="js/photo/AlbumDetailController.js"></script>
+
+    <script src="js/accountInfo/AccountInfoController.js"></script>
+    <script src="js/accountInfo/AccountInfoDirective.js"></script>
+    <script src="js/accountInfo/AccountInfoMainController.js"></script>
+    <script src="js/accountInfo/AccountInfoProfileController.js"></script>
+    <script src="js/accountInfo/AccountInfoPhotoController.js"></script>
+    <script src="js/accountInfo/AccountInfoAlbumDetailController.js"></script>
+    <script src="js/accountInfo/AccountInfoRelationshipController.js"></script>
 
     <script src="js/user/LoginOutController.js"></script>
     <script src="js/user/RegisterController.js"></script>
     <script src="js/accountSetting/AccountProfileController.js"></script>
     <script src="js/accountSetting/AccountSetting.js"></script>
+
+    <script src="js/communication/CommunicationController.js"></script>
 
 </html>

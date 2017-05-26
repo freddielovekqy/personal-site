@@ -1,0 +1,222 @@
+.account-info-page {
+  margin-top: 10px;
+  .account-info-div {
+    background: #fff;
+    height: 230px;
+    width: 100%;
+    padding: 20px;
+    position: relative;
+    .user-img-relationship {
+      float: left;
+      position: relative;
+      label {
+        cursor: pointer;
+      }
+      img {
+        width: 150px;
+        height: 150px;
+      }
+      .replace-for-user-image {
+        width: 150px;
+        height: 150px;
+        font-size: 9em;
+        color: #ccc;
+        text-align: center;
+        line-height: 150px;
+      }
+      .image-help-text {
+        position: absolute;
+        left: 25px;
+        top: 161px;
+        color: #808080;
+      }
+      .blog-relationship {
+        text-align: center;
+        margin-top: 8px;
+        .follow {
+          display: inline-block;
+          width: 70px;
+          border-right: 1px solid #ccc;
+          .follow-count {
+            font-weight: bold;
+          }
+          .follow-label {
+            color: #999;
+          }
+        }
+        .fan {
+          display: inline-block;
+          width: 70px;
+          .fan-count {
+            font-weight: bold;
+          }
+          .fan-label {
+            color: #999;
+          }
+        }
+      }
+    }
+    .user-basic-info {
+      display: inline-block;
+      margin-left: 20px;
+      .username {
+        font-size: 24px;
+        font-weight: bold;
+      }
+      .user-other-info {
+        margin: 10px 0;
+        div {
+          display: inline-block;
+          margin: 0 10px;
+        }
+      }
+      .signature-line {
+        position: absolute;
+        left: 190px;
+        right: 20px;
+        padding-top: 10px;
+        color: #999;
+        border-top: 1px solid #f0f0f0;
+      }
+    }
+    .blog-info {
+      margin: 50px 0px 0px 170px;
+      div {
+        display: inline-block;
+      }
+      .ranking-div {
+        margin-right: 20px;
+        .ranking-label {
+        }
+        .ranking {
+
+        }
+      }
+      .integral-div {
+        margin-right: 20px;
+      }
+      .level-div {
+        margin-right: 20px;
+      }
+      .total-hits-div {
+        margin-right: 20px;
+      }
+    }
+  }
+  .account-section {
+    margin-top: 15px;
+    .account-section-tab {
+      background: #fff;
+      .account-section-tab-item {
+        display: inline-block;
+        line-height: 45px;
+        height: 45px;
+        padding: 0 30px;
+        cursor: pointer;
+      }
+      .account-section-tab-item-selected {
+        border-bottom: 4px solid #2ba7ff;
+        color: #2ba7ff;
+        font-weight: bold;
+      }
+    }
+    .account-content-div {
+      margin-top: 10px;
+    }
+  }
+  .attention-user-item {
+    width: 261px;
+    height: 140px;
+    padding: 15px 0;
+    background: #f2f2f5;
+    display: inline-block;
+    border-radius: 5px;
+    .user-image {
+      height: 100%;
+      float: left;
+      width: 80px;
+      border-right: 1px solid #d9d9d9;
+      position: relative;
+      .image {
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin: auto 15px;
+        left: 0;
+        right: 0;
+        img {
+          height: 100%;
+          border-radius: 25px;
+        }
+      }
+    }
+    .user-info {
+      float: left;
+      margin-left: 15px;
+      .username {
+        font-weight: bold;
+        margin-bottom: 2px;
+      }
+      .attention-status, .brief-introduction, .attention-source {
+        line-height: 20px;
+        font-size: 12px;
+      }
+      .attention-operation {
+        margin-top: 3px;
+        div {
+          display: inline-block;
+        }
+        .group-button {
+          padding: 3px 15px;
+        }
+        .operation-button {
+          padding: 3px 7px;
+        }
+      }
+    }
+  }
+
+  .fan-user-item {
+    width: 261px;
+    height: 125px;
+    padding: 15px 0;
+    background: #f2f2f5;
+    display: inline-block;
+    border-radius: 5px;
+    .user-image {
+      height: 100%;
+      float: left;
+      width: 80px;
+      border-right: 1px solid #d9d9d9;
+      position: relative;
+      .image {
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin: auto 15px;
+        left: 0;
+        right: 0;
+        img {
+          height: 100%;
+          border-radius: 25px;
+        }
+      }
+    }
+    .user-info {
+      float: left;
+      margin-left: 15px;
+      .username {
+        font-weight: bold;
+        margin-bottom: 2px;
+      }
+      .fan-status, .brief-introduction, .fan-source {
+        line-height: 20px;
+        font-size: 12px;
+      }
+    }
+  }
+}

@@ -1,4 +1,4 @@
-function generatePaginationFromReq(request) {
+function generateBlogPaginationFromReq(request) {
     if (!request) {
         return null;
     } else {
@@ -10,11 +10,13 @@ function generatePaginationFromReq(request) {
         var pagination = {
             startIndex: startIndex,
             pageSize: pageSize,
-            sort: {}
+            sort: {
+                topShow: -1
+            }
         };
         pagination.sort[sortName] = sortType;
         return pagination;
     }
 }
 
-module.exports.generatePaginationFromReq = generatePaginationFromReq
+module.exports.generateBlogPaginationFromReq = generateBlogPaginationFromReq

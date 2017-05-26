@@ -10,12 +10,29 @@ blogListModule.constant('blogConstants', {
     BLOG_TYPES_TRANSLATION: '译文',
     BLOG_TYPES_TRANSLATION_SHOW: '译'
 });
-blogListModule.controller('BlogListController', ['$scope', '$location', 'HttpService', 'SessionStorageUtils', 'blogConstants', '$routeParams',
-    function ($scope, $location, HttpService, SessionStorageUtils, blogConstants, $routeParams) {
+blogListModule.controller('BlogListController', ['$scope', '$location', '$timeout', 'HttpService', 'StorageUtils', 'blogConstants', '$routeParams', 'CommonUserUtils',
+    function ($scope, $location, $timeout, HttpService, StorageUtils, blogConstants, $routeParams, CommonUserUtils) {
         init();
 
         $scope.createBlog = function () {
             $location.path('/blog/create');
+        };
+
+        $scope.blogManager = function () {
+            $location.path('/blog/manager');
+        };
+
+        $scope.editBlog = function (id) {
+            $location.path('/blog/edit/' + id);
+        };
+
+        $scope.removeBlog = function (id) {
+            HttpService.delete({
+                url: 'api/blog/' + id,
+                success: function (data) {
+                    $location.path('/blog');
+                }
+            });
         };
 
         function getBlogList(userId) {
@@ -55,11 +72,19 @@ blogListModule.controller('BlogListController', ['$scope', '$location', 'HttpSer
         }
 
         function init() {
-            $scope.currentUser = SessionStorageUtils.getItem('currentUser');
-            $scope.userId = $routeParams.userId || $scope.currentUser._id;
-            console.log('$scope.userId', $scope.userId);
-            if ($scope.userId) {
-                getBlogList($scope.userId);
+            var result = CommonUserUtils.getCurrentUserInfo();
+            if (result instanceof Promise) {
+                result.then( (data) => {
+                    $timeout(() => {
+                        $scope.currentUser = data;
+                        $scope.userId = $routeParams.userId || $scope.currentUser._id;
+                        $scope.userId && getBlogList($scope.userId);
+                    }, 0);
+                });
+            } else {
+                $scope.currentUser = result;
+                $scope.userId = $routeParams.userId || $scope.currentUser._id;
+                $scope.userId && getBlogList($scope.userId);
             }
         }
     }

@@ -15,17 +15,8 @@ body {
         text-decoration: none;
     }
 
-    // 自定义多选框
-    .custom-checkbox-div {
-        input[type="checkbox"] {
-            cursor: pointer;
-        }
-        .custom-checkbox-label {
-            display: inline-block !important;
-            padding-left: 5px;
-        }
-    }
 
+    // 输入框错误样式
     .input-has-error {
         border-color: #a94442;
         -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
@@ -35,5 +26,284 @@ body {
         border-color: #843534;
         -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 6px #ce8483;
         box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 6px #ce8483;
+    }
+    // 自定义tooltip样式
+    .my-tooltip {
+        position: absolute;
+        z-index: 1070;
+        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 1.42857143;
+        text-align: left;
+        text-align: start;
+        text-decoration: none;
+        text-shadow: none;
+        text-transform: none;
+        letter-spacing: normal;
+        word-break: normal;
+        word-spacing: normal;
+        word-wrap: normal;
+        white-space: normal;
+        filter: alpha(opacity=0);
+        opacity: 0;
+        padding: 5px 0;
+        display: inline-block;
+        margin: 10px 20px;
+        opacity: 1;
+        display: none;
+        .my-tooltip-arrow {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-color: transparent;
+            border-style: solid;
+            bottom: 0;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px 5px 0;
+            border-top-color: #ccc;
+            }
+        .my-tooltip-inner {
+            max-width: 200px;
+            padding: 5px 10px;
+            color: #000;
+            text-align: center;
+            border-radius: 4px;
+            background: #fff;
+            border: solid 1px #a0c7ff;
+        }
+    }
+
+    // 自定义多选框组
+    .customer-checkbox-list {
+        .checkbox-item {
+            display: inline-block;
+            margin-right: 15px;
+            label {
+                font-weight: normal;
+            }
+        }
+    }
+
+    // 自定义多选框
+    .my-checkbox-div {
+        .my-checkbox {
+            display: none;
+        }
+        .label-text {
+            cursor: pointer;
+        }
+        .my-checkbox + label { 
+            width: 20px;
+            height: 20px;
+            display: inline-block; 
+            position: relative; 
+            top: 5px;
+            padding: 9px; 
+            margin: 0px 5px 0px 0px;
+            border: 1px solid #C1CACA; 
+            border-radius: 3px; 
+            background-color: #FFF; 
+            cursor: pointer;
+        }
+
+        .my-checkbox + label:hover {
+            box-sizing: border-box;
+            background: #fbfbfb;
+        }
+
+        .my-checkbox + label:hover:after { 
+            content: '\2713'; //勾选符号 
+            position: absolute; 
+            top: -5px; 
+            left: 0px; 
+            color: #ccc; 
+            width: 100%; 
+            height: 100%;
+            text-align: center; 
+            font-size: 1.4em; 
+            padding: 1px 0 0 0; 
+            vertical-align: text-top; 
+        } 
+        
+        .my-checkbox:checked + label { 
+            background-color: rgb(36, 137, 197); 
+            border: 1px solid rgb(36, 137, 197); 
+            color: #243441; 
+        } 
+        
+        .my-checkbox:checked + label:after { 
+            content: '\2713'; //勾选符号 
+            position: absolute; 
+            top: -5px; 
+            left: 0px; 
+            color: #fff; 
+            width: 100%; 
+            height: 100%;
+            text-align: center; 
+            font-size: 1.4em; 
+            padding: 1px 0 0 0; 
+            vertical-align: text-top; 
+        } 
+
+        .my-checkbox:disabled + label {
+            background: #fff;
+            border: 1px solid #ddd;
+        }
+
+        .my-checkbox:disabled + label:after {
+            display: none;
+        }
+
+        .my-checkbox:checked:disabled + label {
+            background-color: #ccc;
+            border: 1px solid #ccc; 
+        }
+
+        .my-checkbox:checked:disabled + label:after {
+            content: '\2713'; //勾选符号 
+            position: absolute; 
+            top: -5px; 
+            left: 0px; 
+            color: #fff; 
+            width: 100%; 
+            height: 100%;
+            text-align: center; 
+            font-size: 1.4em; 
+            padding: 1px 0 0 0; 
+            vertical-align: text-top; 
+            display: inline-block;
+        }
+    }
+
+    // 弹出框样式
+    .my-popover {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        box-shadow: 0 0 8px 1px #ccc;
+        border-radius: 5px;
+        background: #fff;
+        z-index: 1000;
+        .popover-title {
+            cursor: move;
+        }
+        .popover-content {
+            padding: 15px;
+            .item {
+                margin-bottom: 10px;
+                .item-label {
+                    display: inline-block;
+                    vertical-align: top;
+                    line-height: 35px;
+                    width: 60px;
+                    text-align: right;
+                    margin-right: 10px;
+                }
+                .item-input {
+                    display: inline-block;
+                    width: 260px;
+                }
+            }
+        }
+        .popover-footer {
+            background-color: #f7f7f7;
+            border-top: 1px solid #ebebeb;
+            border-radius: 0 0 5px 5px;
+            height: 40px;
+            width: 100%;
+            text-align: right;
+            line-height: 40px;
+            padding-right: 10px;
+        }
+    }
+
+    .message-popover {
+        width: 300px;
+        height: 135px;
+        background: #ffffff;
+        z-index: 100;
+        .popover-content {
+            .message-popover-icon {
+                font-size: 2em;
+                color: #53b0da;
+                display: inline-block;
+            }
+            .message-content {
+                display: inline-block;
+                line-height: 30px;
+                vertical-align: top;
+            }
+        }
+        .popover-footer {
+            button {
+                margin-left: 10px;
+            }
+        }
+    }
+
+    // 自定义开关按钮的样式
+    .my-switch {
+        .switch-div {
+            position: relative;
+            width: 55px;
+            height: 30px;
+            background: #eee;
+            border-radius: 30px;
+            cursor: pointer;
+            border: solid 1px #ccc;
+            box-sizing: content-box;
+            .switch-handle {
+                width: 30px;
+                height: 30px;
+                border-radius: 30px;
+                // border: solid 1px #ccc;
+                text-align: center;
+                line-height: 30px;
+                position: absolute;
+                background: #fff;
+                font-size: 12px;
+                
+            }
+        }
+        .small {
+            width: 35px;
+            height: 20px;
+            .switch-handle {
+                width: 20px;
+                height: 20px;
+                border-radius: 20px;
+                line-height: 20px;
+            }
+        }
+        .switch-div-on {
+            border: solid 1px #35c036;
+            background: #35c036;
+            .switch-handle {
+                right: 0;
+            }
+        }
+        .switch-div-off {
+            background: #eee;
+            .switch-handle {
+                left: 0;
+            }
+        }
+        .switch-div-on-disabled {
+            background: #aaa;
+            .switch-handle {
+                right: 0;
+            }
+        }
+        .switch-div-off-disabled {
+            background: #eee;
+            .switch-handle {
+                left: 0;
+            }
+        }
     }
 }

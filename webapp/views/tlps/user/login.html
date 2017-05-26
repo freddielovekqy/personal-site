@@ -4,7 +4,7 @@
         <img src="image/logo.png" class="login-logo-img" alt=""/>
         <div class="login-contain">
             <div class="username-div">
-                <label class="label-for-text" for="email">用户名：</label>
+                <label class="label-for-text" for="email">邮箱：</label>
                 <div class="input-line">
                     <span class="glyphicon glyphicon-user login-icon"></span>
                     <input type="text" class="form-control login-input" id="email" ng-model="email" placeholder="请输入邮箱">
@@ -20,7 +20,7 @@
             </div>
             <div class="login-option">
                 <div class="checkbox auto-login">
-                    <customer-checkbox ng-model="option"></customer-checkbox>
+                    <customer-checkbox option="option"></customer-checkbox>
                 </div>
                 <a class="forget-password">忘记密码？</a>
             </div>

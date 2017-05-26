@@ -1,0 +1,27 @@
+<div class="edit-album-popover my-popover">
+    <div class="popover-title">创建相册</div>
+    <div class="popover-content">
+        <div class="item">
+            <div class="item-label">相册名称</div>
+            <div class="item-input">
+                <input type="text" class="form-control" placeholder="请输入相册名称" ng-model="album.name"/>
+            </div>
+        </div>
+        <div class="item">
+            <div class="item-label">描述</div>
+            <div class="item-input">
+                <textarea name="" class="form-control" id="blogSummary" cols="30" rows="3" ng-model="album.description"></textarea>
+            </div>
+        </div>
+        <div class="item">
+            <div class="item-label">权限</div>
+            <div class="item-input">
+                <select ng-model="selectedJurisdiction" ng-options="jurisdictions.label for jurisdictions in albumJurisdictions" class="form-control work-year-select"></select>
+            </div>
+        </div>
+    </div>
+    <div class="popover-footer">
+        <button type="button" class="btn btn-info btn-sm" ng-click="save()">保存</button>
+        <button type="button" class="btn btn-default btn-sm" ng-click="cancel()">取消</button>
+    </div>
+</div>

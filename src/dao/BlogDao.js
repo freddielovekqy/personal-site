@@ -1,4 +1,7 @@
-var Blog = require("../model/blog.js");
+var BlogSchemaModule = require("../model/blog.js");
+var Blog = BlogSchemaModule.Blog;
+var BlogReader = BlogSchemaModule.BlogReader;
+var Gooder = BlogSchemaModule.Gooder;
 
 function save(blogDTO) {
     var blog = new Blog({
@@ -7,33 +10,53 @@ function save(blogDTO) {
         keyword: blogDTO.keyword,
         content: blogDTO.content,
         type: blogDTO.type,
+        categories: blogDTO.categories,
+        status: blogDTO.status,
+        commentAble: blogDTO.commentAble,
+        topShow: blogDTO.topShow,
         userId: blogDTO.userId,
         comment: blogDTO.comment,
         reader: blogDTO.reader
     });
-    var promise = blog.save();
-    promise.then(function (data) {
-        return data;
-    }).catch(function (error) {
-        return error;
-    });
+    return blog.save();
 }
 
-function findByUser(userId, paginationParams, isCurrentUser) {
-    var candition = { userId: userId };
-    !isCurrentUser && (candition.isPublic = true);
+function update(id, blog) {
+    return Blog.update({'_id': id}, blog);
+}
+
+function updateBlogAttr(id, key, value) {
+    var updateObj = {};
+    updateObj[key] = value;
+    return Blog.update({ '_id': id }, { '$set': updateObj });
+}
+
+function countUserBlogs(userId) {
+    return Blog.count({userId: userId, status: 1}).exec();
+}
+
+function findByUser(candition, paginationParams) {
     // sort = {'logindate':-1}
-    var promise = Blog.find(candition).skip(paginationParams.startIndex).limit(paginationParams.pageSize).sort(paginationParams.sort).exec();
-    promise.then(function (data) {
-        return data;
-    }).catch(function (error) {
-        return error;
-    });
-    return promise;
+    console.log('candition', candition);
+    if (paginationParams) {
+        return Blog.find(candition).skip(paginationParams.startIndex).limit(paginationParams.pageSize).sort(paginationParams.sort).exec();
+    } else {
+        return Blog.find(candition).lean().exec();
+    }
 }
 
-function findByBlogId(blogId) {
-    var promise = Blog.find({ _id: blogId }).exec();
+function findRecentBlogs(startIndex = 0, pageSize = 30) {
+    return Blog
+        .find({})
+        .skip(startIndex)
+        .limit(pageSize)
+        .sort({ createDate: -1 })
+        .lean()
+        .exec();
+}
+
+function findById(blogId) {
+    var promise = Blog.findById(blogId).exec();
     promise.then(function (data) {
         return data;
     }).catch(function (error) {
@@ -51,6 +74,10 @@ function getBlogCountByCondition(condition) {
 }
 
 module.exports.save = save;
+module.exports.update = update;
+module.exports.updateBlogAttr = updateBlogAttr;
 module.exports.findByUser = findByUser;
-module.exports.findByBlogId = findByBlogId;
+module.exports.findRecentBlogs = findRecentBlogs;
+module.exports.findById = findById;
+module.exports.countUserBlogs = countUserBlogs;
 module.exports.getBlogCountByCondition = getBlogCountByCondition;

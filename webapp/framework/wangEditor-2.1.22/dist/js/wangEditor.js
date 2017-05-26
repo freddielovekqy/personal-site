@@ -3241,7 +3241,7 @@ _e(function (E, $) {
         '|',
         'img',
         'video',
-        'location',
+        // 'location', TODO 博客系统暂不支持
         'insertcode',
         '|',
         'undo',

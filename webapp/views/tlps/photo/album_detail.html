@@ -1,0 +1,78 @@
+<div class="album-detail-page container">
+    <div class="photo-header" ng-hide="isAccountInfoPage">
+        <div class="photo-header-title select">相册</div>
+        <div class="photo-header-title">照片</div>
+    </div>
+    <div class="album-info-div">
+        <div class="album-image">
+            <img src="{{album.defaultPhoto.path}}" alt=""/>
+        </div>
+        <div class="album-info">
+            <div class="album-title">{{album.name}}</div>
+            <div class="album-photos-count">{{album.photos.length}}张</div>
+            <div class="album-more-info-link" ng-click="showMoreInfo($event)">
+                <span>更多信息</span>
+                <span class="fa fa-angle-down"></span>
+            </div>
+            <div class="album-more-info-popover" ng-show="showMoreInfoFlag">
+                <div class="album-jurisdiction">
+                    <span class="album-more-info-label">权限</span>
+                    <span class="album-more-info-value">{{selectedJurisdiction.label}}</span>
+                </div>
+                <div class="album-description">
+                    <span class="album-more-info-label">描述</span>
+                    <span class="album-more-info-value">{{album.description}}</span>
+                </div>
+                <div class="album-create-date">
+                    <span class="album-more-info-label">时间</span>
+                    <span class="album-more-info-value">{{album.createDate}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="operations-div" ng-hide="multiOperate">
+            <button type="button" class="btn btn-info upload-photo" ng-click="uploadPhoto()">
+                <span class="fa fa-upload"></span>
+                <span>上传照片</span>
+            </button>
+            <button type="button" class="btn btn-info multi-operation" ng-click="multiOperation()">批量管理</button>
+            <button type="button" class="btn btn-info edit-album" ng-click="editAlbum()">编辑相册</button>
+            <button type="button" class="btn btn-link delete-album" ng-click="deleteAlbum()">删除相册</button>
+        </div>
+        <div class="operations-div" ng-show="multiOperate">
+            <button type="button" class="btn btn-info multi-operation" ng-click="multiOperation()">取消</button>
+            <button type="button" class="btn btn-link multi-operate-all-select" ng-click="multiOperateSelectedAll()">全选</button>
+            <button type="button" class="btn btn-link delete-selected-photos" ng-click="deleteSelectedPhotos()">删除</button>
+        </div>
+    </div>
+    <div class="photos-in-album">
+        <div class="photo-item-div" ng-repeat="photo in album.photos">
+            <img src="{{photo.path}}" alt="" ng-class="{'multi-operate-selected': photo.option.checked}" ng-click="showPhoto(photo)"/>
+            <div class="photo-operations" ng-mouseleave="showPhotoOperationsClick(photo, false)">
+                <div class="photo-operation-icon" ng-click="showPhotoOperationsClick(photo, true)" ng-class="{'hide-bottom-border': photo.showPhotoOperations}" ng-hide="multiOperate">
+                    <span class="fa fa-chevron-down"></span>
+                </div>
+                <div class="photo-multi-operate">
+                    <customer-checkbox option="photo.option" ng-show="multiOperate"></customer-checkbox>
+                </div>
+                <div class="photo-operation-items" ng-show="photo.showPhotoOperations">
+                    <div class="photo-operation-item" ng-click="editPhoto(photo)">
+                        <span class="fa fa-pencil"></span>
+                        <span class="operation-text">编辑</span>
+                    </div>
+                    <div class="photo-operation-item" ng-click="setToCover(photo)">
+                        <span class="fa fa-newspaper-o"></span>
+                        <span class="operation-text">设置为封面</span>
+                    </div>
+                    <div class="photo-operation-item" ng-click="deletePhoto(photo)">
+                        <span class="fa fa-trash"></span>
+                        <span class="operation-text">删除</span>
+                    </div>
+                </div>
+            </div>
+            <div class="photo-name">{{photo.name}}</div>
+        </div>
+    </div>
+    <div class="photo-popover-container">
+
+    </div>
+</div>

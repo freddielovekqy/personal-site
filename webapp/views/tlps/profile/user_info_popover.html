@@ -1,0 +1,39 @@
+<div class="user-info-popover my-popover" ng-style="positionStype" ng-mouseover="showOrHide(true)" ng-mouseleave="showOrHide(false)">
+    <div class="background-image">
+        <div class="user-image" ng-class="{'class-for-no-image': !userInfo.headImgPath}">
+            <img src="{{userInfo.headImgPath}}" alt="" ng-show="userInfo.headImgPath">
+            <span class="fa fa-user-o replace-for-user-image" ng-hide="userInfo.headImgPath"></span>
+        </div>
+        <div class="username">{{userInfo.username}}</div>
+        <div class="brief-introduction">{{userInfo.briefIntroduction}}</div>
+    </div>
+    <div class="other-info">
+        <div class="attention">
+            <span>关注</span>
+            <span>{{userInfo.attentionCount || 0}}</span>
+        </div>
+        <div class="fans">
+            <span>粉丝</span>
+            <span>{{userInfo.fanCount || 0}}</span>
+        </div>
+        <div class="simple-blog">
+            <span>微博</span>
+            <span>{{userInfo.simpleBlogCount || 0}}</span>
+        </div>
+        <div class="blog">
+            <span>博客</span>
+            <span>{{userInfo.blogCount || 0}}</span>
+        </div>
+    </div>
+    <div class="operations">
+        <button type="button" class="btn btn-default btn-sm" ng-show="!attentionInfo.type && currentUserInfo._id !== userInfo._id" ng-click="addAttention()">关注</button>
+        <div ng-show="attentionInfo.type && currentUserInfo._id !== userInfo._id" class="followed">
+            <button type="button" class="btn btn-default btn-sm" ng-click="deleteAttentions()">取消关注</button>
+            <!-- 功能暂不开放 -->
+            <button type="button" class="btn btn-default btn-sm" style="display: none;">切换分组</button>
+        </div>
+
+        <button type="button" class="btn btn-default btn-sm private-chat" ng-show="currentUserInfo._id !== userInfo._id" ng-click="privateChat()">私聊</button>
+        <a href="blog/list/{{userInfo._id}}">ta的博文</a>
+    </div>
+</div>

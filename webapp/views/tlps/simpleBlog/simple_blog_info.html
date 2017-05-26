@@ -1,0 +1,66 @@
+<div class="dynamic-item">
+    <div class="fa fa-angle-down show-content-operations" ng-click="showOperations()"></div>
+    <div class="dynamic-item-operations" ng-show="showOperationsFlag">
+        <div class="operation-item" ng-show="content.userId === currentUser._id" ng-click="deleteContent()">删除</div>
+        <div class="operation-item" ng-show="content.userId === currentUser._id && content.jurisdiction !== 1" ng-click="updateJurisdiction(1)">转换为所有人可见</div>
+        <div class="operation-item" ng-show="content.userId === currentUser._id && content.jurisdiction !== 2" ng-click="updateJurisdiction(2)">转换为好友可见</div>
+        <div class="operation-item" ng-show="content.userId === currentUser._id && content.jurisdiction !== 3" ng-click="updateJurisdiction(3)">转换为自己可见</div>
+        <div class="operation-item" ng-show="content.userId !== currentUser._id" ng-click="shieldContent()">屏蔽这条内容</div>
+        <div class="operation-item" ng-show="content.userId !== currentUser._id" ng-click="shieldUser()">屏蔽{{content.userInfo.username}}</div>
+        <div class="operation-item" ng-show="content.userId !== currentUser._id" ng-click="removeAttention()">取消关注{{content.userInfo.username}}</div>
+    </div>
+    <div class="personal-dynamic-info">
+        <div class="user-image" ng-class="{'class-for-no-image': !content.userInfo.headImgPath}">
+            <img src="{{content.userInfo.headImgPath}}" alt="" ng-show="content.userInfo.headImgPath"/>
+            <span class="fa fa-user-o replace-for-user-image" ng-hide="content.userInfo.headImgPath"></span>
+        </div>
+        <div class="username">
+            <span ng-mouseover="showOrHideUserInfoPopover(true, $event)" ng-mouseleave="showOrHideUserInfoPopover(false)">{{content.userInfo.username || content.userInfo.email}}</span>
+        </div>
+        <div class="dynamic-other-info">{{content.createDate}} 来自 {{content.source}}</div>
+        <div class="personal-dynamic-info-detail">{{content.content}}</div>
+    </div>
+    <div class="original-dynamic-info" ng-if="content.originSimpleBlog">
+        <div class="username">@{{content.originSimpleBlog.userInfo.username}}</div>
+        <div class="dynamic-info-detail">{{content.originSimpleBlog.content}}</div>
+        <div class="dynamic-foot-div">
+            <div class="dynamic-other-info">{{content.originSimpleBlog.createDate}} 来自 {{content.originSimpleBlog.source}}</div>
+            <div class="dynamic-foot-operation">
+                <div class="forward">
+                    <span class="operation-text" ng-click="forwardSimpleBlog(content.originSimpleBlog)"><span class="fa fa-reply"></span>{{content.originSimpleBlog.replyNum > 0 ? content.originSimpleBlog.replyNum : '转发'}}</span>
+                </div>
+                <div class="comment">
+                    <span class="operation-text"><span class="fa fa-commenting-o"></span>{{content.originSimpleBlog.commentsNum > 0 ? content.originSimpleBlog.commentsNum : '评论'}}</span>
+                </div>
+                <div class="good">
+            <span class="operation-text"><span class="fa fa-thumbs-o-up" ng-class="{'operated':content.originSimpleBlog.isHaveFavor}"></span>
+                {{content.originSimpleBlog.goodNum > 0 ? content.originSimpleBlog.goodNum : '赞'}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="dynamic-foot-operation">
+        <div class="reader" ng-show="content.userId === currentUser._id">
+            <span class="operation-text">阅读 175</span>
+        </div>
+        <div class="collection" ng-hide="content.userId === currentUser._id">
+            <span class="operation-text" ng-hide="content.isHaveCollected"><span class="fa fa-star-o"></span>收藏</span>
+            <span class="operation-text" ng-show="content.isHaveCollected"><span class="fa fa-star"></span>已收藏</span>
+        </div>
+        <div class="forward">
+            <span class="operation-text" ng-click="forwardSimpleBlog(content)"><span class="fa fa-reply"></span>{{content.replyNum > 0 ? content.replyNum : '转发'}}</span>
+        </div>
+        <div class="comment">
+            <span class="operation-text" ng-click="showComments()"><span class="fa fa-commenting-o"></span>{{content.commentNum > 0 ? content.commentNum : '评论'}}</span>
+        </div>
+        <div class="good">
+            <span class="operation-text"><span class="fa fa-thumbs-o-up" ng-class="{'operated': content.gooders.length > 0}"></span>
+                {{content.gooders.length > 0 ? content.gooders.length : '赞'}}</span>
+        </div>
+    </div>
+    <div class="comment-div" ng-if="showCommentFlag">
+        <comment-directive current-user="currentUser" user-info="content.userInfo" object-info="content"></comment-directive>
+    </div>
+    <div class="forward-simple-blog-div">
+    </div>
+</div>

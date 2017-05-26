@@ -1,0 +1,202 @@
+.album-detail-page {
+  margin-top: 10px;
+
+  .photo-header {
+    background: #fff;
+    height: 40px;
+    line-height: 40px;
+    .photo-header-title {
+      height: 40px;
+      display: inline-block;
+      padding: 0 20px;
+      font-size: 14px;
+      cursor: pointer;
+      &.select {
+        border-bottom: 3px solid #2ba7ff;
+        box-sizing: border-box;
+      }
+    }
+  }
+
+  .album-info-div {
+    background: #fff;
+    margin-top: 10px;
+    padding: 20px 10px 10px 10px;
+    .album-image {
+      width: 70px;
+      height: 70px;
+      display: inline-block;
+      vertical-align: top;
+      border: 1px solid #ccc;
+      padding: 2px;
+      img {
+        width: 100%;
+      }
+    }
+    .album-info {
+      display: inline-block;
+      margin-left: 10px;
+      .album-title {
+        font-size: 18px;
+        font-weight: bold;
+        display: inline-block;
+      }
+      .album-photos-count {
+        display: inline-block;
+        margin-left: 10px;
+        font-size: 10px;
+      }
+      .album-more-info-link {
+        display: inline-block;
+        margin-left: 10px;
+        font-size: 10px;
+        &:hover {
+          color: #2ba7ff;
+          cursor: pointer;
+        }
+      }
+      .album-more-info-popover {
+        box-shadow: 0 0 5px 1px #ccc;
+        border-radius: 2px;
+        padding: 20px;
+        margin-top: 10px;
+        position: absolute;
+        z-index: 10;
+        background: #fff;
+        .album-jurisdiction, .album-description, .album-create-date {
+          line-height: 25px;
+        }
+        .album-more-info-label {
+          margin-right: 10px;
+          color: #888;
+        }
+      }
+    }
+    .operations-div {
+      margin: -35px 0 0 85px;
+      button {
+        margin-right: 5px;
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+      .upload-photo {
+
+      }
+      .multi-operation {
+
+      }
+      .delete-album, .delete-selected-photos {
+        color: #FF0000;
+      }
+    }
+  }
+
+  .photos-in-album {
+    height: 500px;
+    background: #faf7e6;
+    padding: 20px;
+    .photo-item-div {
+      width: 160px;
+      height: 190px;
+      background: #ccc;
+      position: relative;
+      display: inline-block;
+      margin: 0 11px;
+      img {
+        width: 100%;
+        height: 160px;
+        &.multi-operate-selected {
+          border: 2px solid #2489c5;
+        }
+      }
+
+      &:hover {
+        .photo-operations {
+          .photo-operation-icon {
+            display: block;
+          }
+        }
+      }
+      .photo-operations {
+        .photo-operation-icon {
+          display: none;
+          position: absolute;
+          right: 10px;
+          top: 10px;
+          height: 20px;
+          width: 20px;
+          border: 1px solid #ccc;
+          border-radius: 3px;
+          box-shadow: 0 0 1px 0 #ccc;
+          background-color: #fff;
+          z-index: 100;
+          .fa {
+            position: relative;
+            top: -1px;
+            left: 2px;
+          }
+          &:hover {
+            cursor: pointer;
+          }
+          &.hide-bottom-border {
+            border-bottom: #ffffff;
+            border-radius: 3px 3px 0 0;
+            box-shadow: none;
+          }
+        }
+        .photo-multi-operate {
+          position: absolute;
+          top: 0;
+          left: 5px;
+        }
+        .photo-operation-items {
+          width: 130px;
+          position: absolute;
+          top: 29px;
+          right: 10px;
+          border: 1px solid #ccc;
+          border-radius: 3px;
+          box-shadow: 0 0 1px 0 #ccc;
+          background-color: #fff;
+          z-index: 99;
+          padding: 2px 0;
+          &:hover {
+            border-radius: 3px 0 3px 3px;
+          }
+          .photo-operation-item {
+            height: 30px;
+            line-height: 30px;
+            padding: 2px 10px;
+            color: #666;
+            .fa {
+              width: 20px;
+              text-align: center;
+            }
+            .operation-text {
+              margin-left: 5px;
+            }
+            &:hover {
+              background: #2ba7ff;
+              cursor: pointer;
+            }
+          }
+        }
+      }
+      .photo-name {
+        height: 30px;
+        background: #fafafa;
+        text-align: center;
+        line-height: 30px;
+      }
+    }
+  }
+}
+.photo-popover-mark {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 1;
+}

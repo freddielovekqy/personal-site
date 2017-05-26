@@ -1,0 +1,57 @@
+<div class="account-info-page container">
+    <div class="account-info-div">
+        <div class="user-img-relationship" ng-click="selectImage()">
+            <input type="file" id="uploadUserImage" onchange="angular.element(this).scope().fileSelected()" accept=".jpg,.png" style="display: none;"/>
+            <label for="uploadUserImage">
+                <img src="{{user.headImgPath}}" alt="" ng-show="user.headImgPath"/>
+                <span class="fa fa-user-o replace-for-user-image" ng-hide="user.headImgPath"></span>
+            </label>
+            <span class="image-help-text">点击图片更换头像</span>
+        </div>
+        <div class="user-basic-info">
+            <div class="username">{{user.username}}</div>
+            <div class="user-other-info">
+                <div class="industry">{{user.industry || '未填写行业'}}</div>
+                <span>|</span>
+                <div class="occupation">{{user.occupation || '未填写职业'}}</div>
+                <span>|</span>
+                <div class="name">{{user.realName}}</div>
+                <span>|</span>
+                <div class="country">中国</div>
+                <span>|</span>
+                <div class="sex">男</div>
+                <span>|</span>
+                <div class="birthday">1993/07/21</div>
+            </div>
+            <div class="signature-line">好好学习，天天向上</div>
+        </div>
+        <div class="blog-info">
+            <div class="ranking-div">
+                <div class="ranking-label">排名：</div>
+                <div class="ranking">{{userBlogInfo.ranking}}</div>
+            </div>
+            <div class="integral-div">
+                <div class="integral-label">积分：</div>
+                <div class="integral">{{userBlogInfo.integral}}</div>
+            </div>
+            <div class="level-div">
+                <div class="level-label">等级：</div>
+                <div class="level">{{userBlogInfo.level}}</div>
+            </div>
+            <div class="total-hits-div">
+                <div class="total-hits-label">总点击量：</div>
+                <div class="total-hits">{{userBlogInfo.totalHits}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="account-section">
+        <div class="account-section-tab">
+            <!--<div class="account-section-tab-item" ng-class="{'account-section-tab-item-selected': accountInfoCurrentSelectTab === 'main'}" ng-click="showAccountInfoPage('main')">我的主页</div>-->
+            <div class="account-section-tab-item" ng-class="{'account-section-tab-item-selected': accountInfoCurrentSelectTab === 'photo' || accountInfoCurrentSelectTab === 'album'}" ng-click="showAccountInfoPage('photo')">我的相册</div>
+            <div class="account-section-tab-item" ng-class="{'account-section-tab-item-selected': accountInfoCurrentSelectTab === 'profile'}" ng-click="showAccountInfoPage('profile')">我的资料</div>
+            <div class="account-section-tab-item" ng-class="{'account-section-tab-item-selected': accountInfoCurrentSelectTab === 'relationship'}" ng-click="showAccountInfoPage('relationship')">我的关系</div>
+            <!--<div class="account-section-tab-item" ng-class="{'account-section-tab-item-selected': accountInfoCurrentSelectTab === 'manager'}" ng-click="showAccountInfoPage('manager')">管理中心</div>-->
+        </div>
+        <div class="account-content-div"></div>
+    </div>
+</div>

@@ -3,45 +3,46 @@
         <div class="title">个人资料</div>
         <div class="profile-info">
             <div class="profile-img">
-                <img src="{{user.headImgPath}}" alt=""/>
+                <img src="{{user.headImgPath}}" alt="" ng-show="user.headImgPath"/>
+                <span class="fa fa-user-o replace-for-user-image" ng-hide="user.headImgPath"></span>
             </div>
             <div class="username">{{user.username}}</div>
         </div>
-        <div class="blog-statistics-info">
-            <div class="statistics-item">
-                <div class="statistics-label">访问：</div>
-                <div class="statistics-value">{{userBlogInfo.totalHits}}</div>
-            </div>
-            <div class="statistics-item">
-                <div class="statistics-label">积分：</div>
-                <div class="statistics-value">{{userBlogInfo.integral}}</div>
-            </div>
-            <div class="statistics-item">
-                <div class="statistics-label">等级：</div>
-                <div class="statistics-value">{{userBlogInfo.level}}</div>
-            </div>
-            <div class="statistics-item">
-                <div class="statistics-label">排名：</div>
-                <div class="statistics-value">{{userBlogInfo.ranking > 9999 ? '千里之外' : userBlogInfo.ranking}}</div>
-            </div>
-        </div>
+        <!--<div class="blog-statistics-info">-->
+            <!--<div class="statistics-item">-->
+                <!--<div class="statistics-label">访问：</div>-->
+                <!--<div class="statistics-value">{{userBlogInfo.totalHits}}</div>-->
+            <!--</div>-->
+            <!--<div class="statistics-item">-->
+                <!--<div class="statistics-label">积分：</div>-->
+                <!--<div class="statistics-value">{{userBlogInfo.integral}}</div>-->
+            <!--</div>-->
+            <!--<div class="statistics-item">-->
+                <!--<div class="statistics-label">等级：</div>-->
+                <!--<div class="statistics-value">{{userBlogInfo.level}}</div>-->
+            <!--</div>-->
+            <!--<div class="statistics-item">-->
+                <!--<div class="statistics-label">排名：</div>-->
+                <!--<div class="statistics-value">{{userBlogInfo.ranking > 9999 ? '千里之外' : userBlogInfo.ranking}}</div>-->
+            <!--</div>-->
+        <!--</div>-->
         <div class="blog-summary-info">
             <div class="blog-summary-item">
                 <div class="summary-label">原创：</div>
-                <div class="summary-value">{{userBlogInfo.originCount}}篇</div>
+                <div class="summary-value">{{countInfo.originCount || 0}}篇</div>
             </div>
             <div class="blog-summary-item">
                 <div class="summary-label">转载：</div>
-                <div class="summary-value">{{userBlogInfo.rePrintCount}}篇</div>
+                <div class="summary-value">{{countInfo.rePrintCount || 0}}篇</div>
             </div>
             <div class="blog-summary-item">
                 <div class="summary-label">译文：</div>
-                <div class="summary-value">{{userBlogInfo.translationCount}}篇</div>
+                <div class="summary-value">{{countInfo.translationCount || 0}}篇</div>
             </div>
-            <div class="blog-summary-item">
-                <div class="summary-label">评论：</div>
-                <div class="summary-value">1篇</div>
-            </div>
+            <!--<div class="blog-summary-item">-->
+                <!--<div class="summary-label">评论：</div>-->
+                <!--<div class="summary-value">1篇</div>-->
+            <!--</div>-->
         </div>
     </div>
 </div>

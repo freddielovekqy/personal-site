@@ -1,6 +1,7 @@
 'use strict';
 
-var app = angular.module('app', ['ngRoute', 'ngAnimate', 'home', 'about', 'blog', 'profile', 'loginOut', 'register', 'account-setting']);
+var app = angular.module('app', ['ngRoute', 'ngAnimate', 'ui.grid', 'home', 'communication', 'about', 'blog', 'simpleBlog', 'comment', 'profile',
+    'photo', 'loginOut', 'register', 'account-info', 'account-setting']);
 
 Date.prototype.format = function(format) {
     var o = {
@@ -35,8 +36,9 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
     $locationProvider.html5Mode(true);
 }]);
 
-app.controller('initController', ['$rootScope', '$scope', '$location', '$timeout', 'CommonUtils', 'SessionStorageUtils',
-    function ($rootScope, $scope, $location, $timeout, CommonUtils, SessionStorageUtils) {
+app.controller('initController', ['$rootScope', '$scope', '$location', '$timeout', 'CommonUtils', 'HttpService', 'StorageUtils', 'CommonUserUtils',
+    function ($rootScope, $scope, $location, $timeout, CommonUtils, HttpService, StorageUtils, CommonUserUtils) {
+        console.log('----');
         $scope.showHeader = true;
         $scope.showLoginBtn = false;
         $scope.currentPath = getRootPath($location.path());
@@ -46,19 +48,11 @@ app.controller('initController', ['$rootScope', '$scope', '$location', '$timeout
             $scope.showLoginBtn = ($scope.currentPath === '/login' || $scope.currentPath === '/register');
         });
 
-        $scope.$on('loginSuccess', function () {
-            $scope.currentUser = SessionStorageUtils.getItem('currentUser');
-        });
-
-
-        console.log('$scope.currentPath', $scope.currentPath);
+        getUserInfo();
 
         $scope.changePath = function (path) {
             $scope.currentPath = getRootPath(path);
         };
-
-        $scope.currentUser = SessionStorageUtils.getItem('currentUser');
-        console.log($scope.currentUser);
 
         function getRootPath (path) {
             var pathList = path.split('/');
@@ -71,6 +65,87 @@ app.controller('initController', ['$rootScope', '$scope', '$location', '$timeout
                 $scope.alertObj = null;
             }, 2000);
         });
+
+        function getUserInfo() {
+            var result = CommonUserUtils.getCurrentUserInfo();
+            if (result && result instanceof Promise) {
+                result.then((data) => {
+                    $timeout(() => {
+                        $scope.currentUser = data;
+                    }, 0);
+                });
+            } else if (result) {  
+                $scope.currentUser = result;
+            }
+        }
+
+        var loginSub = postal.subscribe({
+            channel: 'user',
+            topic: 'loginSuccess',
+            callback: data => {
+                getUserInfo();
+            }
+        });
+
+        var updateUserInfoSub = postal.subscribe({
+            channel: 'user',
+            topic: 'updateUserInfo',
+            callback: function (data) {
+                getUserInfo();
+            }
+        });
+
+        var showAlertMessageSubs = postal.subscribe({
+            channel: 'showAlertMessage',
+            topic: 'showAlertMessage',
+            callback: data => {
+                $scope.alertObj = data;
+                $timeout(function () {
+                    $scope.alertObj = null;
+                }, 2000);
+            }
+        });
+
+        $scope.logout = function () {
+            HttpService.post({
+                url: 'api/user/logout',
+                success: data => {
+                    $timeout(() => {
+                        location.reload();
+                    }, 500);
+                }
+            });
+        };
+
+        $scope.showAccountSetting = false;
+        $scope.showSettings = function () {
+            $scope.showAccountSetting = true;
+        };
+
+        $('body').bind('click', clickBody);
+
+        function clickBody(event) {
+            postal.publish({
+                channel: 'elementEvent',
+                topic: 'clickBody',
+                data: {
+                    event: event
+                }
+            });
+            if (!$(event.target).hasClass('glyphicon-cog')) {
+                $timeout(() => {
+                    $scope.showAccountSetting = false;
+                }, 0);
+            }
+        }
+
+        $scope.$on('destroy', data => {
+            $('body').unbind('click', clickBody);
+            loginSub && loginSub.unsubscribe();
+            updateUserInfoSub.unsubscribe();
+            showAlertMessageSubs.unsubscribe();
+        });
+
 
         //var lastScollPosition = 0;
         //$(window).scroll(function () {

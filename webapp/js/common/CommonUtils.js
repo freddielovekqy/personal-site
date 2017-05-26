@@ -1,4 +1,4 @@
-app.service('CommonUtils', [function () {
+app.service('CommonUtils', ['HttpService', function (HttpService) {
     var isPCClient;
     function isPC () {
         if (!isPCClient) {
@@ -20,22 +20,167 @@ app.service('CommonUtils', [function () {
         return isPCClient === 'true';
     }
 
+    function showAlertMessage(data) {
+        postal.publish({
+            channel: 'showAlertMessage',
+            topic: 'showAlertMessage',
+            data: data
+        });
+    }
+
     return {
-        isPC: isPC
+        isPC: isPC,
+        showAlertMessage: showAlertMessage
     }
 }]);
 
-app.service('SessionStorageUtils', [function () {
-    function setItem (key, value) {
-        sessionStorage.setItem(key, JSON.stringify(value));
+app.service('CommonUserUtils', ['$location', 'HttpService', function ($location, HttpService) {
+    var currentUserInfo;
+    var currentUserBlogInfo;
+    var userBlogInfo = {};
+    var getCurrentUserInfoPromise;
+
+    function getCurrentUserInfo() {
+        if (!currentUserInfo) {
+            if (!getCurrentUserInfoPromise) {
+                getCurrentUserInfoPromise = new Promise(function (resolve, reject) {
+                    HttpService.get({
+                        url: 'api/user/currentUser',
+                        success: function (data) {
+                            if (!data || !data._id) {
+                                // 跳转到登录页面
+                                $location.url('/login');
+                            } else {
+                                currentUserInfo = data;
+                                resolve(data);
+                            }
+                            getCurrentUserInfoPromise = undefined;
+                        },
+                        error: function (data) {
+                            getCurrentUserInfoPromise = undefined;
+                        }
+                    });
+                });
+            }
+            return getCurrentUserInfoPromise;
+            
+        } else {
+            return currentUserInfo;
+        }
     }
 
-    function getItem (key) {
-        return JSON.parse(sessionStorage.getItem(key));
+    function getCurrentUserBlogInfo() {
+        if (currentUserBlogInfo) {
+            return currentUserBlogInfo;
+        } else {
+            var result = getCurrentUserInfo();
+            if (result instanceof Promise) {
+                return result.then(userInfo => {
+                    return getUserBlogInfoFunc(userInfo._id, data => {
+                        currentUserBlogInfo = data;
+                    });
+                });
+            } else {
+                return getUserBlogInfoFunc(result._id, data => {
+                    currentUserBlogInfo = data;
+                });
+            }
+        }
+    }
+
+    function updateCurrentUserInfo(callback) {
+        HttpService.get({
+            url: 'api/user/currentUser',
+            success: function (data) {
+                currentUserInfo = data;
+                postal.publish({
+                    channel: 'user',
+                    topic: 'updateUserInfo',
+                    data: {}
+                });
+                callback && callback(userInfo);
+            },
+            error: function (data) {
+            }
+        });
+    } 
+
+    function getUserBlogInfoFunc(userId, callback) {
+        return new Promise(function (resolve, reject) {
+            HttpService.get({
+                url: 'api/userBlogInfo/getInfo/' + userId,
+                success: function (data) {
+                    callback && callback(data);
+                    resolve(data);
+                },
+                error: function (data) {
+                    console.log('get info error');
+                }
+            });
+        });
     }
 
     return {
-        setItem: setItem,
-        getItem: getItem
+        getCurrentUserInfo: getCurrentUserInfo,
+        updateCurrentUserInfo: updateCurrentUserInfo,
+        getCurrentUserBlogInfo: getCurrentUserBlogInfo
+    };
+}]);
+
+app.service('StorageUtils', [function () {
+    function setSessionStorage(key, value) {
+        if (typeof value === 'string') {
+            sessionStorage.setItem(key, value);
+        } else {
+            sessionStorage.setItem(key, JSON.stringify(value));
+        }
     }
+
+    function getSessionStorage(key) {
+        return JSON.parse(sessionStorage.getItem(key));
+    }
+
+    function setLocalStorage(key, value) {
+        if (typeof value === 'string') {
+            localStorage.setItem(key, value);
+        } else {
+            localStorage.setItem(key, JSON.stringify(value));
+        }
+    }
+
+    function  getLocalStorage(key) {
+        return JSON.parse(localStorage.getItem(key));
+    }
+
+    return {
+        setSessionStorage: setSessionStorage,
+        getSessionStorage: getSessionStorage,
+        setLocalStorage: setLocalStorage,
+        getLocalStorage: getLocalStorage
+    }
+}]);
+
+app.service('MessagePopoverUtil', ['$compile', function ($compile) {
+    function createMessagePopover(scope, option) {
+        var baseEle = $('.popover-container');
+        var newScope = scope.$new();
+        newScope.option = option;
+        var ele = $compile('<message-popover></message-popover>')(newScope);
+        baseEle.append(ele);
+    }
+
+    return {
+        createMessagePopover: createMessagePopover
+    };
+}]);
+
+app.service('RadioBroadcast', ['$rootScope', function ($rootScope) {
+    function broadcast(broadcastType, data) {
+        $rootScope.$broadcast(broadcastType, data);
+        $rootScope.$emit(broadcastType, data);
+    }
+
+    return {
+        broadcast: broadcast
+    };
 }]);

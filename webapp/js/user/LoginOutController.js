@@ -7,8 +7,8 @@ loginOutModule.constant('LoginConstants', {
     ENTER_KEY_CODE: 13
 });
 
-loginOutModule.controller('LoginController', ['$scope', 'HttpService', '$location', 'LoginConstants', 'SessionStorageUtils',
-    function ($scope, HttpService, $location, LoginConstants, SessionStorageUtils) {
+loginOutModule.controller('LoginController', ['$scope', 'HttpService', '$location', 'LoginConstants', 'StorageUtils', 'CommonUserUtils',
+    function ($scope, HttpService, $location, LoginConstants, StorageUtils, CommonUserUtils) {
         $scope.option = {
             id: 'rememberCheckbox',
             name: 'rememberCheckbox',
@@ -34,8 +34,13 @@ loginOutModule.controller('LoginController', ['$scope', 'HttpService', '$locatio
                 success: function (data) {
                     console.log('login success...', data);
                     if (data && data._id) {
-                        SessionStorageUtils.setItem('currentUser', data);
-                        $scope.$emit('loginSuccess', data);
+                        StorageUtils.setSessionStorage('currentUser', data);
+                        StorageUtils.setLocalStorage('currentUserId', data._id);
+                        postal.publish({
+                            channel: 'user',
+                            topic: 'loginSuccess',
+                            data: {}
+                        });
                         $location.url('/');
                     } else {
                         $scope.password = '';

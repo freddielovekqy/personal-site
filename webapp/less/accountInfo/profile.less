@@ -1,0 +1,199 @@
+.account-info-profile-page {
+  .account-info-list-group {
+    width: 180px;
+    float: left;
+  }
+  .account-info-category-item {
+    width: 945px;
+    background: #ffffff;
+    float: right;
+    border-radius: 4px;
+    padding: 20px;
+    .account-info-header {
+      height: 27px;
+      border-bottom: 1px solid #ccc;
+      .header-text {
+        font-weight: bold;
+      }
+      .update-password {
+        color: #0061de;
+        text-decoration: underline;
+        margin-left: 10px;
+        cursor: pointer;
+      }
+      button {
+        border-radius: 14px;
+        padding: 3px 7px;
+        float: right;
+        margin-right: 20px;
+        margin-top: -5px;
+      }
+    }
+    .account-info-page-div {
+      .account-info-item {
+        line-height: 45px;
+        .account-info-item-label {
+          display: inline-block;
+          width: 75px;
+          text-align: right;
+          margin-right: 20px;
+        }
+        .account-info-item-value {
+          width: 200px;
+          display: inline-block;
+        }
+        .account-info-item-edit {
+          width: 200px;
+          display: inline-block;
+          .sex-radios {
+            margin-right: 10px;
+          }
+          .choice {
+            display: inline-block;
+            margin: 0 5px;
+            padding: 0 10px;
+            border: 1px solid #ccc;
+            height: 25px;
+            line-height: 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            &.select {
+              border-color: #2ba7ff;
+              background: #2ba7ff;
+            }
+          }
+          select {
+            display: inline-block;
+            width: 49%;
+          }
+        }
+      }
+      .add-education-or-work-button {
+        height: 30px;
+        line-height: 30px;
+        border: 1px solid #ccc;
+        margin: 10px 0;
+        padding: 0 10px;
+        cursor: pointer;
+        &:hover {
+          color: #2ba7ff;
+        }
+        .icon-plus {
+          color: #ffbd21;
+        }
+      }
+      .edit-education-or-work {
+        margin-top: 15px;
+        margin-bottom: 20px;
+        .education-or-work-label {
+          width: 160px;
+          display: inline-block;
+          text-align: right;
+          padding-right: 15px;
+          div {
+            height: 34px;
+            line-height: 34px;
+            margin: 10px 0;
+          }
+        }
+        .education-or-work-value {
+          width: 200px;
+          display: inline-block;
+          div {
+            margin: 10px 0;
+          }
+          .work-year-select {
+            width: 44%;
+            display: inline-block;
+          }
+          .work-location-select {
+            width: 49%;
+            display: inline-block;
+          }
+        }
+        .submit-education-or-work-button {
+          margin: 10px 0 0 164px;
+        }
+      }
+      .education-item {
+        color: #888;
+        font-size: 13px;
+        padding: 10px 0;
+        width: 50%;
+        div {
+          display: inline-block;
+          margin-right: 10px;
+        }
+        div:first-child {
+          margin-left: 10px;
+        }
+        .operation {
+          float: right;
+          span {
+            display: none;
+            margin-right: 15px;
+            cursor: pointer;
+            &.icon-pencil:hover {
+              color: #2ba7ff;
+            }
+            &.icon-remove:hover {
+              color: #FF0000;
+            }
+          }
+        }
+        &:hover {
+          background: #f2f2f2;
+          span {
+            display: inline-block;
+          }
+        }
+      }
+      .work-item {
+        width: 50%;
+        color: #888;
+        font-size: 13px;
+        margin: 10px 0;
+        div {
+          display: inline-block;
+          line-height: 30px;
+        }
+        .operation {
+          float: right;
+          span {
+            display: none;
+            margin-right: 15px;
+            cursor: pointer;
+            &.icon-pencil:hover {
+              color: #2ba7ff;
+            }
+            &.icon-remove:hover {
+              color: #FF0000;
+            }
+          }
+        }
+        .location {
+          margin-left: 10px;
+          display: block;
+        }
+        &:hover {
+          background: #f2f2f2;
+          span {
+            display: inline-block;
+          }
+        }
+      }
+    }
+  }
+}
+
+.update-password-popover {
+  width: 400px;
+  height: 235px;
+  .popover-content {
+    .item {
+      .item-label {
+        width: 70px !important;
+      }
+    }
+  }
+}

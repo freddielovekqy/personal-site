@@ -1,0 +1,52 @@
+<div class="blog-article-manager-page">
+    <div class="blog-search-options">
+        <div class="category-option">
+            <span class="search-label">类型：</span>
+            <div class="category-select">
+                <select class="form-control" ng-model="searchOption.selectedBlogCategory" ng-options="blogCategory.name for blogCategory in blogCategories" ng-change="searchBlogHandler()"></select>
+            </div>
+        </div>
+        <div class="type-option">
+            <span class="search-label">类别：</span>
+            <div class="type-select">
+                <select class="form-control" ng-model="searchOption.selectedBlogType" ng-options="blogType.value for blogType in blogTypes" ng-change="searchBlogHandler()"></select>
+            </div>
+        </div>
+        <div class="search-title-option">
+            <input type="text" class="form-control" ng-model="searchOption.title" placeholder="请输入博客标题" ng-keypress="searchTitleKeyPressHandler($event)"/>
+            <span class="glyphicon glyphicon-search" ng-click="searchBlogHandler()"></span>
+        </div>
+    </div>
+    <div class="blog-table-div">
+        <div class="table-header">
+            <div class="table-header-item" style="width: 50%; text-align: left;">标题</div>
+            <div class="table-header-item" style="width: 5%">状态</div>
+            <div class="table-header-item" style="width: 5%">阅读</div>
+            <div class="table-header-item" style="width: 5%">评论</div>
+            <div class="table-header-item" style="width: 10%">评论权限</div>
+            <div class="table-header-item" style="width: 20%">操作</div>
+        </div>
+        <div class="table-content" ng-repeat="blog in blogList">
+            <div class="table-content-item" style="width: 50%; text-align: left;">
+                <a href="">
+                    <span class="blog-top-show" ng-show="blog.topShow">[置顶]</span>
+                    <span>{{blog.title}}</span>
+                </a>
+                <span class="create-time">({{blog.createDate}})</span>
+            </div>
+            <div class="table-content-item" style="width: 5%"></div>
+            <div class="table-content-item" style="width: 5%">{{blog.readCount}}</div>
+            <div class="table-content-item" style="width: 5%">{{blog.comment.length}}</div>
+            <div class="table-content-item" style="width: 10%">
+                <span class="operation-link" ng-click="commentAble(blog._id, !blog.commentAble)">{{blog.commentAble ? '禁止评论' : '允许评论'}}</span>
+            </div>
+            <div class="table-content-item" style="width: 20%">
+                <span class="operation-link" ng-click="editBlog(blog._id)">编辑</span>
+                <span> | </span>
+                <span class="operation-link" ng-class="{'blog-top-show' : blog.topShow}" ng-click="topShow(blog._id, !blog.topShow)">{{blog.topShow ? '取消置顶' : '置顶'}}</span>
+                <span> | </span>
+                <span class="operation-link" ng-click="deleteBlog(blog._id)">删除</span>
+            </div>
+        </div>
+    </div>
+</div>

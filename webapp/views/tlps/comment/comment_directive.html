@@ -1,0 +1,83 @@
+<div class="comment-directive">
+    <div class="comment-triangle"></div>
+    <div class="add-comment">
+        <div class="user-image">
+            <img src="{{userInfo.headImgPath}}" alt=""/>
+        </div>
+        <div class="comment-input">
+            <input type="text" class="form-control" ng-model="comment.content">
+        </div>
+        <div class="comment-operation">
+            <span class="fa fa-smile-o" style="color: #ffa405;"></span>
+            <customer-checkbox option="option" class="reply-at-once"></customer-checkbox>
+            <button type="button" class="btn btn-primary btn-sm submit-button" ng-click="addComment(comment)">评论</button>
+        </div>
+    </div>
+    <div class="comment-items">
+        <div class="comment-item" ng-repeat="comment in comments">
+            <div class="user-image">
+                <img src="{{comment.userInfo.headImgPath}}" alt=""/>
+            </div>
+            <div class="content">
+                <div class="username">{{comment.userInfo.username}}</div>
+                <span style="display: inline-block; vertical-align: top;">: </span>
+                <div class="comment-content">{{comment.content}}</div>
+                <div class="comment-time">{{comment.createDate}}</div>
+            </div>
+
+            <div class="comment-operation">
+                <span class="delete-comment" ng-show="currentUser._id === comment.userId || currentUser._id === objectInfo.userId" ng-click="deleteComment(comment)">删除</span>
+                <span class="comment" ng-click="addReplyComment(comment, comment.userInfo)">回复</span>
+                <span class="good">
+                    <span class="fa fa-thumbs-o-up"></span>
+                    <span>赞</span>
+                </span>
+            </div>
+            <div class="add-reply-comment" ng-show="replyComment.replyCommentId === comment._id && !addReplyCommentForReplyComment">
+                <div class="triangle"></div>
+                <div class="add-reply-comment-input">
+                    <input type="text" class="form-control" ng-model="replyComment.content">
+                </div>
+                <div class="reply-comment-operation">
+                    <span class="fa fa-smile-o" style="color: #ffa405;"></span>
+                    <customer-checkbox option="replyCommentOption" class="reply-at-once"></customer-checkbox>
+                    <button type="button" class="btn btn-primary btn-sm submit-button" ng-click="addComment(replyComment)">评论</button>
+                    <button type="button" class="btn btn-default btn-sm" ng-click="cancelAddComment()">取消</button>
+                </div>
+            </div>
+            <div class="reply-comments" ng-show="comment.replyedComments.length > 0">
+                <div class="reply-comment" ng-repeat="replyedComment in comment.replyedComments">
+                    <span class="username">{{replyedComment.userInfo.username}}</span>
+                    <span>: 回复</span>
+                    <span class="reply-username">@{{replyedComment.replyUserName}}</span>
+                    <span>: </span>
+                    <span class="reply-comment-content">{{replyedComment.content}}</span>
+                    <div class="date-and-operations">
+                        <span class="reply-comment-date">{{replyedComment.createDate}}</span>
+                        <div class="reply-comment-operations">
+                            <span class="delete-reply-comment" ng-show="currentUser._id === replyedComment.userId || currentUser._id === objectInfo.userId" ng-click="deleteComment(replyedComment)">删除</span>
+                            <span class="comment" ng-click="addReplyComment(comment, replyedComment.userInfo, replyedComment._id)">回复</span>
+                            <span class="good">
+                                <span class="fa fa-thumbs-o-up"></span>
+                                <span>赞</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="add-reply-comment for-reply-comment" ng-show="addReplyCommentForReplyComment === replyedComment._id">
+                        <div class="triangle"></div>
+                        <div class="add-reply-comment-input">
+                            <input type="text" class="form-control" ng-model="replyComment.content">
+                        </div>
+                        <div class="reply-comment-operation">
+                            <span class="fa fa-smile-o" style="color: #ffa405;"></span>
+                            <customer-checkbox option="replyCommentOption" class="reply-at-once"></customer-checkbox>
+                            <button type="button" class="btn btn-primary btn-sm submit-button" ng-click="addComment(replyComment)">评论</button>
+                            <button type="button" class="btn btn-default btn-sm" ng-click="cancelAddComment()">取消</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

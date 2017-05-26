@@ -6,8 +6,8 @@
             <div class="blog-title">{{blogInfo.title}}</div>
         </div>
         <div class="blog-info-div">
-            <div class="keyword">关键字：{{blogInfo.keyword}}</div>
-            <div class="info-and-operation">
+            <div class="blog-info-keyword">关键字：{{blogInfo.keyword}}</div>
+            <div class="blog-info-and-operation">
                 <div class="create-date">{{blogInfo.createDate}}</div>
                 <div class="read-statistic">
                     <span class="icon-eye-open"></span>
@@ -19,16 +19,68 @@
                     <span class="comment-statistic-count">({{blogInfo.comment.length}})</span>
                 </div>
                 <div class="edit operation-link">
-                    <span>编辑</span>
+                    <span ng-click="editBlog()">编辑</span>
                 </div>
                 <div class="delete operation-link">
                     <span>删除</span>
                 </div>
             </div>
-            <div class="blog-classify-type"></div>
+            <div class="blog-info-categories">
+                <div class="category-label">
+                    <span class="glyphicon glyphicon-th-list"></span>
+                    <span class="category-label-text">分类：</span>
+                </div>
+            </div>
         </div>
         <div class="blog-content">
             <div ng-bind-html="blogInfo.content"></div>
         </div>
+        <div class="comments">
+            <div class="comment-header">查看评论</div>
+            <div class="comment-item" ng-repeat="comment in comments">
+                <div class="comment-item-header">
+                    <span>#{{comment.floor}}楼</span>
+                    <span>{{comment.createDate}}</span>
+                    <span>{{comment.userInfo.username}}</span>
+                    <div class="comment-operations">
+                        <span class="fa fa-comments-o"></span>
+                        <span class="fa fa-times" ng-click="deleteComment(comment._id)"></span>
+                    </div>
+                </div>
+                <div class="comment-item-content">
+                    <div class="comment-user-img" ng-class="{'class-for-no-image':!comment.userInfo.headImgPath}">
+                        <img src="{{comment.userInfo.headImgPath}}" alt="" ng-show="comment.userInfo.headImgPath"/>
+                        <span class="fa fa-user-o replace-for-user-image" ng-hide="comment.userInfo.headImgPath"></span>
+                    </div>
+                    <div class="comment-content" ng-bind-html="comment.content"></div>
+
+                    <div class="reply-comments" ng-repeat="replyComment in comment.replyComments">
+                        <div class="reply-comment">
+                            <div class="reply-comment-header">
+                                <span>Re:</span>
+                                <span>{{replyComment.createDate}}</span>
+                                <span>{{replyComment.userInfo.username}}</span>
+                                <div class="comment-operations">
+                                    <span class="icon-comments"></span>
+                                    <span class="icon-remove" ng-click="deleteComment(replyComment._id)"></span>
+                                </div>
+                            </div>
+                            <div class="reply-comment-user-img"></div>
+                            <div class="reply-comment-content">回复<span class="reply-to-user">@{{replyComment.replyUserName}}</span>：<span ng-bind-html="replyComment.content"></span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="add-comment">
+            <div class="add-comment-header">发表评论</div>
+            <div class="add-comment-content">
+                <div id="createBlogComment" ng-model="newComment.content" wang-editor="true"></div>
+            </div>
+            <div class="buttons">
+                <button type="button" class="btn btn-primary btn-sm" ng-click="addComment()">提交评论</button>
+            </div>
+        </div>
+        <div class="help-text">* 以上用户言论只代表其个人观点，不代表本网站的观点或立场</div>
     </div>
 </div>

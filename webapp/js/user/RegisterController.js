@@ -1,6 +1,6 @@
 var registerModule = angular.module('register', []);
 
-registerModule.controller('RegisterController', ['$scope', '$http', 'HttpService', function ($scope, $http, HttpService) {
+registerModule.controller('RegisterController', ['$scope', '$http', '$location', 'HttpService', function ($scope, $http, $location, HttpService) {
     $scope.option = {
         id: 'rememberCheckbox',
         name: 'rememberCheckbox',
@@ -32,11 +32,38 @@ registerModule.controller('RegisterController', ['$scope', '$http', 'HttpService
     $scope.register = function () {
         if (!registerValid()) {
             HttpService.post({
-                url: '/api/user/register',
-                method: 'POST',
-                data: $scope.user,
+                url: '/api/user',
+                params: {
+                    user: $scope.user
+                },
                 success: function (data) {
-                    console.log(data);
+                    if ($scope.option) {
+                        HttpService.post({
+                            url: 'api/user/login',
+                            params: {
+                                email: $scope.user.email,
+                                password: $scope.user.password
+                            },
+                            success: data => {
+                                postal.publish({
+                                    channel: 'user',
+                                    topic: 'loginSuccess',
+                                    data: {}
+                                });
+                                $location.url('/');
+                            }
+                        });
+                    } else {
+                        postal.publish({
+                            channel: 'showAlertMessage',
+                            topic: 'showAlertMessage',
+                            data: {
+                                type: 'success',
+                                message: '注册成功'
+                            }
+                        });
+                        $location.url('/');
+                    }
                 }
             });
             //$http({

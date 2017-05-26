@@ -3,11 +3,12 @@
     <div class="blog-list-div">
         <div class="operation-div" ng-show="currentUser._id === userId">
             <button type="button" class="btn btn-info" ng-click="createBlog()">写博客</button>
-            <button class="btn btn-default">博客管理</button>
+            <button class="btn btn-default" ng-click="blogManager()">博客管理</button>
         </div>
         <div ng-repeat="blog in blogList" class="blog-list">
             <div class="type-and-title">
                 <span class="label label-info blog-type {{blog.type}}-blog-type">{{blog.typeShow}}</span>
+                <span class="blog-list-top-show" ng-show="blog.topShow">[置顶]</span>
                 <div class="blog-title">
                     <a href="/blog/detail/{{blog._id}}">{{blog.title}}</a>
                 </div>
@@ -26,10 +27,10 @@
                     <span class="comment-statistic-count">({{blog.comment.length}})</span>
                 </div>
                 <div class="edit operation-link">
-                    <span>编辑</span>
+                    <span ng-click="editBlog(blog._id)">编辑</span>
                 </div>
                 <div class="delete operation-link">
-                    <span>删除</span>
+                    <span ng-click="removeBlog(blog._id)">删除</span>
                 </div>
             </div>
         </div>

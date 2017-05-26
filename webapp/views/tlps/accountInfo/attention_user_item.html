@@ -1,0 +1,24 @@
+<div class="attention-user-item">
+    <div class="user-image">
+        <div class="image">
+            <img src="{{userInfo.headImgPath}}" alt=""/>
+        </div>
+    </div>
+    <div class="user-info">
+        <div class="username">{{userInfo.username || userInfo.email}}</div>
+        <div class="attention-status">已关注</div>
+        <div class="brief-introduction">{{userInfo.briefIntroduction || '暂无签名'}}</div>
+        <div class="attention-source">{{userInfo.source || '通过系统推荐'}}</div>
+        <div class="attention-operation">
+            <!--TODO-->
+            <!--<button class="btn btn-default btn-xs group-button" type="button">&ndash;&gt;-->
+                <!--<span>{{userInfo.typeName}}</span>-->
+                <!--<span class="fa fa-caret-down"></span>-->
+            <!--</button>-->
+            <!--<button class="btn btn-default btn-xs operation-button" type="button">-->
+                <!--<span class="fa fa-cog"></span>-->
+            <!--</button>-->
+            <button class="btn btn-default btn-xs operation-button" type="button" ng-click="deleteAttention()">取消关注</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,100 @@
+.blog-article-manager-page {
+  margin: 20px 0px;
+  .blog-search-options {
+    .search-label() {
+
+    }
+    .search-select-option-div() {
+      display: inline-block;
+      .form-control {
+        height: 30px;
+      }
+    }
+    .category-option {
+      display: inline-block;
+      .search-label {
+        .search-label();
+      }
+      .category-select {
+        .search-select-option-div();
+      }
+    }
+    .type-option {
+      display: inline-block;
+      margin-left: 15px;
+      .search-label {
+        .search-label();
+      }
+      .type-select {
+        .search-select-option-div();
+      }
+    }
+    .search-title-option {
+      display: inline-block;
+      float: right;
+      width: 400px;
+      position: relative;
+      .glyphicon {
+        position: absolute;
+        right: 8px;
+        top: 10px;
+        cursor: pointer;
+        color: #CCCCCC;
+      }
+    }
+  }
+  .blog-table-div {
+    margin-top: 20px;
+    .table-header {
+      border-bottom: solid 2px #CCC;
+      padding-bottom: 5px;
+      .table-header-item {
+        display: inline-block;
+        font-weight: bold;
+        text-align: center;
+      }
+    }
+    .table-content {
+      .table-content-item {
+        display: inline-block;
+        text-align: center;
+        line-height: 40px;
+        font-size: 13px;
+        a {
+          color: #3B5998;
+          text-decoration: none;
+        }
+        a:hover {
+          text-decoration: underline;
+        }
+        .blog-top-show {
+          color: #FF0000 !important;
+        }
+        .create-time {
+          font-size: 12px;
+          color: #888;
+        }
+        .operation-link {
+          color: #3B5998;
+        }
+        .operation-link:hover {
+          cursor: pointer;
+          text-decoration: underline;
+        }
+        .operation-link:focus {
+          text-decoration: underline;
+          cursor: pointer;
+        }
+      }
+    }
+    .table-content:nth-child(2n - 1) {
+      background: #f9f9f9;
+      border: solid 1px #eee;
+      border-left: none;
+      border-right: none;
+    }
+    .table-content:hover {
+      background: #f9fad1;
+    }
+  }
+}

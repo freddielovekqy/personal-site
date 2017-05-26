@@ -1,0 +1,209 @@
+.communication-div {
+  .communication-folding {
+    height: 40px;
+    line-height: 40px;
+    width: 250px;
+    background: #fff;
+    padding: 0 20px;
+    box-shadow: 0 0 2px 1px #ccc;
+    cursor: pointer;
+    .glyphicon-envelope {
+      color: #eb7350;
+      font-size: 20px;
+      position: relative;
+      top: 5px;
+    }
+    span {
+      margin-right: 10px;
+      display: inline-block;
+    }
+    &.new-message-coming-when-folding {
+      box-shadow: 0 0 8px 1px #ff992f;
+      background: #ffc68a;
+    }
+  }
+  .communication-open {
+    width: 500px;
+    height: 340px;
+    background: #fff;
+    box-shadow: 0 0 2px 1px #ccc;
+    .communication-objects {
+      width: 150px;
+      float: left;
+      height: 100%;
+      border-right: 1px solid #ccc;
+      padding: 2px 0;
+      .search-communicator {
+        padding: 5px;
+        position: relative;
+        border-bottom: 1px solid #ccc;
+        height: 39px;
+        input {
+          height: 27px;
+        }
+        .fa-search {
+          position: absolute;
+          top: 12px;
+          right: 15px;
+          color: #b5b8bd;
+        }
+      }
+      .userImage() {
+        .user-image {
+          width: 30px;
+          height: 30px;
+          display: inline-block;
+          img {
+            width: 100%;
+            height: 100%;
+            vertical-align: top;
+          }
+        }
+      }
+      .search-results {
+        .communicator-label {
+          padding: 5px;
+        }
+        .search-result-user {
+          height: 40px;
+          line-height: 40px;
+          padding: 5px;
+          cursor: pointer;
+          .userImage();
+          .user-name {
+            display: inline-block;
+            vertical-align: top;
+            line-height: 30px;
+          }
+          &:hover {
+            background: #f2f2f5;
+          }
+        }
+        .no-result-user {
+          margin: 50px 20px;
+        }
+      }
+      .communication-object {
+        height: 40px;
+        line-height: 40px;
+        padding: 5px;
+        .userImage();
+        .user-name {
+          display: inline-block;
+          vertical-align: top;
+          line-height: 30px;
+        }
+        .delete-communication-object {
+          float: right;
+          position: relative;
+          right: 5px;
+          top: 8px;
+          cursor: pointer;
+          display: none;
+          &:hover {
+            color: #2ba7ff;
+          }
+        }
+        &.select {
+          background: #f2f2f5;
+        }
+        &:hover {
+          background: #f2f2f5;
+          .delete-communication-object {
+            display: inline-block;
+          }
+        }
+      }
+
+    }
+    .communication-content {
+      float: left;
+      .communication-header {
+        line-height: 40px;
+        padding: 0 15px;
+        width: 350px;
+        border-bottom: 1px solid #ccc;
+        .object-name {
+          font-weight: bold;
+          display: inline-block;
+        }
+        .communication-operations {
+          float: right;
+          .folding-communication-div {
+            color: #6a6f79;
+            cursor: pointer;
+            &:hover {
+              color: #2ba7ff;
+            }
+          }
+        }
+      }
+      .content {
+        width: 100%;
+        background: #f2f2f5;
+        height: 256px;
+        overflow: auto;
+        .show-chat-log {
+          text-align: center;
+          color: #2ba7ff;
+          cursor: pointer;
+          margin: 5px 0;
+        }
+        .no-more-chat-log {
+          text-align: center;
+          color: #949494;
+          margin: 5px 0;
+        }
+        .parting-line {
+          text-align: center;
+          color: #949494;
+          margin-bottom: 10px;
+          div {
+            height: 1px;
+            display: inline-block;
+            width: 60px;
+            margin: 0 15px 5px;
+            border-bottom: 1px dashed #949494;
+          }
+        }
+        .message {
+          padding: 5px 10px;
+          .message-user {
+            display: inline-block;
+            font-size: 12px;
+            &.current-user {
+              color: #dea386;
+            }
+          }
+          .send-time {
+            display: inline-block;
+            margin-left: 8px;
+            font-size: 12px;
+            &.current-user {
+              color: #dea386;
+            }
+          }
+          .message-content {
+            margin-left: 10px;
+            font-size: 15px;
+            line-height: 30px;
+            &.current-user {
+              color: #dea386;
+            }
+          }
+        }
+      }
+      .new-content {
+        padding: 5px;
+        input {
+          width: 290px;
+          display: inline-block;
+        }
+        button {
+          position: relative;
+          top: -2px;
+        }
+      }
+    }
+  }
+}

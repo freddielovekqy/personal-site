@@ -1,0 +1,212 @@
+.account-info-main-page {
+  .left {
+    float: left;
+    .brief-navigation {
+      height: 60px;
+      .blog-briefly-info {
+        display: inline-block;
+        background: #fff;
+        text-align: center;
+        .follow {
+          display: inline-block;
+          padding: 0 25px;
+          border-right: 1px solid #ccc;
+          margin: 10px 0;
+          float: left;
+          .follow-count {
+            font-weight: bold;
+          }
+          .follow-label {
+            color: #999;
+          }
+        }
+        .fan {
+          display: inline-block;
+          padding: 0 25px;
+          border-right: 1px solid #ccc;
+          margin: 10px 0;
+          float: left;
+          .fan-count {
+            font-weight: bold;
+          }
+          .fan-label {
+            color: #999;
+          }
+        }
+        .blog {
+          display: inline-block;
+          padding: 0 25px;
+          border-right: 1px solid #ccc;
+          margin: 10px 0;
+          float: left;
+          .blog-count {
+            font-weight: bold;
+          }
+          .blog-label {
+            color: #999;
+          }
+        }
+        .simple-blog {
+          display: inline-block;
+          padding: 0 25px;
+          margin: 10px 0;
+          float: left;
+          .simple-blog-count {
+            font-weight: bold;
+          }
+          .simple-blog-label {
+            color: #999;
+          }
+        }
+      }
+    }
+    .data-completion {
+      background: #FFF;
+      width: 315px;
+      margin-top: 10px;
+      .data-completion-percent {
+        padding: 20px;
+        .num-data-completion {
+          .number {
+
+          }
+        }
+        .data-completion-img {
+          background: #EEEEEE;
+          height: 4px;
+          border-radius: 4px;
+          margin-top: 8px;
+          .data-percent-img {
+            width: 20px;
+            height: 4px;
+            background: #ffba54;
+            border-radius: 4px 0 0 4px;
+          }
+        }
+      }
+      .edit-account-info {
+        text-align: center;
+        padding: 5px 0;
+        border-top: 1px solid #e2e2e2;
+        .edit:hover {
+          color: #2ba7ff;
+        }
+      }
+    }
+  }
+  .right {
+    @leftWidth: 315px;
+    @marginLeft: 20px;
+    float: left;
+    width: -moz-calc(~"100% - @{leftWidth} - @{marginLeft}");
+    width: -webkit-calc(~"100% - @{leftWidth} - @{marginLeft}");
+    width: calc(~"100% - @{leftWidth} - @{marginLeft}");
+    margin-left: @marginLeft;
+    .dynamics-top {
+      background: #f3f3f3;
+      & > div {
+        display: inline-block;
+        height: 40px;
+        line-height: 40px;
+        padding: 0 10px;
+      }
+      .search-div {
+        float: right;
+        position: relative;
+        input {
+          margin-top: 3px;
+        }
+        .glyphicon-search {
+          position: absolute;
+          right: 16px;
+          top: 14px;
+          cursor: pointer;
+          color: #CCCCCC;
+        }
+      }
+      & .selected-dynamics {
+        background: #ffffff;
+        border-bottom: 2px solid #2ba7ff;
+      }
+    }
+    .dynamic-item {
+      background: #ffffff;
+      margin-top: 10px;
+      position: relative;
+      .icon-angle-down {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        cursor: pointer;
+        &:hover {
+          color: #2ba7ff;
+        }
+      }
+      .dynamic-info() {
+        .user-image {
+          width: 50px;
+          height: 50px;
+          line-height: 25px;
+          float: left;
+          margin-right: 10px;
+        }
+        .username {
+          line-height: 25px;
+          font-size: 14px;
+          font-weight: bold;
+        }
+        .dynamic-other-info {
+          font-size: 12px;
+          color: #999;
+          line-height: 20px;
+        }
+      }
+
+      .personal-dynamic-info {
+        padding: 20px 20px 5px 20px;
+        .dynamic-info();
+      }
+      .original-dynamic-info {
+        padding: 5px 20px 0 80px;
+        background: #efefef;
+        .dynamic-info();
+        .dynamic-other-info {
+          padding: 5px 0;
+        }
+        .dynamic-info-detail {
+          font-size: 12px;
+        }
+      }
+      .dynamic-foot-operation {
+        overflow: auto;
+        & > div {
+          width: 25%;
+          line-height: 40px;
+          float: left;
+          display: inline-block;
+          text-align: center;
+          position: relative;
+          .operation-text {
+            width: 100%;
+            display: inline-block;
+            height: 25px;
+            line-height: 25px;
+            border-right: 1px solid #ccc;
+            cursor: pointer;
+            &:hover {
+              color: #2ba7ff;
+            }
+            .icon {
+              margin-right: 5px;
+            }
+          }
+        }
+        .good {
+          span {
+            border-right: none;
+          }
+        }
+      }
+    }
+  }
+}

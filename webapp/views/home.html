@@ -1,2 +1,121 @@
-<div>
+<div class="home-page container">
+    <div class="home-bar">
+        <div class="home-bar-item main-item" ng-class="{'select': shownPage === 'home'}" ng-click="changeShowPage('home')">首页</div>
+        <div class="home-bar-item main-item" style="display: none;">我的收藏</div>
+        <div class="home-bar-item main-item" style="display: none;">我的赞</div>
+        <fieldset></fieldset>
+        <div class="home-bar-item" ng-class="{'select': shownPage === 'recentSimpleBlog'}" ng-click="changeShowPage('recentSimpleBlog')">全部微博</div>
+        <div class="home-bar-item" ng-class="{'select': shownPage === 'recentBlog'}" ng-click="changeShowPage('recentBlog')">全部博客</div>
+    </div>
+    <div class="home-main-container">
+        <div class="submit-simple-blog" ng-show="shownPage === 'home'">
+            <div class="content-above-input">
+                <span>有什么新鲜事想告诉大家</span>
+            </div>
+            <textarea name="" id="" rows="4" ng-model="simpleBlog.content"></textarea>
+            <div class="simple-blog-option">
+                <!--<div class="add-expression simple-blog-option-item">-->
+                    <!--<span class="fa fa-smile-o" style="color: #ffa405;"></span>-->
+                    <!--<span>表情</span>-->
+                <!--</div>-->
+                <!--<div class="add-picture simple-blog-option-item">-->
+                    <!--<span class="fa fa-picture-o" style="color: #84c002;"></span>-->
+                    <!--<span>图片</span>-->
+                <!--</div>-->
+                <!--<div class="add-timeout simple-blog-option-item">-->
+                    <!--<span class="fa fa-clock-o" style="color: #4c9dc1;"></span>-->
+                    <!--<span>定时发</span>-->
+                <!--</div>-->
+                <div class="write-blog simple-blog-option-item">
+                    <span class="fa fa-pencil-square-o" style="color: #5a8ce6;"></span>
+                    <a href="/blog/create">发表博客</a>
+                </div>
+                <button type="button" class="btn btn-primary" ng-click="saveSimpleBlog()">发布</button>
+                <div class="simple-blog-privilege-level-set simple-blog-option-item" ng-click="showJurisdictionOptions()">
+                    <span>{{simpleBlog.jurisdiction === 1 ? '公开' : simpleBlog.jurisdiction === 2 ? '仅好友可见' : '仅自己可见'}}</span>
+                    <span class="fa fa-chevron-down"></span>
+                </div>
+                <div class="simple-blog-privilege-levels" ng-show="showJurisdictionsFlag">
+                    <div class="jurisdiction-item" ng-click="changeJurisdiction(1)">公开</div>
+                    <div class="jurisdiction-item" ng-click="changeJurisdiction(2)">仅好友可见</div>
+                    <div class="jurisdiction-item" ng-click="changeJurisdiction(3)">仅自己可见</div>
+                </div>
+            </div>
+        </div>
+        <div class="home-content-type-and-search" ng-show="shownPage === 'home'">
+            <div class="home-content-blog-type">
+                <div class="home-content-blog-type-item" ng-class="{'select': currentShowContentType === 'simpleBlog'}" ng-click="changeContentType('simpleBlog')">微博</div>
+                <div class="home-content-blog-type-item" style="display: none;">原创</div>
+                <div class="home-content-blog-type-item" style="display: none;">图片</div>
+                <div class="home-content-blog-type-item" ng-class="{'select': currentShowContentType === 'blog'}" ng-click="changeContentType('blog')">博客</div>
+            </div>
+            <div class="search-div">
+                <input type="text" class="form-control" placeholder="搜索我的博客">
+                <span class="glyphicon glyphicon-search"></span>
+            </div>
+        </div>
+        <div class="content-information">
+            <div ng-repeat="content in contents">
+                <simple-blog-info content="content" current-user="currentUserInfo" ng-if="currentShowContentType === 'simpleBlog'"></simple-blog-info>
+                <blog-info-for-home content="content" current-user="currentUserInfo" ng-if="currentShowContentType === 'blog'"></blog-info-for-home>
+            </div>
+            <div class="no-content" ng-show="contents.length === 0">
+                没有内容，去关注更多的人吧。
+            </div>
+        </div>
+    </div>
+    <div class="right-div">
+        <div class="current-user-info">
+            <div class="user-background-img"></div>
+            <div class="user-image">
+                <img src="{{currentUserInfo.headImgPath}}" alt="" ng-show="currentUserInfo.headImgPath"/>
+                <div class="class-for-no-image" ng-hide="currentUserInfo.headImgPath">
+                    <span class="fa fa-user-o replace-for-user-image"></span>
+                </div>
+            </div>
+            <div class="username">
+                <span class="username-label">{{currentUserInfo.username}}</span>
+                <!--<span class="level">Lv.{{currentUserInfo.level}}</span>-->
+            </div>
+            <div class="user-brief-info">
+                <div class="follow">
+                    <div class="user-brief-info-count">{{currentUserInfo.attentionCount || 0}}</div>
+                    <div class="user-brief-info-label">关注</div>
+                </div>
+                <div class="fan">
+                    <div class="user-brief-info-count">{{currentUserInfo.fanCount || 0}}</div>
+                    <div class="user-brief-info-label">粉丝</div>
+                </div>
+                <div class="blog">
+                    <div class="user-brief-info-count">{{currentUserInfo.blogCount || 0}}</div>
+                    <div class="user-brief-info-label">博客</div>
+                </div>
+                <div class="simple-blog">
+                    <div class="user-brief-info-count">{{currentUserInfo.simpleBlogCount || 0}}</div>
+                    <div class="user-brief-info-label">微博</div>
+                </div>
+            </div>
+        </div>
+        <div class="advertisement">
+            广告区
+        </div>
+        <div class="hot-topic">
+            <div class="hot-topic-header">
+                <div class="header-title">热门话题</div>
+                <div class="change-new-ones">
+                    <span class="icon-refresh"></span>
+                    <span>换一换</span>
+                </div>
+            </div>
+            <div class="hot-topic-items">
+                <div class="hot-topic-item" ng-repeat="topic in hotTopics">
+                    <a class="topic-title">#{{topic.topicName}}#</a>
+                    <div class="topic-index">{{topic.topicIndex}}</div>
+                </div>
+            </div>
+            <div class="hot-topic-footer">
+                <span class="see-more">查看更多<span class="icon-angle-right"></span></span>
+            </div>
+        </div>
+    </div>
 </div>

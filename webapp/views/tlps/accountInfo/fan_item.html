@@ -1,0 +1,14 @@
+<div class="fan-user-item">
+    <div class="user-image">
+        <div class="image">
+            <img src="{{userInfo.headImgPath}}" alt=""/>
+        </div>
+    </div>
+    <div class="user-info">
+        <div class="username">{{userInfo.username || userInfo.email}}</div>
+        <div class="fan-status" ng-show="fanBeAttention">已关注</div>
+        <button class="btn btn-default btn-xs operation-button" type="button" ng-show="!fanBeAttention" ng-click="addAttention()">关注</button>
+        <div class="brief-introduction">{{userInfo.briefIntroduction || '暂无签名'}}</div>
+        <div class="fan-source">{{userInfo.source || '通过系统推荐'}}</div>
+    </div>
+</div>
