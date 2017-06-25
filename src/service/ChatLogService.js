@@ -1,4 +1,5 @@
 var chatLogDao = require('../dao/ChatLogDao');
+var userDao = require('../dao/UserDao');
 var logger = require('../common/log/log4js').logger;
 var _ = require('lodash');
 
@@ -32,25 +33,43 @@ function readUnReadMessage(userId, fromUserId) {
 
 function findUnreadMessage(userId) {
     return new Promise((resolve, reject) => {
+        var results = [];
         var condition = {
             toUserId: userId,
             status: UNREAD_CHAT_LOG_STATUS
         };
         chatLogDao.findByCondition(condition)
             .then(chatLogs => {
-                var unreadLogMap = [];
+                var getUserInfoPromises = [];
+
                 chatLogs.forEach(chatLog => {
-                    var index = _.findIndex(unreadLogMap, {fromUserId: chatLog.fromUserId});
+                    var userId = chatLog.fromUserId;
+                    var index = _.findIndex(results, { fromUserId: userId });
+
                     if (index > -1) {
-                        unreadLogMap[index].messages.push(chatLog);
+                        results[index].messages.push(chatLog);
                     } else {
-                        unreadLogMap.push({
+                        getUserInfoPromises.push(userDao.getBasicUserInfo(userId));
+                        results.push({
                             fromUserId: chatLog.fromUserId,
                             messages: [chatLog]
                         });
                     }
                 });
-                resolve(unreadLogMap);
+                return Promise.all(getUserInfoPromises);
+            })
+            .then(userInfos => {
+                results.forEach(result => {
+                    userInfos.every(userInfo => {
+                        if (userInfo._doc._id.toString() === result.fromUserId) {
+                            result.userInfo = userInfo;
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    });
+                });
+                resolve(results);
             })
             .catch(error => {
                 reject(error);
