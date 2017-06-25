@@ -28,6 +28,7 @@ communicationModule.directive('communicationDiv', function () {
             // 引用该指令的地方限定了有currentUser才编译，所以可以确定currentUser有值
             $scope.userInfo = CommonUserUtils.getCurrentUserInfo();
 
+            getChatList();
             getUnReadMessage();
 
             $scope.changeStatus = function (status) {
@@ -72,11 +73,20 @@ communicationModule.directive('communicationDiv', function () {
             };
 
             $scope.communicate = function (user) {
-                var communicator = angular.copy(user);
-                communicator.messages = [];
-                communicator.chatLogs = [];
-                $scope.communicators.unshift(communicator);
-                $scope.currentCommunicator = $scope.communicators[0];
+                var index = _.findIndex($scope.communicators, {_id: user._id});
+
+                if (index === -1) {
+                    index = 0;
+                    var communicator = angular.copy(user);
+                    communicator.messages = [];
+                    communicator.chatLogs = [];
+                    $scope.communicators.unshift(communicator);
+
+                    HttpService.post({
+                        url: `/api/chatList/chatUser/${user._id}`
+                    });
+                }
+                $scope.currentCommunicator = $scope.communicators[index];
                 $scope.searchResults = [];
                 $scope.searchUserInfo = {};
             };
@@ -110,6 +120,10 @@ communicationModule.directive('communicationDiv', function () {
             $scope.removeCommunicator = function (user) {
                 $scope.communicators = $scope.communicators.filter(communicator => {
                     return communicator._id !== user._id;
+                });
+
+                HttpService.delete({
+                    url: `/api/chatList/chatUser/${user._id}`
                 });
             };
 
@@ -171,26 +185,36 @@ communicationModule.directive('communicationDiv', function () {
                     url: '/api/chatLog/unRead',
                     success: chatLogsMaps => {
                         chatLogsMaps.forEach((chatLogMap, index) => {
-                            HttpService.get({
-                                url: `api/user/${chatLogMap.fromUserId}`,
-                                success: user => {
-                                    var communicator = angular.copy(user);
-                                    communicator.chatLogs = [];
-                                    communicator.messages = chatLogMap.messages.map(message => {
-                                        return {
-                                            message: message.content,
-                                            sendTime: new Date(message.createDate).format('MM-dd hh:mm:ss'),
-                                            username: communicator.username,
-                                            isCurrentUser: false
-                                        };
-                                    });
-                                    $scope.communicators.unshift(communicator);
-                                    if (index === chatLogsMaps.length - 1) {
-                                        $scope.currentCommunicator = $scope.communicators[0];
-                                    }
-                                }
+                            var communicator = chatLogMap.userInfo;
+                            communicator.chatLogs = [];
+                            communicator.messages = chatLogMap.messages.map(message => {
+                                return {
+                                    message: message.content,
+                                    sendTime: new Date(message.createDate).format('MM-dd hh:mm:ss'),
+                                    username: communicator.username,
+                                    isCurrentUser: false
+                                };
                             });
+                            $scope.communicators.unshift(communicator);
+                            if (index === chatLogsMaps.length - 1) {
+                                $scope.currentCommunicator = $scope.communicators[0];
+                            }
                         });
+                    }
+                });
+            }
+
+            function getChatList() {
+                HttpService.get({
+                    url: '/api/chatList',
+                    success: data => {
+                        if (data && data.userList) {
+                            data.userList.forEach(user => {
+                                user.chatLogs = [];
+                                user.messages = [];
+                                $scope.communicators.push(user);
+                            });
+                        }
                     }
                 });
             }

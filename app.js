@@ -21,6 +21,7 @@ var photo = require('./src/routes/PhotoController');
 var album = require('./src/routes/AlbumController');
 var home = require('./src/routes/HomeController');
 var chatLog = require('./src/routes/ChatLogController');
+var chatList = require('./src/routes/ChatListController');
 
 var chatLogService = require('./src/service/ChatLogService')
 
@@ -97,6 +98,7 @@ app.use('/api/album', album);
 app.use('/api/photo', photo);
 app.use('/api/home', home);
 app.use('/api/chatLog', chatLog);
+app.use('/api/chatList', chatList);
 
 // nodejs提供restful的api接口
 app.get('/api/about', function (request, response) {
